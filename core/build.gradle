@@ -1,0 +1,27 @@
+apply plugin: "java"
+apply plugin: "jacoco"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+sourceSets.main.java.srcDirs = [ "src/main/java" ]
+sourceSets.test.java.srcDirs = [ "src/test/java" ]
+
+eclipse.project.name = appName + "-core"
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    afterEvaluate {
+        def coverageSourceDirs = ['src/main/java']
+//        sourceDirectories = files(coverageSourceDirs)
+//        classDirectories = fileTree(
+//                dir: "${project.buildDir}/classes/java/main",
+//                excludes: [
+//                        //whatever here like JavaConfig etc. in /src/main/java
+//                ]
+//        )
+    }
+}
