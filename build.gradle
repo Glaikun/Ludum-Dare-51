@@ -62,6 +62,7 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         
     }
 }
@@ -81,6 +82,6 @@ project(":html") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion:sources"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
-        
+        api "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
     }
 }
