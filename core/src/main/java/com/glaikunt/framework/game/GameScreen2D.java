@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
+import com.glaikunt.framework.esc.component.common.GravityComponent;
 
 public class GameScreen2D extends Screen {
 
@@ -15,6 +16,9 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
+
+        GravityComponent gravityComponent = new GravityComponent();
+        getApplicationResources().getGlobalEntity().add(gravityComponent);
 
         getBackground().act(delta);
         getFront().act(delta);

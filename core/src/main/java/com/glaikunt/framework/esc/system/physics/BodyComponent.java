@@ -1,22 +1,21 @@
 package com.glaikunt.framework.esc.system.physics;
 
 import com.badlogic.ashley.core.Component;
+import com.glaikunt.framework.application.Rectangle;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class BodyComponent implements Component {
 
-    public static enum BODY_TYPE {
-        DYNAMIC,
-        KINEMATIC,
-        STATIC
+    private List<Rectangle> collidingWith = new LinkedList<>();
+    private Rectangle body;
+
+    public List<Rectangle> getCollidingWith() {
+        return collidingWith;
     }
 
-    private BODY_TYPE bodyType;
-
-    public BODY_TYPE getBodyType() {
-        return bodyType;
-    }
-
-    public void setBodyType(BODY_TYPE bodyType) {
-        this.bodyType = bodyType;
+    public Rectangle getBody() {
+        return body;
     }
 }

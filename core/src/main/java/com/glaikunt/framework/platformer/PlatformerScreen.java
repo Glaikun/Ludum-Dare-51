@@ -3,8 +3,6 @@ package com.glaikunt.framework.platformer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.Scaling;
-import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
-import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.platformer.misc.AppleActor;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
@@ -24,8 +22,6 @@ public class PlatformerScreen extends Screen {
         getFront().addActor(new FloorActor(getApplicationResources()));
 
         getApplicationResources().getEngine().addSystem(new GravitySystem(getEngine()));
-        getApplicationResources().getEngine().addSystem(new PositionIterationsSystem(getEngine()));
-        getApplicationResources().getEngine().addSystem(new VelocityIterationsSystem(getEngine()));
     }
 
     @Override

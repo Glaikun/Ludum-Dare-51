@@ -6,9 +6,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
-import com.glaikunt.framework.esc.component.common.MassComponent;
+import com.glaikunt.framework.esc.component.common.PositionComponent;
 
 
 /**
@@ -20,12 +19,11 @@ public class GravitySystem extends EntitySystem {
     private ImmutableArray<Entity> entities;
 
     private ComponentMapper<GravityComponent> gcm = ComponentMapper.getFor(GravityComponent.class);
-    private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
-    private ComponentMapper<MassComponent> mcm = ComponentMapper.getFor(MassComponent.class);
+    private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
 
     public GravitySystem(Engine engine) {
         entities = engine.getEntitiesFor(
-                Family.all(GravityComponent.class, AccelerationComponent.class, MassComponent.class)
+                Family.all(GravityComponent.class, PositionComponent.class)
                         .get()
         );
     }
@@ -36,10 +34,9 @@ public class GravitySystem extends EntitySystem {
 
             Entity entity = entities.get(i);
             GravityComponent gravity = gcm.get(entity);
-            AccelerationComponent accel = fcm.get(entity);
-            MassComponent mass = mcm.get(entity);
+            PositionComponent pos = pcm.get(entity);
 
-            accel.y += mass.getMass() * (gravity.y * delta);
+            pos.y += gravity.y * delta;
         }
     }
 }
