@@ -16,6 +16,7 @@ import com.glaikunt.framework.esc.component.common.VelocityComponent;
  */
 public class AccelDecaySystem extends EntitySystem {
 
+    private static final float DECAY_RATE = 10f;
     private ImmutableArray<Entity> entities;
 
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
@@ -37,8 +38,10 @@ public class AccelDecaySystem extends EntitySystem {
             VelocityComponent vel = vcm.get(entity);
             AccelerationComponent accel = fcm.get(entity);
 
-            vel.x += accel.x;
-            vel.y += accel.y;
+            vel.scl(1f - (DECAY_RATE*delta) );
+//            accel.scl(1f - (100*DECAY_RATE*delta) );
+//            accel.x -= Math.abs(accel.x/2);// * delta;
+//            accel.y -= (accel.x/8) * delta;
         }
     }
 }

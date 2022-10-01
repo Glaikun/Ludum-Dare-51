@@ -14,6 +14,7 @@ import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 
 public class PlayerInputSystem extends EntitySystem {
 
+    private static final float LATERAL_ACCELERATION = 50f;
     private final ImmutableArray<Entity> animationEntities;
 
     private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
@@ -44,15 +45,16 @@ public class PlayerInputSystem extends EntitySystem {
 
             if (input.isMovingLeft()) {
 //                pos.x -= speed;
-                ac.x -= 1;
+                ac.x = -LATERAL_ACCELERATION;
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.LEFT);
-            }
-            if (input.isMovingRight()) {
+            } else if (input.isMovingRight()) {
 //                pos.x += speed;
-                ac.x += 1;
+                ac.x = LATERAL_ACCELERATION;
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
+            } else {
+                ac.x = 0;
             }
 
 

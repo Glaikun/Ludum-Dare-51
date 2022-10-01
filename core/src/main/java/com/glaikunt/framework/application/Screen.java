@@ -246,6 +246,10 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         return Arrays.asList((OrthographicCamera) front.getCamera(), (OrthographicCamera) background.getCamera());
     }
 
+    public DebugLabels getDebugLabels() {
+        return debugLabels;
+    }
+
     public List<Stage> getStages() {
         return Arrays.asList(front, background, ux, immutableBackground);
     }

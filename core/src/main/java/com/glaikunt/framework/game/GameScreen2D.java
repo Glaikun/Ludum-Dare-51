@@ -26,7 +26,14 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
-
+//        {
+//            Entity e = getApplicationResources().getEngine().getEntitiesFor(
+//                    Family
+//                            .one(PlayerInputComponent.class)
+//                            .all(AnimationComponent.class, VelocityComponent.class).get()
+//            ).get(0);
+//            getDebugLabels().getDebugPlayerLabel().setText("Ax: " + e.getComponent(AccelerationComponent.class).x+" Vx: " + e.getComponent(VelocityComponent.class).x);
+//        }
         getBackground().act(delta);
         getFront().act(delta);
         getUX().act(delta);
