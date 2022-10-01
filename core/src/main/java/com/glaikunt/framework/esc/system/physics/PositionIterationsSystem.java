@@ -6,8 +6,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+
+import java.util.Map;
 
 
 /**
@@ -20,10 +23,11 @@ public class PositionIterationsSystem extends EntitySystem {
 
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
 
     public PositionIterationsSystem(Engine engine) {
         entities = engine.getEntitiesFor(
-                Family.all(VelocityComponent.class, PositionComponent.class)
+                Family.all(VelocityComponent.class, PositionComponent.class, BodyComponent.class)
                         .get()
         );
     }
@@ -36,9 +40,24 @@ public class PositionIterationsSystem extends EntitySystem {
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
             PositionComponent pos = pcm.get(entity);
+            BodyComponent body = bcm.get(entity);
 
             pos.x += vel.x;
             pos.y += vel.y;
+
+            for (Map.Entry<BodyComponent, ContactComponent> e : body.getContactsByBody().entrySet()) {
+                if (e.getValue().getNormal().y < 0 || e.getValue().getNormal().y > 0) {
+                    // not falling
+                    if (e.getValue().getNormal().x < 0 || e.getValue().getNormal().x > 0) {
+                        // not moving
+                        pos.x = pos.x - (pos.x % 32);
+                    }
+                }
+                if (e.getValue().getNormal().x < 0 || e.getValue().getNormal().x > 0) {
+                    // not moving
+
+                }
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
+import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 
 import java.util.Map;
@@ -54,6 +55,7 @@ public class VelocityIterationsSystem extends EntitySystem {
                 if (e.getValue().getNormal().y < 0 || e.getValue().getNormal().y > 0) {
                     // not falling
                     vel.y = 0;
+
                 }
                 if (e.getValue().getNormal().x < 0 || e.getValue().getNormal().x > 0) {
                     // not moving
