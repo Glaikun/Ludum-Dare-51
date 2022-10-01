@@ -6,8 +6,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
-import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 
 import java.util.Map;
@@ -23,7 +23,6 @@ public class CollisionSystem extends EntitySystem {
 
     private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
 
     public CollisionSystem(Engine engine) {
         this.entities = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class).get());
@@ -40,6 +39,11 @@ public class CollisionSystem extends EntitySystem {
 
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 
+                BodyComponent key = entry.getKey();
+                if (key.getBodyType() == BodyType.CHECKPOINT) {
+                    Gdx.app.log("DEBUG", "CHECKPOINT!!!");
+                    continue;
+                }
                 ContactComponent contact = entry.getValue();
                 if (contact.getNormal().y < 0 || contact.getNormal().y > 0) {
                     vel.y = 0;

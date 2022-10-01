@@ -30,9 +30,8 @@ public class DebugLevel extends CommonActor implements Level {
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
 
         TiledMapTileLayer player_start = (TiledMapTileLayer) map.getLayers().get("Player");
-        MapLayer level_collision = map.getLayers().get("Platforms");
-
-        for (MapObject mapObject : level_collision.getObjects()) {
+        MapLayer levelCollision = map.getLayers().get("Platforms");
+        for (MapObject mapObject : levelCollision.getObjects()) {
 
             if (mapObject instanceof RectangleMapObject) {
                 RectangleMapObject r = (RectangleMapObject) mapObject;
@@ -45,6 +44,23 @@ public class DebugLevel extends CommonActor implements Level {
                 Vector2 size = new Vector2(width, height);
 
                 front.addActor(new BlockActor(applicationResources, pos, size));
+            }
+        }
+
+        MapLayer levelCheckpoint = map.getLayers().get("Checkpoint");
+        for (MapObject mapObject : levelCheckpoint.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new CheckPointActor(applicationResources, pos, size));
             }
         }
 

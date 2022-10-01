@@ -49,9 +49,9 @@ public class CameraControlsSystem extends EntitySystem {
 
                 if (as.isEnableZoom()) {
                     if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-                        camera.zoom = GameUtils.clamp(.01f, 2, camera.zoom + (as.getScrollSpeed() * delta));
+                        camera.zoom = GameUtils.clamp(.01f, 3, camera.zoom + (as.getScrollSpeed() * delta));
                     } else if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-                        camera.zoom = GameUtils.clamp(.01f, 2, camera.zoom + (-as.getScrollSpeed() * delta));
+                        camera.zoom = GameUtils.clamp(.01f, 3, camera.zoom + (-as.getScrollSpeed() * delta));
                     }
                 }
 

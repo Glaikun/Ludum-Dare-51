@@ -27,7 +27,6 @@ public class CollisionListenerSystem extends EntitySystem {
 
     private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
 
     private final Rectangle tmpBodyA = new Rectangle();
     private final Rectangle tmpBodyB = new Rectangle();
@@ -60,7 +59,6 @@ public class CollisionListenerSystem extends EntitySystem {
             Entity entityA = bodyEntitiesWithVel.get(eiA);
             BodyComponent bodyA = bcm.get(entityA);
             VelocityComponent velA = vcm.get(entityA);
-            PositionComponent posA = pcm.get(entityA);
 
             for (int eiB = 0; eiB < allBodyEntities.size(); ++eiB) {
 
