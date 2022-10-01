@@ -3,7 +3,9 @@ package com.glaikunt.framework.game.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -13,8 +15,8 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.*;
+import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
-import com.glaikunt.framework.esc.system.WarmthSystem;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.GameConstants;
@@ -26,7 +28,7 @@ public class PlayerActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
     private final VelocityComponent velocity;
-    private final AnimationComponent animation;
+    private final AnimationComponent idleAnimation, runningAnimation;
     private final PlayerInputComponent playerInput;
 
     private final WarmthComponent warmth;
@@ -39,12 +41,20 @@ public class PlayerActor extends CommonActor {
 
         this.acceleration = new AccelerationComponent();
         this.velocity = new VelocityComponent();
-        this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.PLAYER), 1, 1);
+
+        this.idleAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.IDLE_PLAYER), 6, 1);
+        this.idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        this.idleAnimation.setFramerate(0.15f);
+
+        this.runningAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.RUNNING_PLAYER), 4, 1);
+        this.runningAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        this.runningAnimation.setFramerate(0.1f);
+
         this.playerInput = new PlayerInputComponent();
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
 
         this.pos.set(pos);
-        this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
+        this.size.set(idleAnimation.getCurrentFrame().getRegionWidth()-1, idleAnimation.getCurrentFrame().getRegionHeight()-1);
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.DYNAMIC);
@@ -52,7 +62,7 @@ public class PlayerActor extends CommonActor {
 
         getEntity().add(acceleration);
         getEntity().add(velocity);
-        getEntity().add(animation);
+        getEntity().add(idleAnimation);
         getEntity().add(playerInput);
         getEntity().add(warmth);
         getEntity().add(body);
@@ -63,12 +73,50 @@ public class PlayerActor extends CommonActor {
     public void draw(Batch batch, float parentAlpha) {
 
         batch.setColor(warmth.getWarmthFloat(), warmth.getWarmthFloat(), 1.0f, 1f);
-        batch.draw(animation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
+        batch.draw(getEntity().getComponent(AnimationComponent.class).getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
         batch.setColor(Color.WHITE);
     }
 
     @Override
     public void act(float delta) {
+
+         if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
+            if (idleAnimation.isxFlip()) {
+                idleAnimation.setxFlip(false);
+                for (TextureRegion region : idleAnimation.getCurrentAnimation().getKeyFrames()) {
+                    region.flip(true, false);
+                }
+            }
+
+            getEntity().add(idleAnimation);
+        } else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
+            if (!idleAnimation.isxFlip()) {
+                idleAnimation.setxFlip(true);
+                for (TextureRegion region : idleAnimation.getCurrentAnimation().getKeyFrames()) {
+                    region.flip(true, false);
+                }
+            }
+
+            getEntity().add(idleAnimation);
+        }else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
+            if (runningAnimation.isxFlip()) {
+                runningAnimation.setxFlip(false);
+                for (TextureRegion region : runningAnimation.getCurrentAnimation().getKeyFrames()) {
+                    region.flip(true, false);
+                }
+            }
+
+            getEntity().add(runningAnimation);
+        } else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
+            if (!runningAnimation.isxFlip()) {
+                runningAnimation.setxFlip(true);
+                for (TextureRegion region : runningAnimation.getCurrentAnimation().getKeyFrames()) {
+                    region.flip(true, false);
+                }
+            }
+
+            getEntity().add(runningAnimation);
+        }
 
         cameraUpdate(delta);
 

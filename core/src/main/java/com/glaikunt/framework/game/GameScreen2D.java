@@ -9,6 +9,7 @@ import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
 import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
+import com.glaikunt.framework.esc.system.AnimationSystem;
 import com.glaikunt.framework.esc.system.CameraControlsSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.esc.system.WarmthSystem;
@@ -59,6 +60,7 @@ public class GameScreen2D extends Screen {
 
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
         getEngine().addSystem(new WarmthSystem(getEngine()));
+        getEngine().addSystem(new AnimationSystem(getEngine()));
     }
 
     @Override

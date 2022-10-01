@@ -21,6 +21,8 @@ public class TextureCache implements Cache {
 
 //   ################## PLAYER ##################
     public static final String PLAYER = "player/player.png";
+    public static final String IDLE_PLAYER = "player/idle.png";
+    public static final String RUNNING_PLAYER = "player/running.png";
 //   ################## PLAYER ##################
 
     public static final String ENEMY = "enemy/enemy.png";
@@ -33,6 +35,7 @@ public class TextureCache implements Cache {
     public void loadCache(AssetManager assetManager) {
 
         add(assetManager, PIXEL, SPRITESHEET, PLAYER, ENEMY);
+        add(assetManager, IDLE_PLAYER, RUNNING_PLAYER);
     }
 
     @Override

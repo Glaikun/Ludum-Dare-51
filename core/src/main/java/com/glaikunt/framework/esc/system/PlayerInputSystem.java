@@ -59,6 +59,7 @@ public class PlayerInputSystem extends EntitySystem {
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             } else {
                 ac.x = 0;
+                input.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
             }
 
             if (input.isJumping() && body.isContactedWithFloor()) {
