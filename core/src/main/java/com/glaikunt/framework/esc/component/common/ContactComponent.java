@@ -3,12 +3,15 @@ package com.glaikunt.framework.esc.component.common;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.Rectangle;
+import com.glaikunt.framework.esc.system.physics.BodyType;
 
 public class ContactComponent implements Component {
 
     private final Rectangle interaction = new Rectangle();
     private final Vector2 normal = new Vector2();
     private Rectangle bodyA, bodyB;
+    private BodyType bodyAType;
+    private BodyType bodyBType;
 
     public Rectangle getInteraction() {
         return interaction;
@@ -36,5 +39,21 @@ public class ContactComponent implements Component {
 
     public void setBodyB(Rectangle bodyB) {
         this.bodyB = bodyB;
+    }
+
+    public BodyType getBodyAType() {
+        return bodyAType;
+    }
+
+    public BodyType getBodyBType() {
+        return bodyBType;
+    }
+
+    public void setBodyAType(BodyType bodyAType) {
+        this.bodyAType = bodyAType;
+    }
+
+    public void setBodyBType(BodyType bodyBType) {
+        this.bodyBType = bodyBType;
     }
 }

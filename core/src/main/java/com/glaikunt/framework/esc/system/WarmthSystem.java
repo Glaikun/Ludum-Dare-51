@@ -2,6 +2,7 @@ package com.glaikunt.framework.esc.system;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.esc.component.common.WarmthComponent;
 
 public class WarmthSystem extends EntitySystem {
@@ -34,6 +35,8 @@ public class WarmthSystem extends EntitySystem {
             if (w.isNearHeatSource()) {
                 w.setWarmth(w.getWarmth() + (HEATSOURCE_UNITS_PER_SECOND * delta));
             }
+
+//            Gdx.app.log("DEBUG", "warmth: "+w);
         }
     }
 }

@@ -18,7 +18,7 @@ public class BodyComponent extends Rectangle implements Component {
 
     public boolean isContactedWithFloor() {
         return contactsByBody.values().stream()
-                .anyMatch(c -> c.getNormal().y <= -1);
+                .anyMatch(c -> c.getNormal().y <= -1 && (c.getBodyBType() == BodyType.STATIC || c.getBodyBType() == BodyType.DYNAMIC));
     }
 
     public List<ContactComponent> getBeforeContacts() {
