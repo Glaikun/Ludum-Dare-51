@@ -54,7 +54,7 @@ public class PlayerActor extends CommonActor {
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
 
         this.pos.set(pos);
-        this.size.set(idleAnimation.getCurrentFrame().getRegionWidth()-1, idleAnimation.getCurrentFrame().getRegionHeight()-1);
+        this.size.set(idleAnimation.getCurrentFrame().getRegionWidth(), idleAnimation.getCurrentFrame().getRegionHeight());
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.DYNAMIC);
