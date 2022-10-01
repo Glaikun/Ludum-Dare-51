@@ -87,8 +87,19 @@ public class CollisionListenerSystem extends EntitySystem {
 //                    tmpBodyB.getCenter(tmpVecB);
                     tmpContact.getCenter(tmpVecContact);
                     tmpVecContact.sub(tmpVecA); // calculate
-                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
-                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
+                    if (MathUtils.floor(tmpVecContact.x) != 0 && MathUtils.floor(tmpVecContact.y) != 0) {
+
+                        if (Math.abs(MathUtils.floor(tmpVecContact.x)) > Math.abs(MathUtils.floor(tmpVecContact.y))) {
+                            contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
+                            contact.getNormal().y = 0;
+                        } else {
+                            contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
+                            contact.getNormal().x = 0;
+                        }
+                    } else {
+                        contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
+                        contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
+                    }
                     contact.setInteraction(tmpContact);
 
                     Gdx.app.log("DEBUG", "contact normal: " +   contact.getNormal());
@@ -111,8 +122,8 @@ public class CollisionListenerSystem extends EntitySystem {
 //                    tmpBodyB.getCenter(tmpVecB);
                     tmpContact.getCenter(tmpVecContact); // warning this is the old unchanged contact value from the initial contact.
                     tmpVecContact.sub(tmpVecA); // calculate
-                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
-                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
+//                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
+//                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                     contact.setInteraction(tmpContact);
                     Gdx.app.log("DEBUG", "non-contacted normal " +   contact.getNormal());
 
