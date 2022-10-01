@@ -44,7 +44,9 @@ public abstract class AbstractPlayerInputComponent implements Movable, Component
 
     public enum Animation {
         IDLE,
-        MOVEMENT
+        MOVEMENT,
+        FALLING,
+        JUMP
     }
 
     public Animation getAnimation() {
