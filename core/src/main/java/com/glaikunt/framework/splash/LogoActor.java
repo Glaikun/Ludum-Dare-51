@@ -90,6 +90,6 @@ public class LogoActor extends CommonActor {
     }
 
     public boolean isComplete() {
-        return (logo.getCurrentFrameIndex() >= logo.getCurrentAnimation().getKeyFrames().length-1) && completeTimer.isTimerEventReady();
+        return true;
     }
 }

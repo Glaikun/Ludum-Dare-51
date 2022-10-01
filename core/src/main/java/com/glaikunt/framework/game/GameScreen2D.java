@@ -2,11 +2,15 @@ package com.glaikunt.framework.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Scaling;
 import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
+import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
+import com.glaikunt.framework.esc.system.CameraControlsSystem;
+import com.glaikunt.framework.game.map.DebugLevel;
 
 public class GameScreen2D extends Screen {
 
@@ -17,12 +21,27 @@ public class GameScreen2D extends Screen {
     @Override
     public void update(float delta) {
 
-        GravityComponent gravityComponent = new GravityComponent();
-        getApplicationResources().getGlobalEntity().add(gravityComponent);
-
         getBackground().act(delta);
         getFront().act(delta);
         getUX().act(delta);
+    }
+
+    @Override
+    public void show() {
+
+        GravityComponent gravityComponent = new GravityComponent();
+        getApplicationResources().getGlobalEntity().add(gravityComponent);
+
+        CameraControlsComponent cameraControls = new CameraControlsComponent();
+        cameraControls.setEnableMovement(true);
+        cameraControls.setEnableZoom(true);
+        cameraControls.getCameras().add((OrthographicCamera) getFront().getCamera());
+        getApplicationResources().getImmutableGameEntity().add(cameraControls);
+        getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
+
+        getFront().addActor(new DebugLevel(getApplicationResources()));
+
+        getEngine().addSystem(new CameraControlsSystem(getEngine()));
     }
 
     @Override
@@ -34,11 +53,6 @@ public class GameScreen2D extends Screen {
         getBackground().draw();
         getFront().draw();
         getUX().draw();
-    }
-
-    @Override
-    public void show() {
-
     }
 
     @Override

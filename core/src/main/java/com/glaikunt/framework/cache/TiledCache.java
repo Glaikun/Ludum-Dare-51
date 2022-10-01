@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class TiledCache implements Cache {
 
-//   ################## EXAMPLE ##################
-    public static final String SOMETHING = "tmp/isometric.tmx";
+    //   ################## EXAMPLE ##################
+    public static final String SOMETHING = "maps/debug_map.tmx";
 //   ################## EXAMPLE ##################
 
     private Map<String, TiledMap> tiledMap = new HashMap<>();
@@ -28,8 +28,8 @@ public class TiledCache implements Cache {
         TmxMapLoader loader = new TmxMapLoader(new InternalFileHandleResolver());
         assetManager.setLoader(TiledMap.class, loader);
 
-      assetManager.load(SOMETHING, TiledMap.class, params);
-      getTiledMap().put(SOMETHING, null);
+        assetManager.load(SOMETHING, TiledMap.class, params);
+        getTiledMap().put(SOMETHING, null);
     }
 
     @Override
