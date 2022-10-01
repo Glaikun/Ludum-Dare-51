@@ -31,13 +31,13 @@ public class PositionIterationsSystem extends EntitySystem {
     @Override
     public void update(float delta) {
 
-
         for (int ei = 0; ei < entities.size(); ++ei) {
 
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
             PositionComponent pos = pcm.get(entity);
 
+            pos.x += vel.x;
             pos.y += vel.y;
         }
     }

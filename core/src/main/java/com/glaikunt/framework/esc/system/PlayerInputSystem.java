@@ -7,6 +7,7 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
+import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
@@ -17,6 +18,7 @@ public class PlayerInputSystem extends EntitySystem {
 
     private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
     private final ComponentMapper<VelocityComponent> vc = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
     private final ComponentMapper<PlayerInputComponent> pic = ComponentMapper.getFor(PlayerInputComponent.class);
 
     //TODO Jumping State
@@ -37,15 +39,18 @@ public class PlayerInputSystem extends EntitySystem {
             Entity entity = animationEntities.get(i);
             AnimationComponent playerAnimation = ac.get(entity);
             VelocityComponent vel = vc.get(entity);
+            AccelerationComponent ac = acm.get(entity);
             AbstractPlayerInputComponent input = pic.get(entity);
 
             if (input.isMovingLeft()) {
 //                pos.x -= speed;
+                ac.x -= 1;
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.LEFT);
             }
             if (input.isMovingRight()) {
 //                pos.x += speed;
+                ac.x += 1;
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             }

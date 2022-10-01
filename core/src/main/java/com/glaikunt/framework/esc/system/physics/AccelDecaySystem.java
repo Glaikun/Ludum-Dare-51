@@ -7,38 +7,38 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.GravityComponent;
-import com.glaikunt.framework.esc.component.common.PositionComponent;
+import com.glaikunt.framework.esc.component.common.VelocityComponent;
 
 
 /**
  * This is gravity movement based on pixels.
  * By Andrew Murray
  */
-public class GravitySystem extends EntitySystem {
+public class AccelDecaySystem extends EntitySystem {
 
     private ImmutableArray<Entity> entities;
 
-    private ComponentMapper<GravityComponent> gcm = ComponentMapper.getFor(GravityComponent.class);
+    private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
 
-    public GravitySystem(Engine engine) {
+    public AccelDecaySystem(Engine engine) {
         entities = engine.getEntitiesFor(
-                Family.all(GravityComponent.class, AccelerationComponent.class)
+                Family.all(VelocityComponent.class, AccelerationComponent.class)
                         .get()
         );
     }
 
     @Override
     public void update(float delta) {
-        for (int i = 0; i < entities.size(); ++i) {
 
-            Entity entity = entities.get(i);
-            GravityComponent gravity = gcm.get(entity);
+        for (int ei = 0; ei < entities.size(); ++ei) {
+
+            Entity entity = entities.get(ei);
+            VelocityComponent vel = vcm.get(entity);
             AccelerationComponent accel = fcm.get(entity);
 
-            accel.x += (gravity.x * delta);
-            accel.y += (gravity.y * delta);
+            vel.x += accel.x;
+            vel.y += accel.y;
         }
     }
 }

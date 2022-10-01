@@ -37,6 +37,7 @@ public class VelocityIterationsSystem extends EntitySystem {
             VelocityComponent vel = vcm.get(entity);
             AccelerationComponent accel = fcm.get(entity);
 
+            vel.x += accel.x;
             vel.y += accel.y;
         }
     }
