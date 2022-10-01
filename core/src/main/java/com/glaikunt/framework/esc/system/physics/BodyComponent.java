@@ -16,6 +16,11 @@ public class BodyComponent extends Rectangle implements Component {
     private final List<ContactComponent> afterContacts = new LinkedList<>();
     private BodyType bodyType;
 
+    public boolean isContactedWithFloor() {
+        return contactsByBody.values().stream()
+                .anyMatch(c -> c.getNormal().y <= -1);
+    }
+
     public List<ContactComponent> getBeforeContacts() {
         return beforeContacts;
     }

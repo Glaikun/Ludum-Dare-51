@@ -11,16 +11,19 @@ import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
+import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class PlayerInputSystem extends EntitySystem {
 
     private static final float LATERAL_ACCELERATION = 50f;
+    private static final float JUMPING_ACCELERATION = 20f;
     private final ImmutableArray<Entity> animationEntities;
 
     private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
     private final ComponentMapper<VelocityComponent> vc = ComponentMapper.getFor(VelocityComponent.class);
     private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
     private final ComponentMapper<PlayerInputComponent> pic = ComponentMapper.getFor(PlayerInputComponent.class);
+    private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
 
     //TODO Jumping State
 
@@ -28,7 +31,7 @@ public class PlayerInputSystem extends EntitySystem {
         animationEntities = engine.getEntitiesFor(
                 Family
                         .one(PlayerInputComponent.class)
-                        .all(AnimationComponent.class, VelocityComponent.class).get()
+                        .all(AnimationComponent.class, VelocityComponent.class, BodyComponent.class).get()
         );
     }
 
@@ -42,6 +45,7 @@ public class PlayerInputSystem extends EntitySystem {
             VelocityComponent vel = vc.get(entity);
             AccelerationComponent ac = acm.get(entity);
             AbstractPlayerInputComponent input = pic.get(entity);
+            BodyComponent body = bcm.get(entity);
 
             if (input.isMovingLeft()) {
 //                pos.x -= speed;
@@ -55,6 +59,12 @@ public class PlayerInputSystem extends EntitySystem {
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             } else {
                 ac.x = 0;
+            }
+
+            if (input.isJumping() && body.isContactedWithFloor()) {
+//                pos.x += speed;
+                ac.y = JUMPING_ACCELERATION;
+                input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
             }
 
 

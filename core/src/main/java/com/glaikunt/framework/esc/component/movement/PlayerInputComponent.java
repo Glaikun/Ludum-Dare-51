@@ -53,6 +53,11 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
     }
 
     @Override
+    public boolean isJumping() {
+        return Gdx.input.isKeyPressed(jumpKeyPrimary);
+    }
+
+    @Override
     public boolean keyUp(int i) {
         if (!isAnyMovementKeysPressed()) {
             setAnimation(IDLE);

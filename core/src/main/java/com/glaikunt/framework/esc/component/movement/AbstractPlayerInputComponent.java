@@ -29,6 +29,7 @@ public abstract class AbstractPlayerInputComponent implements Movable, Component
     protected int moveUpKeySecondary = UP;
     protected int moveDownKeyPrimary = S;
     protected int moveDownKeySecondary = DOWN;
+    protected int jumpKeyPrimary = SPACE;
 
     protected int attackPrimary = SPACE;
 

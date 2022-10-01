@@ -12,4 +12,6 @@ public interface Movable {
 
     boolean isMovingDown();
 
+    boolean isJumping();
+
 }
