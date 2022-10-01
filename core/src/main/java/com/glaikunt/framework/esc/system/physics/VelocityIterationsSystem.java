@@ -6,8 +6,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+
+import java.util.Map;
 
 
 /**
@@ -22,10 +27,11 @@ public class VelocityIterationsSystem extends EntitySystem {
 
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
+    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
 
     public VelocityIterationsSystem(Engine engine) {
         entities = engine.getEntitiesFor(
-                Family.all(VelocityComponent.class, AccelerationComponent.class)
+                Family.all(VelocityComponent.class, AccelerationComponent.class, BodyComponent.class)
                         .get()
         );
     }
@@ -38,21 +44,21 @@ public class VelocityIterationsSystem extends EntitySystem {
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
             AccelerationComponent accel = fcm.get(entity);
+            BodyComponent body = bcm.get(entity);
 
-            vel.x += accel.x * delta;
-            if (vel.x > MAX_X_V) {
-                vel.x = MAX_X_V;
-            }
-            if (vel.x < -MAX_X_V) {
-                vel.x = -MAX_X_V;
-            }
+            vel.x = GameUtils.clamp(-MAX_X_V, MAX_X_V, vel.x + (accel.x * delta));
+            vel.y = GameUtils.clamp(-MAX_X_V, MAX_X_V, vel.y + (accel.y * delta));
 
-            vel.y += accel.y * delta;
-            if (vel.y > MAX_Y_V) {
-                vel.y = MAX_Y_V;
-            }
-            if (vel.y < -MAX_Y_V) {
-                vel.y = -MAX_Y_V;
+            for (Map.Entry<BodyComponent, ContactComponent> e : body.getContactsByBody().entrySet()) {
+                // TODO test the normal here? e.g. x = 0 when hit the sides of a hole
+                if (e.getValue().getNormal().y < 0 || e.getValue().getNormal().y > 0) {
+                    // not falling
+                    vel.y = 0;
+                }
+                if (e.getValue().getNormal().x < 0 || e.getValue().getNormal().x > 0) {
+                    // not moving
+                    vel.x = 0;
+                }
             }
         }
     }

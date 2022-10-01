@@ -69,10 +69,6 @@ public class PlayerActor extends CommonActor {
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
-
-        for (Map.Entry<BodyComponent, ContactComponent> e : getBody().getContactsByBody().entrySet()) {
-
-        }
     }
 
     @Override

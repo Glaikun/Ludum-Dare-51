@@ -92,16 +92,6 @@ public class CollisionListenerSystem extends EntitySystem {
                     contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
                     contact.setInteraction(tmpContact);
 
-                    // TODO test the normal here? e.g. x = 0 when hit the sides of a hole
-                    if (contact.getNormal().y < 0) {
-                        // not falling
-                        velA.y = 0;
-                    }
-                    if (contact.getNormal().x < 0 || contact.getNormal().x > 0) {
-                        // not moving
-                        velA.x = 0;
-                    }
-
                     Gdx.app.log("DEBUG", "contact normal: " +   contact.getNormal());
 
                     bodyA.getBeforeContacts().add(contact);
