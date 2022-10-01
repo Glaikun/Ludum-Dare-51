@@ -32,7 +32,6 @@ public class PlayerActor extends CommonActor {
 
         this.pos.set(pos);
         this.size.set(animation.getCurrentFrame().getRegionWidth(), animation.getCurrentFrame().getRegionHeight());
-        this.velocity.set(15, 15);
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.DYNAMIC);

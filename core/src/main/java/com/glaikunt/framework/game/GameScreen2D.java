@@ -11,6 +11,10 @@ import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.CameraControlsSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
+import com.glaikunt.framework.esc.system.physics.CollisionListenerSystem;
+import com.glaikunt.framework.esc.system.physics.GravitySystem;
+import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
+import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.DebugLevel;
 
 public class GameScreen2D extends Screen {
@@ -42,8 +46,12 @@ public class GameScreen2D extends Screen {
 
         getFront().addActor(new DebugLevel(getApplicationResources(), getFront()));
 
-        getEngine().addSystem(new CameraControlsSystem(getEngine()));
+        getEngine().addSystem(new GravitySystem(getEngine()));
+        getEngine().addSystem(new VelocityIterationsSystem(getEngine()));
+        getEngine().addSystem(new CollisionListenerSystem(getEngine()));
+        getEngine().addSystem(new PositionIterationsSystem(getEngine()));
         getEngine().addSystem(new PlayerInputSystem(getEngine()));
+        getEngine().addSystem(new CameraControlsSystem(getEngine()));
     }
 
     @Override
