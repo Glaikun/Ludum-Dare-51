@@ -1,5 +1,6 @@
 package com.glaikunt.framework.esc.system.physics;
 
+import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -17,11 +18,10 @@ public class CollisionListenerSystem extends EntitySystem {
 
     private ImmutableArray<Entity> entities;
 
+    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
+
     public CollisionListenerSystem(Engine engine) {
-        entities = engine.getEntitiesFor(
-                Family.all(VelocityComponent.class, PositionComponent.class)
-                        .get()
-        );
+        entities = engine.getEntitiesFor( Family.all(BodyComponent.class).get());
     }
 
     //TODO need a before colliding code
@@ -36,6 +36,7 @@ public class CollisionListenerSystem extends EntitySystem {
         for (int ei = 0; ei < entities.size(); ++ei) {
 
             Entity entity = entities.get(ei);
+            BodyComponent body = bcm.get(entity);
         }
     }
 }
