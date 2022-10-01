@@ -32,7 +32,6 @@ public class CollisionListenerSystem extends EntitySystem {
     @Override
     public void update(float delta) {
 
-
         for (int ei = 0; ei < entities.size(); ++ei) {
 
             Entity entity = entities.get(ei);
