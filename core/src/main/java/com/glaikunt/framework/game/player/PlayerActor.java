@@ -10,11 +10,14 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+
+import java.util.Map;
 
 public class PlayerActor extends CommonActor {
 
@@ -65,6 +68,10 @@ public class PlayerActor extends CommonActor {
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now" + getBody().getContactsByBody().size());
+        }
+
+        for (Map.Entry<BodyComponent, ContactComponent> e : getBody().getContactsByBody().entrySet()) {
+
         }
     }
 
