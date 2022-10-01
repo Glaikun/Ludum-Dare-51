@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.GameUtils;
@@ -28,8 +29,9 @@ public class CollisionListenerSystem extends EntitySystem {
     private final Rectangle tmpBodyA = new Rectangle();
     private final Rectangle tmpBodyB = new Rectangle();
     private final Rectangle tmpContact = new Rectangle();
-    private final Vector2 vecA = new Vector2();
-    private final Vector2 vecB = new Vector2();
+    private final Vector2 tmpVecA = new Vector2();
+    private final Vector2 tmpVecB = new Vector2();
+    private final Vector2 tmpVecContact = new Vector2();
 
     public CollisionListenerSystem(Engine engine) {
         this.allBodyEntities = engine.getEntitiesFor(Family.all(BodyComponent.class).get());
@@ -82,8 +84,14 @@ public class CollisionListenerSystem extends EntitySystem {
                     contact.setBodyA(bodyA);
                     contact.setBodyB(bodyB);
 
-                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpContact.getCenter(vecA).x);
-                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpContact.getCenter(vecA).y);
+                    tmpBodyA.getCenter(tmpVecA);
+//                    tmpBodyB.getCenter(tmpVecB);
+                    tmpContact.getCenter(tmpVecContact);
+                    tmpVecContact.sub(tmpVecA); // calculate
+                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpVecContact.x);
+                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
+
+                    Gdx.app.log("DEBUG", "subtracted vec: " +   contact.getNormal());
 
                     bodyA.getBeforeContacts().add(contact);
                     bodyB.getBeforeContacts().add(contact);
@@ -91,7 +99,8 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getBodyContacts().add(bodyB);
                     bodyB.getBodyContacts().add(bodyA);
 
-                } if (bodyA.getBodyContacts().contains(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+                }
+                if (bodyA.getBodyContacts().contains(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
                     ContactComponent contact = new ContactComponent();
                     contact.setBodyA(bodyA);
