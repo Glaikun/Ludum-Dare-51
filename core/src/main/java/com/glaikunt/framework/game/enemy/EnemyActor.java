@@ -54,15 +54,11 @@ public class EnemyActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (getBodyRect().getX() != getX() || getBodyRect().getY() != getY()) {
-            getBodyRect().setPosition(getX(), getY());
-        }
-
         if (!getBody().getBeforeContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            Gdx.app.log("DEBUG", "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            Gdx.app.log("DEBUG", "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
     }
 

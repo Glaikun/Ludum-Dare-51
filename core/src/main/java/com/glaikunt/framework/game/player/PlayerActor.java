@@ -1,6 +1,7 @@
 package com.glaikunt.framework.game.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,11 +12,9 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
-import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.ContactComponent;
-import com.glaikunt.framework.esc.component.common.GravityComponent;
-import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.esc.component.common.*;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
+import com.glaikunt.framework.esc.system.WarmthSystem;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.GameConstants;
@@ -29,6 +28,8 @@ public class PlayerActor extends CommonActor {
     private final VelocityComponent velocity;
     private final AnimationComponent animation;
     private final PlayerInputComponent playerInput;
+
+    private final WarmthComponent warmth;
     private final BodyComponent body;
 
     private final Vector2 tmpVector2 = new Vector2();
@@ -40,6 +41,7 @@ public class PlayerActor extends CommonActor {
         this.velocity = new VelocityComponent();
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.PLAYER), 1, 1);
         this.playerInput = new PlayerInputComponent();
+        this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
 
         this.pos.set(pos);
         this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
@@ -52,6 +54,7 @@ public class PlayerActor extends CommonActor {
         getEntity().add(velocity);
         getEntity().add(animation);
         getEntity().add(playerInput);
+        getEntity().add(warmth);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
     }
@@ -59,7 +62,9 @@ public class PlayerActor extends CommonActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
 
+        batch.setColor(warmth.getWarmthFloat(), warmth.getWarmthFloat(), 1.0f, 1f);
         batch.draw(animation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
+        batch.setColor(Color.WHITE);
     }
 
     @Override
@@ -68,16 +73,16 @@ public class PlayerActor extends CommonActor {
         cameraUpdate(delta);
 
         if (!getBody().getBeforeContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            Gdx.app.log("DEBUG", "[P] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
             List<Vector2> collect = getBody().getBeforeContacts().stream().map(ContactComponent::getNormal)
                     .collect(Collectors.toList());
-            Gdx.app.log("DEBUG", "Before Collide normal mappings: " + collect);
+            Gdx.app.log("DEBUG", "[P] Before Collide normal mappings: " + collect);
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            Gdx.app.log("DEBUG", "[P] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
             List<Vector2> collect = getBody().getAfterContacts().stream().map(ContactComponent::getNormal)
                     .collect(Collectors.toList());
-            Gdx.app.log("DEBUG", "After Collide normal mappings: " + collect);
+            Gdx.app.log("DEBUG", "[P] After Collide normal mappings: " + collect);
         }
     }
 

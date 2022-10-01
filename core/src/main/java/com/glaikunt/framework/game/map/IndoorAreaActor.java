@@ -8,18 +8,18 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 
-public class CheckPointActor extends CommonActor {
+public class IndoorAreaActor extends CommonActor {
 
     private final BodyComponent body;
 
-    public CheckPointActor(ApplicationResources applicationResources, Vector2 pos, Vector2 size) {
+    public IndoorAreaActor(ApplicationResources applicationResources, Vector2 pos, Vector2 size) {
         super(applicationResources);
 
         this.pos.set(pos);
         this.size.set(size);
 
         this.body = new BodyComponent();
-        this.body.setBodyType(BodyType.CHECKPOINT);
+        this.body.setBodyType(BodyType.INDOORS);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
         getEntity().add(body);
@@ -27,6 +27,6 @@ public class CheckPointActor extends CommonActor {
 
     @Override
     public void drawDebug(ShapeRenderer shapes) {
-        shapes.rect(body.getX(), body.getY(), body.getWidth(), body.getHeight(), Color.YELLOW, Color.GREEN, Color.YELLOW, Color.GREEN);
+        shapes.rect(body.getX(), body.getY(), body.getWidth(), body.getHeight(), Color.RED, Color.ORANGE, Color.RED, Color.ORANGE);
     }
 }

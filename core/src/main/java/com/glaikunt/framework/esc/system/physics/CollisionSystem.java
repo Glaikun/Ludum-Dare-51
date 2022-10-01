@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.esc.component.common.WarmthComponent;
 
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class CollisionSystem extends EntitySystem {
     private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
+    private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
 
     public CollisionSystem(Engine engine) {
         this.entities = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class, AccelerationComponent.class).get());
@@ -39,12 +41,21 @@ public class CollisionSystem extends EntitySystem {
             BodyComponent body = bcm.get(entity);
             VelocityComponent vel = vcm.get(entity);
             AccelerationComponent acces = acm.get(entity);
+            WarmthComponent warmth = wcm.get(entity);
+            if (warmth != null) {
+                warmth.setOutside(true); // default until detected otherwise
+            }
 
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 
                 BodyComponent key = entry.getKey();
                 if (key.getBodyType() == BodyType.CHECKPOINT) {
                     Gdx.app.log("DEBUG", "CHECKPOINT!!!");
+                    continue;
+                } else if (key.getBodyType() == BodyType.INDOORS) {
+                    if (warmth != null) {
+                        warmth.setOutside(false);
+                    }
                     continue;
                 }
                 ContactComponent contact = entry.getValue();

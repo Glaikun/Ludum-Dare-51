@@ -107,9 +107,13 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getContactsByBody().put(bodyB, contact);
                 }
 
-                if (bodyA.getContactsByBody().containsKey(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
-
-                    bodyA.getContactsByBody().remove(bodyB);
+                if (!Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+                    if (bodyA.getContactsByBody().containsKey(bodyB)) {
+                        bodyA.getContactsByBody().remove(bodyB);
+                    }
+                    if (bodyB.getContactsByBody().containsKey(bodyA)) {
+                        bodyB.getContactsByBody().remove(bodyA);
+                    }
                 }
             }
         }
