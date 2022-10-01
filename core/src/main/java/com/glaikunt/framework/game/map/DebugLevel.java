@@ -3,6 +3,8 @@ package com.glaikunt.framework.game.map;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -28,6 +30,22 @@ public class DebugLevel extends CommonActor {
         TiledMapTileLayer player_start = (TiledMapTileLayer) map.getLayers().get("Player");
         MapLayer level_collision = map.getLayers().get("Platforms");
 
+        for (MapObject mapObject : level_collision.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new BlockActor(applicationResources, pos, size));
+            }
+        }
+
         for (int y = player_start.getHeight(); y >= 0; y--) {
             float yPos = (y * player_start.getTileHeight());
             for (int x = 0; x < player_start.getWidth(); x++) {
@@ -36,7 +54,7 @@ public class DebugLevel extends CommonActor {
                 TiledMapTileLayer.Cell playerStartCell = player_start.getCell(x, y);
                 if (playerStartCell != null) {
 
-                    front.addActor(new PlayerActor(applicationResources,  new Vector2(xPos, yPos)));
+                    front.addActor(new PlayerActor(applicationResources, new Vector2(xPos, yPos)));
                 }
             }
         }

@@ -12,6 +12,7 @@ import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.esc.system.physics.BodyType;
 
 public class PlayerActor extends CommonActor {
 
@@ -34,6 +35,7 @@ public class PlayerActor extends CommonActor {
         this.velocity.set(15, 15);
 
         this.body = new BodyComponent();
+        this.body.setBodyType(BodyType.DYNAMIC);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
         getEntity().add(acceleration);

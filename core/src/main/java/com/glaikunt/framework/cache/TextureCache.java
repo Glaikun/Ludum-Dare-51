@@ -16,7 +16,7 @@ public class TextureCache implements Cache {
 
     //   ################## SPRITE TILES ##################
     public static final String SPRITESHEET = "spritesheet/spritesheet.png";
-//    public static final Pair<Integer, Integer> SPRITESHEER = Pair.of(0, 0);
+    public static final Pair<Integer, Integer> BLOCK = Pair.of(0, 0);
     //   ################## SPRITE TILES ##################
 
 //   ################## PLAYER ##################

@@ -8,9 +8,18 @@ import java.util.List;
 
 public class BodyComponent extends Rectangle implements Component {
 
-    private List<Rectangle> collidingWith = new LinkedList<>();
+    private final List<Rectangle> collidingWith = new LinkedList<>();
+    private BodyType bodyType;
 
     public List<Rectangle> getCollidingWith() {
         return collidingWith;
+    }
+
+    public BodyType getBodyType() {
+        return bodyType;
+    }
+
+    public void setBodyType(BodyType bodyType) {
+        this.bodyType = bodyType;
     }
 }
