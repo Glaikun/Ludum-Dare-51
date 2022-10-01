@@ -23,6 +23,8 @@ public class TextureCache implements Cache {
     public static final String PLAYER = "player/player.png";
 //   ################## PLAYER ##################
 
+    public static final String ENEMY = "enemy/enemy.png";
+
     private Map<String, Texture> textureMap = new HashMap<>();
     private Map<String, TextureRegion[][]> textureRegionMap = new HashMap<>();
     private boolean loaded = false;
@@ -30,7 +32,7 @@ public class TextureCache implements Cache {
     @Override
     public void loadCache(AssetManager assetManager) {
 
-        add(assetManager, PIXEL, SPRITESHEET, PLAYER);
+        add(assetManager, PIXEL, SPRITESHEET, PLAYER, ENEMY);
     }
 
     @Override

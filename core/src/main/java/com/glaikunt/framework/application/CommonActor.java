@@ -8,13 +8,13 @@ import com.glaikunt.framework.esc.component.common.SizeComponent;
 
 public abstract class CommonActor extends Actor {
 
-    private ApplicationResources applicationResources;
+    private final ApplicationResources applicationResources;
 
     protected PositionComponent pos;
     protected SizeComponent size;
     protected Entity entity;
 
-    public CommonActor(ApplicationResources applicationResources) {
+    protected CommonActor(ApplicationResources applicationResources) {
         this.applicationResources = applicationResources;
         this.entity = new Entity();
         this.pos = new PositionComponent(0, 0);
