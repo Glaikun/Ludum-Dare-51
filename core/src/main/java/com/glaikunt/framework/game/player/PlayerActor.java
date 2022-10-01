@@ -1,5 +1,6 @@
 package com.glaikunt.framework.game.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +10,7 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -42,8 +44,7 @@ public class PlayerActor extends CommonActor {
         getEntity().add(animation);
         getEntity().add(playerInput);
         getEntity().add(body);
-//        getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
-
+        getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
     }
 
     @Override
@@ -55,18 +56,29 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (getBody().getX() != getX() || getBody().getY() != getY()) {
-            getBody().setPosition(getX(), getY());
+        if (getBodyRect().getX() != getX() || getBodyRect().getY() != getY()) {
+            getBodyRect().setPosition(getX(), getY());
+        }
+
+        if (!getBody().getBeforeContacts().isEmpty()) {
+            Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().get(0).getInteraction());
+        }
+        if (!getBody().getAfterContacts().isEmpty()) {
+            Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().get(0).getInteraction());
         }
     }
 
     @Override
     public void drawDebug(ShapeRenderer shapes) {
 
-        shapes.rect(getBody().getX(), getBody().getY(), getBody().width, getBody().height);
+        shapes.rect(getBodyRect().getX(), getBodyRect().getY(), getBodyRect().width, getBodyRect().height);
     }
 
-    public Rectangle getBody() {
+    public BodyComponent getBody() {
+        return body;
+    }
+
+    public Rectangle getBodyRect() {
         return body;
     }
 }
