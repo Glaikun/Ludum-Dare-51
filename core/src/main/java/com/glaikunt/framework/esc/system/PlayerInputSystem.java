@@ -6,9 +6,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.esc.component.common.WarmthComponent;
 import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -24,6 +26,7 @@ public class PlayerInputSystem extends EntitySystem {
     private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
     private final ComponentMapper<PlayerInputComponent> pic = ComponentMapper.getFor(PlayerInputComponent.class);
     private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
+    private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
 
     //TODO Jumping State
 
@@ -46,6 +49,7 @@ public class PlayerInputSystem extends EntitySystem {
             AccelerationComponent ac = acm.get(entity);
             AbstractPlayerInputComponent input = pic.get(entity);
             BodyComponent body = bcm.get(entity);
+            WarmthComponent warmth = wcm.get(entity);
 
             if (input.isMovingLeft()) {
 //                pos.x -= speed;
@@ -64,8 +68,10 @@ public class PlayerInputSystem extends EntitySystem {
 
             if (input.isJumping() && body.isContactedWithFloor()) {
 //                pos.x += speed;
-                ac.y = JUMPING_ACCELERATION;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
+                if (warmth != null && !warmth.isFrozen()) {
+                    ac.y = JUMPING_ACCELERATION * GameUtils.clamp(.7f, 1f, warmth.getWarmthFloat()*2);
+                    input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
+                }
             }
 
 

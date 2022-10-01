@@ -24,6 +24,7 @@ public class DebugLevel extends CommonActor implements Level {
 
     private PlayerActor player;
     private Array<EnemyActor> enemies = new Array<>();
+    private Array<HeatSourceActor> heatSources = new Array<>();
 
     public DebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
@@ -68,20 +69,39 @@ public class DebugLevel extends CommonActor implements Level {
             }
         }
 
-        MapLayer indoorAreas = map.getLayers().get("Inside");
-        for (MapObject mapObject : indoorAreas.getObjects()) {
+        {
+            MapLayer indoorAreas = map.getLayers().get("Inside");
+            for (MapObject mapObject : indoorAreas.getObjects()) {
 
-            if (mapObject instanceof RectangleMapObject) {
-                RectangleMapObject r = (RectangleMapObject) mapObject;
-                float x = r.getRectangle().getX();
-                float y = r.getRectangle().getY();
-                Vector2 pos = new Vector2(x, y);
+                if (mapObject instanceof RectangleMapObject) {
+                    RectangleMapObject r = (RectangleMapObject) mapObject;
+                    float x = r.getRectangle().getX();
+                    float y = r.getRectangle().getY();
+                    Vector2 pos = new Vector2(x, y);
 
-                float width = r.getRectangle().getWidth();
-                float height = r.getRectangle().getHeight();
-                Vector2 size = new Vector2(width, height);
+                    float width = r.getRectangle().getWidth();
+                    float height = r.getRectangle().getHeight();
+                    Vector2 size = new Vector2(width, height);
 
-                front.addActor(new IndoorAreaActor(applicationResources, pos, size));
+                    front.addActor(new IndoorAreaActor(applicationResources, pos, size));
+                }
+            }
+        }
+
+        {
+            TiledMapTileLayer heatsources = (TiledMapTileLayer) map.getLayers().get("Heatsource");
+            for (int y = heatsources.getHeight(); y >= 0; y--) {
+                float yPos = (y * heatsources.getTileHeight());
+                for (int x = 0; x < heatsources.getWidth(); x++) {
+                    float xPos = (x * heatsources.getTileWidth());
+
+                    TiledMapTileLayer.Cell startCell = heatsources.getCell(x, y);
+                    if (startCell != null) {
+                        HeatSourceActor heatsource = new HeatSourceActor(applicationResources, new Vector2(xPos, yPos));
+                        heatSources.add(heatsource);
+                        front.addActor(heatsource);
+                    }
+                }
             }
         }
 

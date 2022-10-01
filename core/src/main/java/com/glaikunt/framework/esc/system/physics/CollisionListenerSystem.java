@@ -80,6 +80,8 @@ public class CollisionListenerSystem extends EntitySystem {
                     ContactComponent contact = new ContactComponent();
                     contact.setBodyA(bodyA);
                     contact.setBodyB(bodyB);
+                    contact.setBodyAType(bodyA.getBodyType());
+                    contact.setBodyBType(bodyB.getBodyType());
 
                     tmpBodyA.getCenter(tmpVecA);
 //                    tmpBodyB.getCenter(tmpVecB);

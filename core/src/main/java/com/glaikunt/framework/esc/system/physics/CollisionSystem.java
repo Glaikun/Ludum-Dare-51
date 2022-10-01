@@ -44,6 +44,7 @@ public class CollisionSystem extends EntitySystem {
             WarmthComponent warmth = wcm.get(entity);
             if (warmth != null) {
                 warmth.setOutside(true); // default until detected otherwise
+                warmth.setNearHeatSource(false); // default until detected otherwise
             }
 
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
@@ -55,6 +56,11 @@ public class CollisionSystem extends EntitySystem {
                 } else if (key.getBodyType() == BodyType.INDOORS) {
                     if (warmth != null) {
                         warmth.setOutside(false);
+                    }
+                    continue;
+                } else if (key.getBodyType() == BodyType.HEATSOURCE) {
+                    if (warmth != null) {
+                        warmth.setNearHeatSource(true);
                     }
                     continue;
                 }
