@@ -15,10 +15,12 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.player.PlayerActor;
 
-public class DebugLevel extends CommonActor {
+public class DebugLevel extends CommonActor implements Level {
 
     private OrthogonalTiledMapRenderer renderer;
     private TiledMapTileLayer background;
+
+    private PlayerActor player;
 
     public DebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
@@ -54,7 +56,12 @@ public class DebugLevel extends CommonActor {
                 TiledMapTileLayer.Cell playerStartCell = player_start.getCell(x, y);
                 if (playerStartCell != null) {
 
-                    front.addActor(new PlayerActor(applicationResources, new Vector2(xPos, yPos)));
+                    if (player != null) {
+                        throw new IllegalStateException("Player already set");
+                    } else {
+                        this.player = new PlayerActor(applicationResources, new Vector2(xPos, yPos));
+                        front.addActor(player);
+                    }
                 }
             }
         }
@@ -75,5 +82,9 @@ public class DebugLevel extends CommonActor {
         if (getStage() != null) {
             renderer.setView((OrthographicCamera) getStage().getCamera());
         }
+    }
+
+    public PlayerActor getPlayer() {
+        return player;
     }
 }

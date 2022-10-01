@@ -37,15 +37,10 @@ public class CollisionSystem extends EntitySystem {
             Entity entity = entities.get(e);
             BodyComponent body = bcm.get(entity);
             VelocityComponent vel = vcm.get(entity);
-            PositionComponent pos = pcm.get(entity);
 
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 
-                BodyComponent key = entry.getKey();
                 ContactComponent contact = entry.getValue();
-
-
-                // TODO test the normal here? e.g. x = 0 when hit the sides of a hole
                 if (contact.getNormal().y < 0 || contact.getNormal().y > 0) {
                     vel.y = 0;
                 }

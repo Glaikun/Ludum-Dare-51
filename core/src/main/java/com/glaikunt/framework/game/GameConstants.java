@@ -12,5 +12,5 @@ public interface GameConstants {
     int POSITION_ITERATIONS = 2;
 
     float PPM = 16f;
-    float ZOOM = 1 / 4f;
+    float ZOOM = .5f;
 }

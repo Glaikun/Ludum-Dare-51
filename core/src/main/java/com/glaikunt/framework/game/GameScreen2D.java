@@ -18,26 +18,14 @@ import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.DebugLevel;
+import com.glaikunt.framework.game.map.Level;
 
 public class GameScreen2D extends Screen {
 
+    private Level currentLevel;
+
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
-    }
-
-    @Override
-    public void update(float delta) {
-//        {
-//            Entity e = getApplicationResources().getEngine().getEntitiesFor(
-//                    Family
-//                            .one(PlayerInputComponent.class)
-//                            .all(AnimationComponent.class, VelocityComponent.class).get()
-//            ).get(0);
-//            getDebugLabels().getDebugPlayerLabel().setText("Ax: " + e.getComponent(AccelerationComponent.class).x+" Vx: " + e.getComponent(VelocityComponent.class).x);
-//        }
-        getBackground().act(delta);
-        getFront().act(delta);
-        getUX().act(delta);
     }
 
     @Override
@@ -53,7 +41,8 @@ public class GameScreen2D extends Screen {
         getApplicationResources().getImmutableGameEntity().add(cameraControls);
         getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
 
-        getFront().addActor(new DebugLevel(getApplicationResources(), getFront()));
+        this.currentLevel = new DebugLevel(getApplicationResources(), getFront());
+        getFront().addActor((DebugLevel) currentLevel);
 
         // ########### Physics [Order Maters] ###########
         getEngine().addSystem(new GravitySystem(getEngine()));
@@ -67,8 +56,22 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new PositionIterationsSystem(getEngine()));
         // ########### Physics [Order Maters] ###########
 
-
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
+    }
+
+    @Override
+    public void setupCamera() {
+
+        ((OrthographicCamera) this.getFront().getCamera()).zoom = GameConstants.ZOOM;
+        getFront().getCamera().position.set(currentLevel.getPlayer().getX() + (currentLevel.getPlayer().getWidth() / 2), (currentLevel.getPlayer().getY()) + (currentLevel.getPlayer().getHeight()*2), 0);
+    }
+
+    @Override
+    public void update(float delta) {
+
+        getBackground().act(delta);
+        getFront().act(delta);
+        getUX().act(delta);
     }
 
     @Override

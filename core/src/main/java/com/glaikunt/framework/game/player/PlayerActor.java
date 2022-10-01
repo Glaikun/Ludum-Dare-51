@@ -1,8 +1,10 @@
 package com.glaikunt.framework.game.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
@@ -10,14 +12,12 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
-
-import java.util.Map;
+import com.glaikunt.framework.game.GameConstants;
 
 public class PlayerActor extends CommonActor {
 
@@ -26,6 +26,8 @@ public class PlayerActor extends CommonActor {
     private final AnimationComponent animation;
     private final PlayerInputComponent playerInput;
     private final BodyComponent body;
+
+    private final Vector2 tmpVector2 = new Vector2();
 
     public PlayerActor(ApplicationResources applicationResources, Vector2 pos) {
         super(applicationResources);
@@ -58,6 +60,17 @@ public class PlayerActor extends CommonActor {
 
     @Override
     public void act(float delta) {
+
+        getStage().getCamera().position.x = MathUtils.lerp(getStage().getCamera().position.x, getX() + (getWidth() / 2), 5 * delta);
+        getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight()*3), 5 * delta);
+
+        float newZoom = GameConstants.ZOOM
+                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
+                .sub(getX() + (getWidth() / 2), getY() + (getHeight()*3)).scl(.001f)
+                .len();
+        float lerpZoom = MathUtils.lerp(((OrthographicCamera) getStage().getCamera()).zoom, newZoom, 1 * Gdx.graphics.getDeltaTime());
+
+        ((OrthographicCamera) getStage().getCamera()).zoom = lerpZoom;
 
         if (getBodyRect().getX() != getX() || getBodyRect().getY() != getY()) {
             getBodyRect().setPosition(getX(), getY());
