@@ -8,6 +8,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.application.Rectangle;
@@ -88,8 +89,8 @@ public class CollisionListenerSystem extends EntitySystem {
 //                    tmpBodyB.getCenter(tmpVecB);
                     tmpContact.getCenter(tmpVecContact);
                     tmpVecContact.sub(tmpVecA); // calculate
-                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpVecContact.x);
-                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
+                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
+                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                     contact.setInteraction(tmpContact);
 
                     Gdx.app.log("DEBUG", "contact normal: " +   contact.getNormal());
@@ -112,8 +113,8 @@ public class CollisionListenerSystem extends EntitySystem {
 //                    tmpBodyB.getCenter(tmpVecB);
                     tmpContact.getCenter(tmpVecContact); // warning this is the old unchanged contact value from the initial contact.
                     tmpVecContact.sub(tmpVecA); // calculate
-                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpVecContact.x);
-                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
+                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
+                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                     contact.setInteraction(tmpContact);
                     Gdx.app.log("DEBUG", "non-contacted normal " +   contact.getNormal());
 
