@@ -5,6 +5,8 @@ import com.badlogic.ashley.core.Component;
 public class WarmthComponent implements Component {
 
     public static final float WARMTH_MAX = 100f;
+    public static final float WARMTH_THRESHOLD = 0f;
+    public static final float WARMTH_MIN = -1f;
     private float warmth;
     private boolean outside;
     private boolean nearHeatSource;
@@ -20,9 +22,17 @@ public class WarmthComponent implements Component {
     public float getWarmthFloat() {
         return warmth / WARMTH_MAX;
     }
+    public boolean isFrozen() {
+        return warmth < WARMTH_THRESHOLD;
+    }
 
     public void setWarmth(float warmth) {
         this.warmth = warmth;
+        if (this.warmth > WARMTH_MAX) {
+            this.warmth = WARMTH_MAX;
+        } else if (this.warmth < WARMTH_MIN) {
+            this.warmth = WARMTH_MIN;
+        }
     }
 
     public boolean isNearHeatSource() {

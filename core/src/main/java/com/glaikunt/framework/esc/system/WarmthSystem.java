@@ -2,17 +2,16 @@ package com.glaikunt.framework.esc.system;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.esc.component.common.WarmthComponent;
 
 public class WarmthSystem extends EntitySystem {
 
     private static final float DEPLETION_RATE_UNITS_PER_SECOND = 10f; // ergo - 10 seconds to depletion, right?
     private static final float INDOORS_UNITS_PER_SECOND = 5f;
-    private static final float HEATSOURCE_UNITS_PER_SECOND = 10f; // obvs indoors with a heatsource would be a+b
+    private static final float HEATSOURCE_UNITS_PER_SECOND = 15f; // obvs indoors with a heatsource would be a+b
     private final ImmutableArray<Entity> warmthEntities;
 
-    private ComponentMapper<WarmthComponent> wc = ComponentMapper.getFor(WarmthComponent.class);
+    private final ComponentMapper<WarmthComponent> wc = ComponentMapper.getFor(WarmthComponent.class);
 
     public WarmthSystem(Engine engine) {
         warmthEntities = engine.getEntitiesFor(Family.all(WarmthComponent.class).get());
