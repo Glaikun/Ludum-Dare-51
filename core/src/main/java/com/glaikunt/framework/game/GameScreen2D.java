@@ -13,6 +13,7 @@ import com.glaikunt.framework.esc.system.CameraControlsSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.esc.system.physics.AccelDecaySystem;
 import com.glaikunt.framework.esc.system.physics.CollisionListenerSystem;
+import com.glaikunt.framework.esc.system.physics.CollisionSystem;
 import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
@@ -60,6 +61,7 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new PlayerInputSystem(getEngine()));
 
         getEngine().addSystem(new CollisionListenerSystem(getEngine()));
+        getEngine().addSystem(new CollisionSystem(getEngine()));
 
         getEngine().addSystem(new PositionIterationsSystem(getEngine()));
         getEngine().addSystem(new AccelDecaySystem(getEngine()));

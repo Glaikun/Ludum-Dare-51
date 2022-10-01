@@ -28,7 +28,6 @@ public class VelocityIterationsSystem extends EntitySystem {
 
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
-    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
 
     public VelocityIterationsSystem(Engine engine) {
         entities = engine.getEntitiesFor(
@@ -45,23 +44,9 @@ public class VelocityIterationsSystem extends EntitySystem {
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
             AccelerationComponent accel = fcm.get(entity);
-            BodyComponent body = bcm.get(entity);
 
             vel.x = GameUtils.clamp(-MAX_X_V, MAX_X_V, vel.x + (accel.x * delta));
             vel.y = GameUtils.clamp(-MAX_X_V, MAX_X_V, vel.y + (accel.y * delta));
-
-            for (Map.Entry<BodyComponent, ContactComponent> e : body.getContactsByBody().entrySet()) {
-                // TODO test the normal here? e.g. x = 0 when hit the sides of a hole
-                if (e.getValue().getNormal().y < 0 || e.getValue().getNormal().y > 0) {
-                    // not falling
-                    vel.y = 0;
-
-                }
-                if (e.getValue().getNormal().x < 0 || e.getValue().getNormal().x > 0) {
-                    // not moving
-                    vel.x = 0;
-                }
-            }
         }
     }
 }

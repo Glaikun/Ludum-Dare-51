@@ -36,7 +36,7 @@ public class PlayerActor extends CommonActor {
         this.playerInput = new PlayerInputComponent();
 
         this.pos.set(pos);
-        this.size.set(animation.getCurrentFrame().getRegionWidth(), animation.getCurrentFrame().getRegionHeight());
+        this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.DYNAMIC);

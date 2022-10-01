@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
+import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 
 
@@ -26,6 +27,7 @@ public class CollisionListenerSystem extends EntitySystem {
 
     private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
+    private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
 
     private final Rectangle tmpBodyA = new Rectangle();
     private final Rectangle tmpBodyB = new Rectangle();
@@ -36,13 +38,8 @@ public class CollisionListenerSystem extends EntitySystem {
 
     public CollisionListenerSystem(Engine engine) {
         this.allBodyEntities = engine.getEntitiesFor(Family.all(BodyComponent.class).get());
-        this.bodyEntitiesWithVel = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class).get());
+        this.bodyEntitiesWithVel = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class, PositionComponent.class).get());
     }
-
-    //TODO need a before colliding code
-    //TODO need a after colliding code
-    //TODO need during colliding code
-    //TODO what side collided with maybe use Intersector.intersectRectangles(orbRect, playerRect, intersection);
 
     @Override
     public void update(float delta) {
@@ -63,6 +60,7 @@ public class CollisionListenerSystem extends EntitySystem {
             Entity entityA = bodyEntitiesWithVel.get(eiA);
             BodyComponent bodyA = bcm.get(entityA);
             VelocityComponent velA = vcm.get(entityA);
+            PositionComponent posA = pcm.get(entityA);
 
             for (int eiB = 0; eiB < allBodyEntities.size(); ++eiB) {
 
