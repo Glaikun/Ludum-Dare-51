@@ -61,10 +61,10 @@ public class PlayerActor extends CommonActor {
         }
 
         if (!getBody().getBeforeContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().get(0).getInteraction());
+            Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now" + getBody().getContactsByBody().size());
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().get(0).getInteraction());
+            Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now" + getBody().getContactsByBody().size());
         }
     }
 

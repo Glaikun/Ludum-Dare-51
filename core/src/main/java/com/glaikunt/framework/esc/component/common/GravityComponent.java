@@ -8,5 +8,6 @@ public class GravityComponent extends Vector2 implements Component {
 
     public GravityComponent() {
         this.y = PhysicConstants.GRAVITY;
+        this.x = PhysicConstants.WIND;
     }
 }

@@ -78,7 +78,7 @@ public class CollisionListenerSystem extends EntitySystem {
                 tmpBodyA.x += velA.x;
                 tmpBodyA.y += velA.y;
 
-                if (!bodyA.getBodyContacts().contains(bodyB) && Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+                if (!bodyA.getContactsByBody().containsKey(bodyB) && Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
                     ContactComponent contact = new ContactComponent();
                     contact.setBodyA(bodyA);
@@ -97,11 +97,11 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getBeforeContacts().add(contact);
                     bodyB.getBeforeContacts().add(contact);
 
-                    bodyA.getBodyContacts().add(bodyB);
-                    bodyB.getBodyContacts().add(bodyA);
-
+                    bodyA.getContactsByBody().put(bodyB, contact);
+                    bodyB.getContactsByBody().put(bodyA, contact);
                 }
-                if (bodyA.getBodyContacts().contains(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+
+                if (bodyA.getContactsByBody().containsKey(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
                     ContactComponent contact = new ContactComponent();
                     contact.setBodyA(bodyA);
@@ -120,8 +120,8 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getAfterContacts().add(contact);
                     bodyB.getAfterContacts().add(contact);
 
-                    bodyA.getBodyContacts().remove(bodyB);
-                    bodyB.getBodyContacts().remove(bodyA);
+                    bodyA.getContactsByBody().remove(bodyB);
+                    bodyB.getContactsByBody().remove(bodyA);
                 }
             }
         }

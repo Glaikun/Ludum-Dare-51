@@ -4,14 +4,16 @@ import com.badlogic.ashley.core.Component;
 import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class BodyComponent extends Rectangle implements Component {
 
+    private final Map<BodyComponent, ContactComponent> contactsByBody = new LinkedHashMap<>();
     private final List<ContactComponent> beforeContacts = new LinkedList<>();
     private final List<ContactComponent> afterContacts = new LinkedList<>();
-    private final List<BodyComponent> bodyContacts = new LinkedList<>();
     private BodyType bodyType;
 
     public List<ContactComponent> getBeforeContacts() {
@@ -22,8 +24,8 @@ public class BodyComponent extends Rectangle implements Component {
         return afterContacts;
     }
 
-    public List<BodyComponent> getBodyContacts() {
-        return bodyContacts;
+    public Map<BodyComponent, ContactComponent> getContactsByBody() {
+        return contactsByBody;
     }
 
     public BodyType getBodyType() {
