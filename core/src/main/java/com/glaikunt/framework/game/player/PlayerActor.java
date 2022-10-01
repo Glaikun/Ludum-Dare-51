@@ -80,41 +80,21 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-         if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
-            if (idleAnimation.isxFlip()) {
-                idleAnimation.setxFlip(false);
-                for (TextureRegion region : idleAnimation.getCurrentAnimation().getKeyFrames()) {
-                    region.flip(true, false);
-                }
+        if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(false);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
             }
+        } else  if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && !getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(true);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
+            }
+        }
 
+        if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
             getEntity().add(idleAnimation);
-        } else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
-            if (!idleAnimation.isxFlip()) {
-                idleAnimation.setxFlip(true);
-                for (TextureRegion region : idleAnimation.getCurrentAnimation().getKeyFrames()) {
-                    region.flip(true, false);
-                }
-            }
-
-            getEntity().add(idleAnimation);
-        }else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
-            if (runningAnimation.isxFlip()) {
-                runningAnimation.setxFlip(false);
-                for (TextureRegion region : runningAnimation.getCurrentAnimation().getKeyFrames()) {
-                    region.flip(true, false);
-                }
-            }
-
-            getEntity().add(runningAnimation);
-        } else if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
-            if (!runningAnimation.isxFlip()) {
-                runningAnimation.setxFlip(true);
-                for (TextureRegion region : runningAnimation.getCurrentAnimation().getKeyFrames()) {
-                    region.flip(true, false);
-                }
-            }
-
+        } else if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
             getEntity().add(runningAnimation);
         }
 
@@ -136,7 +116,7 @@ public class PlayerActor extends CommonActor {
 
     private void cameraUpdate(float delta) {
         getStage().getCamera().position.x = MathUtils.lerp(getStage().getCamera().position.x, getX() + (getWidth() / 2), 5 * delta);
-        getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight()*3), 5 * delta);
+        getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight() * 3), 5 * delta);
 
 //        float newZoom = GameConstants.ZOOM
 //                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
