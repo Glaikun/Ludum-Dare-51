@@ -1,5 +1,6 @@
 package com.glaikunt.framework.application;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.glaikunt.framework.esc.component.common.PositionComponent;
@@ -18,6 +19,9 @@ public abstract class CommonActor extends Actor {
         this.entity = new Entity();
         this.pos = new PositionComponent(0, 0);
         this.size = new SizeComponent(0, 0);
+        getEntity().add(pos);
+        getEntity().add(size);
+        getEngine().addEntity(getEntity());
     }
 
     public ApplicationResources getApplicationResources() {
@@ -46,6 +50,10 @@ public abstract class CommonActor extends Actor {
 
     public Entity getEntity() {
         return entity;
+    }
+
+    public Engine getEngine() {
+        return getApplicationResources().getEngine();
     }
 
     @Override

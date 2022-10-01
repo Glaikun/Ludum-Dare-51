@@ -61,7 +61,6 @@ public class LogoActor extends CommonActor {
 
         this.entity.add(fade);
         this.entity.add(logo);
-        getApplicationResources().getEngine().addEntity(entity);
     }
 
     @Override

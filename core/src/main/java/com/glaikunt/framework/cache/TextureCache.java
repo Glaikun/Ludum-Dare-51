@@ -14,9 +14,14 @@ public class TextureCache implements Cache {
     public static final String PIXEL = "tmp/pixel.png";
 //   ################## EXAMPLE ##################
 
-//   ################## EXAMPLE ##################
+    //   ################## SPRITE TILES ##################
     public static final String SPRITESHEET = "spritesheet/spritesheet.png";
-//   ################## EXAMPLE ##################
+//    public static final Pair<Integer, Integer> SPRITESHEER = Pair.of(0, 0);
+    //   ################## SPRITE TILES ##################
+
+//   ################## PLAYER ##################
+    public static final String PLAYER = "player/player.png";
+//   ################## PLAYER ##################
 
     private Map<String, Texture> textureMap = new HashMap<>();
     private Map<String, TextureRegion[][]> textureRegionMap = new HashMap<>();
@@ -25,7 +30,7 @@ public class TextureCache implements Cache {
     @Override
     public void loadCache(AssetManager assetManager) {
 
-        add(assetManager, PIXEL, SPRITESHEET);
+        add(assetManager, PIXEL, SPRITESHEET, PLAYER);
     }
 
     @Override

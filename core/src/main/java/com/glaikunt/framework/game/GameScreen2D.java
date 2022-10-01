@@ -10,6 +10,7 @@ import com.glaikunt.framework.application.Screen;
 import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.CameraControlsSystem;
+import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.game.map.DebugLevel;
 
 public class GameScreen2D extends Screen {
@@ -33,15 +34,16 @@ public class GameScreen2D extends Screen {
         getApplicationResources().getGlobalEntity().add(gravityComponent);
 
         CameraControlsComponent cameraControls = new CameraControlsComponent();
-        cameraControls.setEnableMovement(true);
+        cameraControls.setEnableMovement(false);
         cameraControls.setEnableZoom(true);
         cameraControls.getCameras().add((OrthographicCamera) getFront().getCamera());
         getApplicationResources().getImmutableGameEntity().add(cameraControls);
         getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
 
-        getFront().addActor(new DebugLevel(getApplicationResources()));
+        getFront().addActor(new DebugLevel(getApplicationResources(), getFront()));
 
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
+        getEngine().addSystem(new PlayerInputSystem(getEngine()));
     }
 
     @Override

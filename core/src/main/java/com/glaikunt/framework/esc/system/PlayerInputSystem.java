@@ -67,7 +67,7 @@ public class PlayerInputSystem extends EntitySystem {
                 continue;
             }
 
-            float speed = 0;
+            float speed = vel.x;
             if (input.isSprinting()) {
                 speed = vel.getSprintSpeed();
             }
@@ -88,18 +88,18 @@ public class PlayerInputSystem extends EntitySystem {
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             }
-            if (input.isMovingUp()) {
-                pos.y += speed;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
-                input.setFacing(AbstractPlayerInputComponent.Direction.UP);
-            }
-            if (input.isMovingDown()) {
-                pos.y -= speed;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
-                input.setFacing(AbstractPlayerInputComponent.Direction.DOWN);
-            }
+//            if (input.isMovingUp()) {
+//                pos.y += speed;
+//                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
+//                input.setFacing(AbstractPlayerInputComponent.Direction.UP);
+//            }
+//            if (input.isMovingDown()) {
+//                pos.y -= speed;
+//                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
+//                input.setFacing(AbstractPlayerInputComponent.Direction.DOWN);
+//            }
 
-            playerAnimation.setCurrentAnimationId(getTextureKey(input.getAnimation(), input.getFacing()));
+//            playerAnimation.setCurrentAnimationId(getTextureKey(input.getAnimation(), input.getFacing()));
         }
     }
 
