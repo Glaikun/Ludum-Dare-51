@@ -50,8 +50,10 @@ public class GameScreen2D extends Screen {
         // ########### Physics [Order Maters] ###########
         getEngine().addSystem(new GravitySystem(getEngine()));
         getEngine().addSystem(new VelocityIterationsSystem(getEngine()));
-        getEngine().addSystem(new CollisionListenerSystem(getEngine()));
         getEngine().addSystem(new PlayerInputSystem(getEngine()));
+
+        getEngine().addSystem(new CollisionListenerSystem(getEngine()));
+
         getEngine().addSystem(new PositionIterationsSystem(getEngine()));
         getEngine().addSystem(new AccelDecaySystem(getEngine()));
         // ########### Physics [Order Maters] ###########
