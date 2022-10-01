@@ -21,6 +21,7 @@ import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.DebugLevel;
 import com.glaikunt.framework.game.map.Level;
+import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
 
@@ -61,6 +62,8 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
         getEngine().addSystem(new WarmthSystem(getEngine()));
         getEngine().addSystem(new AnimationSystem(getEngine()));
+
+        getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
     }
 
     @Override
@@ -81,7 +84,7 @@ public class GameScreen2D extends Screen {
     @Override
     public void render2D() {
 
-        Gdx.gl.glClearColor(FrameworkConstants.LIGHT_BLACK.r, FrameworkConstants.LIGHT_BLACK.g, FrameworkConstants.LIGHT_BLACK.b, 1f);
+        Gdx.gl.glClearColor(FrameworkConstants.DARK_BLUE.r, FrameworkConstants.DARK_BLUE.g, FrameworkConstants.DARK_BLUE.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         getBackground().draw();

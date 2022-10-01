@@ -138,11 +138,11 @@ public class PlayerActor extends CommonActor {
         getStage().getCamera().position.x = MathUtils.lerp(getStage().getCamera().position.x, getX() + (getWidth() / 2), 5 * delta);
         getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight()*3), 5 * delta);
 
-        float newZoom = GameConstants.ZOOM
-                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
-                .sub(getX() + (getWidth() / 2), getY() + (getHeight()*3)).scl(.001f)
-                .len();
-        ((OrthographicCamera) getStage().getCamera()).zoom = MathUtils.lerp(((OrthographicCamera) getStage().getCamera()).zoom, newZoom, 1 * Gdx.graphics.getDeltaTime());
+//        float newZoom = GameConstants.ZOOM
+//                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
+//                .sub(getX() + (getWidth() / 2), getY() + (getHeight()*3)).scl(.001f)
+//                .len();
+//        ((OrthographicCamera) getStage().getCamera()).zoom = MathUtils.lerp(((OrthographicCamera) getStage().getCamera()).zoom, newZoom, 1 * Gdx.graphics.getDeltaTime());
     }
 
     @Override
