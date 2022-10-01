@@ -6,12 +6,20 @@ import com.glaikunt.framework.application.Rectangle;
 
 public class ContactComponent implements Component {
 
-    private final Rectangle interaction = new Rectangle();
     private final Vector2 normal = new Vector2();
+    private Rectangle interaction;
     private Rectangle bodyA, bodyB;
 
     public Rectangle getInteraction() {
         return interaction;
+    }
+
+    public void setInteraction(Rectangle interaction) {
+        this.interaction = interaction;
+    }
+
+    public Vector2 getNormal() {
+        return normal;
     }
 
     public Rectangle getBodyA() {

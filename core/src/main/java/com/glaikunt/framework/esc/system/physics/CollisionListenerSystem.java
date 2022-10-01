@@ -7,6 +7,8 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
+import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
@@ -25,6 +27,9 @@ public class CollisionListenerSystem extends EntitySystem {
 
     private final Rectangle tmpBodyA = new Rectangle();
     private final Rectangle tmpBodyB = new Rectangle();
+    private final Rectangle tmpContact = new Rectangle();
+    private final Vector2 vecA = new Vector2();
+    private final Vector2 vecB = new Vector2();
 
     public CollisionListenerSystem(Engine engine) {
         this.allBodyEntities = engine.getEntitiesFor(Family.all(BodyComponent.class).get());
@@ -71,12 +76,14 @@ public class CollisionListenerSystem extends EntitySystem {
                 tmpBodyA.x += velA.x;
                 tmpBodyA.y += velA.y;
 
-                if (!bodyA.getBodyContacts().contains(bodyB) && tmpBodyA.intersects(tmpBodyB)) {
+                if (!bodyA.getBodyContacts().contains(bodyB) && Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
                     ContactComponent contact = new ContactComponent();
-                    Intersector.intersectRectangles(tmpBodyA, tmpBodyB, contact.getInteraction());
                     contact.setBodyA(bodyA);
                     contact.setBodyB(bodyB);
+
+                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpContact.getCenter(vecA).x);
+                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpContact.getCenter(vecA).y);
 
                     bodyA.getBeforeContacts().add(contact);
                     bodyB.getBeforeContacts().add(contact);
@@ -84,10 +91,9 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getBodyContacts().add(bodyB);
                     bodyB.getBodyContacts().add(bodyA);
 
-                } if (bodyA.getBodyContacts().contains(bodyB) && !tmpBodyA.intersects(tmpBodyB)) {
+                } if (bodyA.getBodyContacts().contains(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
                     ContactComponent contact = new ContactComponent();
-                    Intersector.intersectRectangles(tmpBodyA, tmpBodyB, contact.getInteraction());
                     contact.setBodyA(bodyA);
                     contact.setBodyB(bodyB);
 
