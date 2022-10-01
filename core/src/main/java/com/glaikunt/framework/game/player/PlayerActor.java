@@ -61,16 +61,7 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        getStage().getCamera().position.x = MathUtils.lerp(getStage().getCamera().position.x, getX() + (getWidth() / 2), 5 * delta);
-        getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight()*3), 5 * delta);
-
-        float newZoom = GameConstants.ZOOM
-                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
-                .sub(getX() + (getWidth() / 2), getY() + (getHeight()*3)).scl(.001f)
-                .len();
-        float lerpZoom = MathUtils.lerp(((OrthographicCamera) getStage().getCamera()).zoom, newZoom, 1 * Gdx.graphics.getDeltaTime());
-
-        ((OrthographicCamera) getStage().getCamera()).zoom = lerpZoom;
+        cameraUpdate(delta);
 
         if (getBodyRect().getX() != getX() || getBodyRect().getY() != getY()) {
             getBodyRect().setPosition(getX(), getY());
@@ -82,6 +73,17 @@ public class PlayerActor extends CommonActor {
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
+    }
+
+    private void cameraUpdate(float delta) {
+        getStage().getCamera().position.x = MathUtils.lerp(getStage().getCamera().position.x, getX() + (getWidth() / 2), 5 * delta);
+        getStage().getCamera().position.y = MathUtils.lerp(getStage().getCamera().position.y, (getY()) + (getHeight()*3), 5 * delta);
+
+        float newZoom = GameConstants.ZOOM
+                + tmpVector2.set(getStage().getCamera().position.x, getStage().getCamera().position.y)
+                .sub(getX() + (getWidth() / 2), getY() + (getHeight()*3)).scl(.001f)
+                .len();
+        ((OrthographicCamera) getStage().getCamera()).zoom = MathUtils.lerp(((OrthographicCamera) getStage().getCamera()).zoom, newZoom, 1 * Gdx.graphics.getDeltaTime());
     }
 
     @Override
