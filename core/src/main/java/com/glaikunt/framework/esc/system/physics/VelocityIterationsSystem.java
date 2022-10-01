@@ -39,8 +39,11 @@ public class VelocityIterationsSystem extends EntitySystem {
             AccelerationComponent accel = fcm.get(entity);
 
             vel.x += accel.x * delta;
-            if (Math.abs(vel.x) > MAX_X_V) {
+            if (vel.x > MAX_X_V) {
                 vel.x = MAX_X_V;
+            }
+            if (vel.x < -MAX_X_V) {
+                vel.x = -MAX_X_V;
             }
             vel.y += accel.y * delta;
         }
