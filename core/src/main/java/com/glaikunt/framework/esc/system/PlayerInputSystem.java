@@ -29,6 +29,8 @@ public class PlayerInputSystem extends EntitySystem {
     private final ComponentMapper<VelocityComponent> vc = ComponentMapper.getFor(VelocityComponent.class);
     private final ComponentMapper<PlayerInputComponent> pic = ComponentMapper.getFor(PlayerInputComponent.class);
 
+    //TODO Jumping State
+
     public PlayerInputSystem(Engine engine) {
         animationEntities = engine.getEntitiesFor(
                 Family
@@ -88,6 +90,8 @@ public class PlayerInputSystem extends EntitySystem {
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             }
+
+
 //            if (input.isMovingUp()) {
 //                pos.y += speed;
 //                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
