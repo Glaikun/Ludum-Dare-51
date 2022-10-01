@@ -24,6 +24,7 @@ public class PositionIterationsSystem extends EntitySystem {
 
     private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
     private ComponentMapper<PositionComponent> pcm = ComponentMapper.getFor(PositionComponent.class);
+    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
 
     public PositionIterationsSystem(Engine engine) {
         entities = engine.getEntitiesFor(
@@ -40,9 +41,13 @@ public class PositionIterationsSystem extends EntitySystem {
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
             PositionComponent pos = pcm.get(entity);
+            BodyComponent body = bcm.get(entity);
 
             pos.x += vel.x;
             pos.y += vel.y;
+
+            body.x = pos.x;
+            body.y = pos.y;
         }
     }
 }

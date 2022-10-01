@@ -16,7 +16,7 @@ import com.glaikunt.framework.esc.system.physics.BodyComponent;
 public class PlayerInputSystem extends EntitySystem {
 
     private static final float LATERAL_ACCELERATION = 50f;
-    private static final float JUMPING_ACCELERATION = 20f;
+    private static final float JUMPING_ACCELERATION = 75;
     private final ImmutableArray<Entity> animationEntities;
 
     private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);

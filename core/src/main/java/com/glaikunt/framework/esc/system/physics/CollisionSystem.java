@@ -48,12 +48,15 @@ public class CollisionSystem extends EntitySystem {
                     continue;
                 }
                 ContactComponent contact = entry.getValue();
-                if (contact.getNormal().y < 0 || contact.getNormal().y > 0) {
+                if (contact.getNormal().y < 0 && vel.y < 0) {
+                    acces.y = 0;
+                    vel.y = 0;
+                } else if (contact.getNormal().y > 0 && vel.y > 0) {
                     acces.y = 0;
                     vel.y = 0;
                 }
+
                 if (contact.getNormal().x < 0 || contact.getNormal().x > 0) {
-                    acces.x = 0;
                     vel.x = 0;
                 }
             }

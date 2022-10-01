@@ -48,7 +48,7 @@ public class CollisionListenerSystem extends EntitySystem {
             Entity entityB = allBodyEntities.get(eiB);
             BodyComponent body = bcm.get(entityB);
 
-            if (body.getAfterContacts().isEmpty() || body.getBeforeContacts().isEmpty()) {
+            if (!body.getAfterContacts().isEmpty() || !body.getBeforeContacts().isEmpty()) {
                 body.getAfterContacts().clear();
                 body.getBeforeContacts().clear();
             }
@@ -87,50 +87,29 @@ public class CollisionListenerSystem extends EntitySystem {
                     tmpVecContact.sub(tmpVecA); // calculate
                     if (MathUtils.floor(tmpVecContact.x) != 0 && MathUtils.floor(tmpVecContact.y) != 0) {
 
-                        if (Math.abs(MathUtils.floor(tmpVecContact.x)) > Math.abs(MathUtils.floor(tmpVecContact.y))) {
+                        if (Math.abs(tmpVecContact.x) > Math.abs(tmpVecContact.y)) {
                             contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                             contact.getNormal().y = 0;
+                            Gdx.app.log("DEBUG", "x contact normal: " + contact.getNormal());
                         } else {
                             contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                             contact.getNormal().x = 0;
+                            Gdx.app.log("DEBUG", "y contact normal: " + contact.getNormal());
                         }
                     } else {
                         contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                         contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
+                        Gdx.app.log("DEBUG", "x & y contact normal: " + contact.getNormal());
                     }
                     contact.setInteraction(tmpContact);
 
-                    Gdx.app.log("DEBUG", "contact normal: " +   contact.getNormal());
-
                     bodyA.getBeforeContacts().add(contact);
-                    bodyB.getBeforeContacts().add(contact);
-
                     bodyA.getContactsByBody().put(bodyB, contact);
-                    bodyB.getContactsByBody().put(bodyA, contact);
                 }
 
                 if (bodyA.getContactsByBody().containsKey(bodyB) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
 
-                    ContactComponent contact = new ContactComponent();
-                    contact.setBodyA(bodyA);
-                    contact.setBodyB(bodyB);
-
-
-                    tmpBodyA.getCenter(tmpVecA);
-//                    tmpBodyB.getCenter(tmpVecB);
-                    tmpContact.getCenter(tmpVecContact); // warning this is the old unchanged contact value from the initial contact.
-                    tmpVecContact.sub(tmpVecA); // calculate
-//                    contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
-//                    contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
-                    contact.setInteraction(tmpContact);
-                    Gdx.app.log("DEBUG", "non-contacted normal " +   contact.getNormal());
-
-
-                    bodyA.getAfterContacts().add(contact);
-                    bodyB.getAfterContacts().add(contact);
-
                     bodyA.getContactsByBody().remove(bodyB);
-                    bodyB.getContactsByBody().remove(bodyA);
                 }
             }
         }

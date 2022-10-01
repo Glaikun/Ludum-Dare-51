@@ -12,12 +12,16 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.GameConstants;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PlayerActor extends CommonActor {
 
@@ -63,15 +67,17 @@ public class PlayerActor extends CommonActor {
 
         cameraUpdate(delta);
 
-        if (getBodyRect().getX() != getX() || getBodyRect().getY() != getY()) {
-            getBodyRect().setPosition(getX(), getY());
-        }
-
         if (!getBody().getBeforeContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            List<Vector2> collect = getBody().getBeforeContacts().stream().map(ContactComponent::getNormal)
+                    .collect(Collectors.toList());
+            Gdx.app.log("DEBUG", "Before Collide normal mappings: " + collect);
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            List<Vector2> collect = getBody().getAfterContacts().stream().map(ContactComponent::getNormal)
+                    .collect(Collectors.toList());
+            Gdx.app.log("DEBUG", "After Collide normal mappings: " + collect);
         }
     }
 
