@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
-import com.glaikunt.framework.application.Rectangle;
+
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.*;

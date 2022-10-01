@@ -24,4 +24,14 @@ public class Rectangle extends com.badlogic.gdx.math.Rectangle {
                 (tw < tx || tw > rx) &&
                 (th < ty || th > ry));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

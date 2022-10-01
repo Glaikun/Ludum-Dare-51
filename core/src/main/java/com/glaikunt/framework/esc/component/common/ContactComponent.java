@@ -1,9 +1,11 @@
 package com.glaikunt.framework.esc.component.common;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+
+import java.util.Objects;
 
 public class ContactComponent implements Component {
 
@@ -55,5 +57,17 @@ public class ContactComponent implements Component {
 
     public void setBodyBType(BodyType bodyBType) {
         this.bodyBType = bodyBType;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactComponent{" +
+                "interaction=" + interaction +
+                ", normal=" + normal +
+                ", bodyA=" + bodyA +
+                ", bodyB=" + bodyB +
+                ", bodyAType=" + bodyAType +
+                ", bodyBType=" + bodyBType +
+                '}';
     }
 }

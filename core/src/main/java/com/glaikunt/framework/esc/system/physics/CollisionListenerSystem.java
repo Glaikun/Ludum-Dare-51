@@ -23,10 +23,11 @@ import com.glaikunt.framework.esc.component.common.VelocityComponent;
  */
 public class CollisionListenerSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> allBodyEntities, bodyEntitiesWithVel;
+    private final ImmutableArray<Entity> allBodyEntities;
+    private final ImmutableArray<Entity> bodyEntitiesWithVel;
 
-    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
-    private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
+    private final ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
 
     private final Rectangle tmpBodyA = new Rectangle();
     private final Rectangle tmpBodyB = new Rectangle();
@@ -43,7 +44,7 @@ public class CollisionListenerSystem extends EntitySystem {
     @Override
     public void update(float delta) {
 
-        for (int eiB = 0; eiB < allBodyEntities.size(); ++eiB) {
+        for (int eiB = 0; eiB < allBodyEntities.size(); eiB++) {
 
             Entity entityB = allBodyEntities.get(eiB);
             BodyComponent body = bcm.get(entityB);
@@ -54,18 +55,18 @@ public class CollisionListenerSystem extends EntitySystem {
             }
         }
 
-        for (int eiA = 0; eiA < bodyEntitiesWithVel.size(); ++eiA) {
+        for (int eiA = 0; eiA < bodyEntitiesWithVel.size(); eiA++) {
 
             Entity entityA = bodyEntitiesWithVel.get(eiA);
             BodyComponent bodyA = bcm.get(entityA);
             VelocityComponent velA = vcm.get(entityA);
 
-            for (int eiB = 0; eiB < allBodyEntities.size(); ++eiB) {
+            for (int eiB = 0; eiB < allBodyEntities.size(); eiB++) {
 
                 Entity entityB = allBodyEntities.get(eiB);
                 BodyComponent bodyB = bcm.get(entityB);
 
-                if (bodyA.equals(bodyB)) {
+                if (bodyA == bodyB) {
                     continue;
                 }
 
@@ -92,30 +93,32 @@ public class CollisionListenerSystem extends EntitySystem {
                         if (Math.abs(tmpVecContact.x) > Math.abs(tmpVecContact.y)) {
                             contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                             contact.getNormal().y = 0;
-                            Gdx.app.log("DEBUG", "x contact normal: " + contact.getNormal());
+                            Gdx.app.log("DEBUG", bodyA.getBodyType()+" x contact normal: " + contact.getNormal());
                         } else {
                             contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                             contact.getNormal().x = 0;
-                            Gdx.app.log("DEBUG", "y contact normal: " + contact.getNormal());
+                            Gdx.app.log("DEBUG", bodyA.getBodyType()+" y contact normal: " + contact.getNormal());
                         }
                     } else {
                         contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                         contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
-                        Gdx.app.log("DEBUG", "x & y contact normal: " + contact.getNormal());
+                        Gdx.app.log("DEBUG", bodyA.getBodyType()+" x & y contact normal: " + contact.getNormal());
                     }
                     contact.setInteraction(tmpContact);
 
                     bodyA.getBeforeContacts().add(contact);
+
+//                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" putting ContactsByBody with "+bodyB.getBodyType()+" "+bodyB+" => "+contact);
                     bodyA.getContactsByBody().put(bodyB, contact);
                 }
 
-                if (!Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
-                    if (bodyA.getContactsByBody().containsKey(bodyB)) {
+                if ((bodyA.getContactsByBody().containsKey(bodyB) || bodyB.getContactsByBody().containsKey(bodyA)) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+//                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" remove from contactsByBody["+bodyA.getContactsByBody().size()+"] " +bodyB.getBodyType()+"? "+bodyA.getContactsByBody().remove(bodyB));
+//                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" now contactsByBody["+bodyA.getContactsByBody().size()+"] ");
+//                    Gdx.app.log("DEBUG", bodyB.getBodyType()+" remove from contactsByBody["+bodyB.getContactsByBody().size()+"] " +bodyA.getBodyType()+"? "+bodyB.getContactsByBody().remove(bodyA));
+//                    Gdx.app.log("DEBUG", bodyB.getBodyType()+" now contactsByBody["+bodyB.getContactsByBody().size()+"] ");
                         bodyA.getContactsByBody().remove(bodyB);
-                    }
-                    if (bodyB.getContactsByBody().containsKey(bodyA)) {
                         bodyB.getContactsByBody().remove(bodyA);
-                    }
                 }
             }
         }

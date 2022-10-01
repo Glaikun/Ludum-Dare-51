@@ -21,12 +21,12 @@ import java.util.Map;
  */
 public class CollisionSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
-    private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
-    private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
+    private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
+    private final ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
+    private final ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
 
     public CollisionSystem(Engine engine) {
         this.entities = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class, AccelerationComponent.class).get());
@@ -40,7 +40,7 @@ public class CollisionSystem extends EntitySystem {
             Entity entity = entities.get(e);
             BodyComponent body = bcm.get(entity);
             VelocityComponent vel = vcm.get(entity);
-            AccelerationComponent acces = acm.get(entity);
+            AccelerationComponent accel = acm.get(entity);
             WarmthComponent warmth = wcm.get(entity);
             if (warmth != null) {
                 warmth.setOutside(true); // default until detected otherwise
@@ -50,7 +50,9 @@ public class CollisionSystem extends EntitySystem {
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 
                 BodyComponent key = entry.getKey();
-                if (key.getBodyType() == BodyType.CHECKPOINT) {
+                if (key.getBodyType() == BodyType.ENEMY) {
+                    continue;
+                } else if (key.getBodyType() == BodyType.CHECKPOINT) {
                     Gdx.app.log("DEBUG", "CHECKPOINT!!!");
                     continue;
                 } else if (key.getBodyType() == BodyType.INDOORS) {
@@ -66,10 +68,10 @@ public class CollisionSystem extends EntitySystem {
                 }
                 ContactComponent contact = entry.getValue();
                 if (contact.getNormal().y < 0 && vel.y < 0) {
-                    acces.y = 0;
+                    accel.y = 0;
                     vel.y = 0;
                 } else if (contact.getNormal().y > 0 && vel.y > 0) {
-                    acces.y = 0;
+                    accel.y = 0;
                     vel.y = 0;
                 }
 

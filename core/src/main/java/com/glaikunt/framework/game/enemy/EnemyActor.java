@@ -3,17 +3,21 @@ package com.glaikunt.framework.game.enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
-import com.glaikunt.framework.application.Rectangle;
+
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+
+import java.util.Map;
 
 public class EnemyActor extends CommonActor {
 
@@ -35,7 +39,7 @@ public class EnemyActor extends CommonActor {
         this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
 
         this.body = new BodyComponent();
-        this.body.setBodyType(BodyType.DYNAMIC);
+        this.body.setBodyType(BodyType.ENEMY);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
         getEntity().add(acceleration);
@@ -56,6 +60,14 @@ public class EnemyActor extends CommonActor {
 
         if (!getBody().getBeforeContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+//
+//            int c = 0;
+//            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
+//                BodyComponent key = entry.getKey();
+//                ContactComponent contact = entry.getValue();
+//                Gdx.app.log("DEBUG", "[E] "+c+" "+key+" => "+contact);
+//                        c++;
+//            }
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
