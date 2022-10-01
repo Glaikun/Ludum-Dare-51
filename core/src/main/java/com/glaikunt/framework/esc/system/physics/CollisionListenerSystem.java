@@ -90,8 +90,9 @@ public class CollisionListenerSystem extends EntitySystem {
                     tmpVecContact.sub(tmpVecA); // calculate
                     contact.getNormal().x = GameUtils.clamp(-1, 1, tmpVecContact.x);
                     contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
+                    contact.setInteraction(tmpContact);
 
-                    Gdx.app.log("DEBUG", "subtracted vec: " +   contact.getNormal());
+                    Gdx.app.log("DEBUG", "contact normal: " +   contact.getNormal());
 
                     bodyA.getBeforeContacts().add(contact);
                     bodyB.getBeforeContacts().add(contact);
@@ -106,6 +107,16 @@ public class CollisionListenerSystem extends EntitySystem {
                     contact.setBodyA(bodyA);
                     contact.setBodyB(bodyB);
 
+
+                    tmpBodyA.getCenter(tmpVecA);
+//                    tmpBodyB.getCenter(tmpVecB);
+                    tmpContact.getCenter(tmpVecContact); // warning this is the old unchanged contact value from the initial contact.
+                    tmpVecContact.sub(tmpVecA); // calculate
+                    contact.getNormal().x = GameUtils.clamp(-1, 1, tmpVecContact.x);
+                    contact.getNormal().y = GameUtils.clamp(-1, 1, tmpVecContact.y);
+                    contact.setInteraction(tmpContact);
+                    Gdx.app.log("DEBUG", "non-contacted normal " +   contact.getNormal());
+
                     bodyA.getAfterContacts().add(contact);
                     bodyB.getAfterContacts().add(contact);
 
@@ -116,3 +127,4 @@ public class CollisionListenerSystem extends EntitySystem {
         }
     }
 }
+
