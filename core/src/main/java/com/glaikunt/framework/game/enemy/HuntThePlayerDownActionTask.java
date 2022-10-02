@@ -50,7 +50,7 @@ public class HuntThePlayerDownActionTask extends AbstractLeafTask {
                 ic.setRight(false);
             }
             System.out.println( Ansi.red("  |- ")+Ansi.purple("dir: ")+Ansi.yellow(tmpVector2b.toString())+Ansi.green(" Status.SUCCEEDED"));
-            return Status.FAILED;
+            return Status.SUCCEEDED;
         } else {
             System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
             return Status.FAILED;

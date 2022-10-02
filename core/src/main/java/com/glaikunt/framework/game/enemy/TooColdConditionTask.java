@@ -14,7 +14,8 @@ public class TooColdConditionTask extends AbstractLeafTask {
     @Override
     public Status execute() {
         System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute TooColdConditionTask [")+Ansi.green(warmth.toString())+Ansi.yellow("]"));
-        if (warmth.isFrozen() || warmth.getWarmthFloat() < 0.9f) {
+        if (warmth.isFrozen() || warmth.getWarmthFloat() < 0.5f) {
+            System.out.println( Ansi.red("  |- ")+Ansi.cyan("** CHILLY **"));
             System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;
         } else {

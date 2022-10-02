@@ -1,6 +1,7 @@
 package com.glaikunt.framework.esc.component.movement;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.glaikunt.framework.Ansi;
 
 import static com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent.Animation.IDLE;
 
@@ -76,14 +77,17 @@ public class EnemyInputComponent extends AbstractPlayerInputComponent {
     }
 
     public void setLeft(boolean left) {
+        if (left) System.out.println(Ansi.cyan("<< STEP LEFT"));
         this.left = left;
     }
 
     public void setRight(boolean right) {
+        if (right) System.out.println(Ansi.cyan(">> STEP RIGHT"));
         this.right = right;
     }
 
     public void setJump(boolean jump) {
+        if (jump) System.out.println(Ansi.cyan("^^ JUMP"));
         this.jump = jump;
     }
 }
