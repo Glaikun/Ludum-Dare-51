@@ -27,15 +27,17 @@ public class TextureCache implements Cache {
 
     public static final String ENEMY = "enemy/enemy.png";
     public static final String HEATSOURCE = "heatsource/heatsource.png";
+    public static final String BREAKABLE_DEBUG = "breakable/breakable-debug.png";
 
-    private Map<String, Texture> textureMap = new HashMap<>();
-    private Map<String, TextureRegion[][]> textureRegionMap = new HashMap<>();
+    private final Map<String, Texture> textureMap = new HashMap<>();
+    private final Map<String, TextureRegion[][]> textureRegionMap = new HashMap<>();
     private boolean loaded = false;
 
     @Override
     public void loadCache(AssetManager assetManager) {
 
-        add(assetManager, PIXEL, SPRITESHEET, PLAYER, ENEMY, HEATSOURCE);
+        add(assetManager, PIXEL, SPRITESHEET, PLAYER, ENEMY);
+        add(assetManager, HEATSOURCE, BREAKABLE_DEBUG);
         add(assetManager, IDLE_PLAYER, RUNNING_PLAYER);
     }
 

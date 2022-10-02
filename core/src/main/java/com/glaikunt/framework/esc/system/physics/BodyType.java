@@ -9,5 +9,6 @@ public enum BodyType {
     HEATSOURCE,
     ENEMY,
     PLAYER,
-    BLOCK
+    BLOCK,
+    BREAKABLE
 }

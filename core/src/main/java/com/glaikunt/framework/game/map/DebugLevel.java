@@ -1,5 +1,6 @@
 package com.glaikunt.framework.game.map;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -18,8 +19,6 @@ import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
 import com.glaikunt.framework.game.player.PlayerActor;
 
-import java.io.Reader;
-
 public class DebugLevel extends CommonActor implements Level {
 
     private final OrthogonalTiledMapRenderer renderer;
@@ -28,6 +27,7 @@ public class DebugLevel extends CommonActor implements Level {
     private PlayerActor player;
     private final Array<EnemyActor> enemies = new Array<>();
     private final Array<HeatSourceActor> heatSources = new Array<>();
+    private final Array<BreakableActor> breakables = new Array<>();
 
     public DebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
@@ -35,6 +35,8 @@ public class DebugLevel extends CommonActor implements Level {
         TiledMap map = applicationResources.getTiledMap(TiledCache.SOMETHING);
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
+
+        // Order here will also drive order actors are added to 'front' stage remember.
 
         createPlatforms(applicationResources, front, map);
 
@@ -48,10 +50,11 @@ public class DebugLevel extends CommonActor implements Level {
         createHeatSources(applicationResources, front, map);
 
 
-        createPlayer(applicationResources, front, map);
+        createBreakables(applicationResources, front, map);
 
 
-        createEnemies(applicationResources, front, map);
+        createPlayer(applicationResources, front, map); // player before enemies
+        createEnemies(applicationResources, front, map); // player before enemies
     }
 
     private void createPlayer(ApplicationResources applicationResources, Stage front, TiledMap map) {
@@ -132,6 +135,23 @@ public class DebugLevel extends CommonActor implements Level {
         }
     }
 
+    private void createBreakables(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        TiledMapTileLayer items = (TiledMapTileLayer) map.getLayers().get("Breakable");
+        for (int y = items.getHeight(); y >= 0; y--) {
+            float yPos = (y * items.getTileHeight());
+            for (int x = 0; x < items.getWidth(); x++) {
+                float xPos = (x * items.getTileWidth());
+
+                TiledMapTileLayer.Cell startCell = items.getCell(x, y);
+                if (startCell != null) {
+                    BreakableActor breakable = new BreakableActor(applicationResources, new Vector2(xPos, yPos));
+                    breakables.add(breakable);
+                    front.addActor(breakable);
+                }
+            }
+        }
+    }
+
     private void createHeatSources(ApplicationResources applicationResources, Stage front, TiledMap map) {
         TiledMapTileLayer heatsources = (TiledMapTileLayer) map.getLayers().get("Heatsource");
         for (int y = heatsources.getHeight(); y >= 0; y--) {
@@ -188,5 +208,23 @@ public class DebugLevel extends CommonActor implements Level {
 
     public Array<HeatSourceActor> getHeatSources() {
         return heatSources;
+    }
+
+    public Array<BreakableActor> getBreakables() {
+        return breakables;
+    }
+
+    public void removeBreakable(Entity entity) {
+        BreakableActor match = null;
+        for (BreakableActor b : breakables) {
+            if (b.getEntity() == entity) {
+                match = b;
+                break;
+            }
+        }
+        if (match != null) {
+            match.remove();
+            breakables.removeValue(match, true);
+        }
     }
 }

@@ -26,6 +26,10 @@ public class BehaviourFactory {
      */
     private static Task<Entity> defensiveBehaviour(Entity entity) {
 
+        Sequence<Entity> breakObstaclesSequence = new Sequence<>(
+                new IsBreakableDirectlyBlockingPathConditionTask(entity),
+                new AttackBreakableActionTask(entity)
+        );
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),
                 new MoveToNearestHeatSourceActionTask(entity)
@@ -36,7 +40,7 @@ public class BehaviourFactory {
                 new AttackPlayerHoldingGroundActionTask(entity)
         );
 
-        return new Selector<>(findHeatSourceSequence, defensiveAttackSequence);
+        return new Selector<>(breakObstaclesSequence, findHeatSourceSequence, defensiveAttackSequence);
     }
 
     /**
@@ -47,6 +51,10 @@ public class BehaviourFactory {
      * @return
      */
     private static Task<Entity> passiveBehaviour(Entity entity) {
+        Sequence<Entity> breakObstaclesSequence = new Sequence<>(
+                new IsBreakableDirectlyBlockingPathConditionTask(entity),
+                new AttackBreakableActionTask(entity)
+        );
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),
                 new MoveToNearestHeatSourceActionTask(entity)
@@ -61,7 +69,7 @@ public class BehaviourFactory {
                 new AttackPlayerActionTask(entity)
         );
 
-        return new Selector<>(findHeatSourceSequence, wanderIfWarmSequence, attackIfCloseSequence);
+        return new Selector<>(breakObstaclesSequence, findHeatSourceSequence, wanderIfWarmSequence, attackIfCloseSequence);
     }
 
     /**
@@ -78,6 +86,10 @@ public class BehaviourFactory {
                 new PlayerNearbyConditionTask(entity),
                 new AttackPlayerActionTask(entity)
         );
+        Sequence<Entity> breakObstaclesSequence = new Sequence<>(
+                new IsBreakableDirectlyBlockingPathConditionTask(entity),
+                new AttackBreakableActionTask(entity)
+        );
         Sequence<Entity> seekPlayerIfWarmSequence = new Sequence<>(
                 new IsWarmConditionTask(entity),
                 new HuntThePlayerDownActionTask(entity)
@@ -86,6 +98,6 @@ public class BehaviourFactory {
                 new TooColdConditionTask(entity),
                 new MoveToNearestHeatSourceActionTask(entity)
         );
-        return new Selector<>(attackIfCloseSequence, seekPlayerIfWarmSequence, findHeatSourceSequence);
+        return new Selector<>(attackIfCloseSequence, breakObstaclesSequence, seekPlayerIfWarmSequence, findHeatSourceSequence);
     }
 }

@@ -17,10 +17,7 @@ import com.glaikunt.framework.application.CommonActor;
 
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
-import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.GravityComponent;
-import com.glaikunt.framework.esc.component.common.VelocityComponent;
-import com.glaikunt.framework.esc.component.common.WarmthComponent;
+import com.glaikunt.framework.esc.component.common.*;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -35,6 +32,7 @@ public class EnemyActor extends CommonActor {
 
     private final WarmthComponent warmth;
     private final TargetsComponent targets;
+    private final DamageComponent damage;
     private final EnemyInputComponent input;
     private final BodyComponent body;
 
@@ -53,6 +51,7 @@ public class EnemyActor extends CommonActor {
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.ENEMY), 1, 1);
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
         this.targets = new TargetsComponent();
+        this.damage = new DamageComponent(10f);
 
         this.input = new EnemyInputComponent();
 
@@ -68,6 +67,7 @@ public class EnemyActor extends CommonActor {
         getEntity().add(animation);
         getEntity().add(warmth);
         getEntity().add(targets);
+        getEntity().add(damage);
         getEntity().add(input);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));

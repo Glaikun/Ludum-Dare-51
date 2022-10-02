@@ -1,7 +1,6 @@
 package com.glaikunt.framework.game.enemy;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.Ansi;
@@ -10,7 +9,7 @@ import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class AttackPlayerActionTask extends AbstractLeafTask {
 
-    private static final int RADIUS = 32; // tiles?
+    private static final int RADIUS = 32*32; // tiles?
     private final BodyComponent playerBC;
     private final BodyComponent bc;
     private final TargetsComponent tc;
