@@ -18,7 +18,7 @@ public class BlockActor extends CommonActor {
         this.size.set(size);
 
         this.body = new BodyComponent();
-        this.body.setBodyType(BodyType.STATIC);
+        this.body.setBodyType(BodyType.BLOCK);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
         getEntity().add(body);

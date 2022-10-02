@@ -15,6 +15,7 @@ public class BodyComponent extends Rectangle implements Component {
     private BodyType bodyType;
     private static long idCounter = 0;
     private final long id = idCounter++;
+    private List<BodyType> includeList = Arrays.asList(BodyType.BLOCK, BodyType.ENEMY);
 
     /**
      * plus the only things it's allowed to jump off from (not a heatsource for example)
@@ -22,7 +23,7 @@ public class BodyComponent extends Rectangle implements Component {
      */
     public boolean isContactedWithFloor() {
         return contactsByBody.values().stream()
-                .anyMatch(c -> c.getNormal().y <= -1 && (c.getBodyBType() == BodyType.STATIC || c.getBodyBType() == BodyType.DYNAMIC));
+                .anyMatch(c -> c.getNormal().y <= -1 && includeList.contains(c.getBodyBType()));
     }
 
     public List<ContactComponent> getBeforeContacts() {

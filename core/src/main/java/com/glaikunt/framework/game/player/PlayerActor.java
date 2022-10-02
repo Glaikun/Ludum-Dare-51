@@ -58,8 +58,8 @@ public class PlayerActor extends CommonActor {
         this.size.set(idleAnimation.getCurrentFrame().getRegionWidth(), idleAnimation.getCurrentFrame().getRegionHeight());
 
         this.body = new BodyComponent();
-        this.body.setBodyType(BodyType.DYNAMIC);
-        this.body.set(getX(), getY(), getWidth(), getHeight());
+        this.body.setBodyType(BodyType.PLAYER);
+        this.body.set(getX()+1, getY()+1, getWidth()-2, getHeight()-2);
 
         getEntity().add(acceleration);
         getEntity().add(velocity);
@@ -109,9 +109,6 @@ public class PlayerActor extends CommonActor {
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "[P] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
-            List<Vector2> collect = getBody().getAfterContacts().stream().map(ContactComponent::getNormal)
-                    .collect(Collectors.toList());
-            Gdx.app.log("DEBUG", "[P] After Collide normal mappings: " + collect);
         }
     }
 

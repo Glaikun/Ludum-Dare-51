@@ -38,7 +38,7 @@ public class CollisionListenerSystem extends EntitySystem {
 
     public CollisionListenerSystem(Engine engine) {
         this.allBodyEntities = engine.getEntitiesFor(Family.all(BodyComponent.class).get());
-        this.bodyEntitiesWithVel = engine.getEntitiesFor( Family.all(BodyComponent.class, VelocityComponent.class, PositionComponent.class).get());
+        this.bodyEntitiesWithVel = engine.getEntitiesFor(Family.all(BodyComponent.class, VelocityComponent.class, PositionComponent.class).get());
     }
 
     @Override
@@ -93,16 +93,16 @@ public class CollisionListenerSystem extends EntitySystem {
                         if (Math.abs(tmpVecContact.x) > Math.abs(tmpVecContact.y)) {
                             contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                             contact.getNormal().y = 0;
-                            Gdx.app.log("DEBUG", bodyA.getBodyType()+" x contact normal: " + contact.getNormal());
+                            Gdx.app.log("DEBUG", bodyA.getBodyType() + " x contact normal: " + contact.getNormal());
                         } else {
                             contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                             contact.getNormal().x = 0;
-                            Gdx.app.log("DEBUG", bodyA.getBodyType()+" y contact normal: " + contact.getNormal());
+                            Gdx.app.log("DEBUG", bodyA.getBodyType() + " y contact normal: " + contact.getNormal());
                         }
                     } else {
                         contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                         contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
-                        Gdx.app.log("DEBUG", bodyA.getBodyType()+" x & y contact normal: " + contact.getNormal());
+                        Gdx.app.log("DEBUG", bodyA.getBodyType() + " x & y contact normal: " + contact.getNormal());
                     }
                     contact.setInteraction(tmpContact);
 
@@ -112,13 +112,20 @@ public class CollisionListenerSystem extends EntitySystem {
                     bodyA.getContactsByBody().put(bodyB, contact);
                 }
 
-                if ((bodyA.getContactsByBody().containsKey(bodyB) || bodyB.getContactsByBody().containsKey(bodyA)) && !Intersector.intersectRectangles(tmpBodyA, tmpBodyB, tmpContact)) {
+                if (bodyA.getContactsByBody().containsKey(bodyB) && !tmpBodyA.intersects(tmpBodyB)) {
 //                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" remove from contactsByBody["+bodyA.getContactsByBody().size()+"] " +bodyB.getBodyType()+"? "+bodyA.getContactsByBody().remove(bodyB));
 //                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" now contactsByBody["+bodyA.getContactsByBody().size()+"] ");
 //                    Gdx.app.log("DEBUG", bodyB.getBodyType()+" remove from contactsByBody["+bodyB.getContactsByBody().size()+"] " +bodyA.getBodyType()+"? "+bodyB.getContactsByBody().remove(bodyA));
 //                    Gdx.app.log("DEBUG", bodyB.getBodyType()+" now contactsByBody["+bodyB.getContactsByBody().size()+"] ");
-                        bodyA.getContactsByBody().remove(bodyB);
-                        bodyB.getContactsByBody().remove(bodyA);
+
+                    bodyA.getContactsByBody().remove(bodyB);
+                    ContactComponent contact = new ContactComponent();
+                    contact.setBodyA(bodyA);
+                    contact.setBodyB(bodyB);
+                    contact.setBodyAType(bodyA.getBodyType());
+                    contact.setBodyBType(bodyB.getBodyType());
+
+                    bodyA.getAfterContacts().add(contact);
                 }
             }
         }

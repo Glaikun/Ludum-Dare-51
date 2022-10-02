@@ -50,9 +50,7 @@ public class CollisionSystem extends EntitySystem {
             for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 
                 BodyComponent key = entry.getKey();
-                if (key.getBodyType() == BodyType.ENEMY) {
-                    continue;
-                } else if (key.getBodyType() == BodyType.CHECKPOINT) {
+                 if (key.getBodyType() == BodyType.CHECKPOINT) {
                     Gdx.app.log("DEBUG", "CHECKPOINT!!!");
                     continue;
                 } else if (key.getBodyType() == BodyType.INDOORS) {
@@ -75,7 +73,9 @@ public class CollisionSystem extends EntitySystem {
                     vel.y = 0;
                 }
 
-                if (contact.getNormal().x < 0 || contact.getNormal().x > 0) {
+                if (contact.getNormal().x < 0 && vel.x < 0) {
+                    vel.x = 0;
+                } else if (contact.getNormal().x > 0 && vel.x > 0) {
                     vel.x = 0;
                 }
             }
