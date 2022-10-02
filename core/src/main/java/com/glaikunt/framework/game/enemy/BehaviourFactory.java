@@ -11,7 +11,7 @@ public class BehaviourFactory {
 
     private BehaviourFactory() {}
     public static Task<Entity> getBehaviour(Stance stance, Entity entity) {
-        Gdx.app.log("DEBUG", Ansi.red("[AI]] ")+Ansi.purple("Stance: ")+Ansi.yellow(stance.name()));
+        System.out.println( Ansi.red("[AI]] ")+Ansi.purple("Stance: ")+Ansi.yellow(stance.name()));
         switch (stance) {
             case DEFENSIVE: return defensiveBehaviour(entity);
             case PASSIVE: return passiveBehaviour(entity);

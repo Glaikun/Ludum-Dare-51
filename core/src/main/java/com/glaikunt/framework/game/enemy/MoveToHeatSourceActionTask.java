@@ -11,8 +11,8 @@ public class MoveToHeatSourceActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        Gdx.app.log("DEBUG", Ansi.red("[AI] ")+Ansi.yellow("execute MoveToHeatSourceActionTask"));
-        Gdx.app.log("DEBUG", Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute MoveToHeatSourceActionTask"));
+        System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
         return Status.SUCCEEDED;
     }
 }

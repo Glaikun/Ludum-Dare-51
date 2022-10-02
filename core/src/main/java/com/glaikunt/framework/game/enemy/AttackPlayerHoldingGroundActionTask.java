@@ -11,8 +11,8 @@ public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        Gdx.app.log("DEBUG", Ansi.red("[AI] ")+Ansi.yellow("execute AttackPlayerHoldingGroundActionTask"));
-        Gdx.app.log("DEBUG", Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackPlayerHoldingGroundActionTask"));
+        System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
         return Status.SUCCEEDED;
     }
 }

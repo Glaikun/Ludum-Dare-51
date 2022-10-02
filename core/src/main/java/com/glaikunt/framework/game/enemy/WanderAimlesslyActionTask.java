@@ -11,8 +11,8 @@ public class WanderAimlesslyActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        Gdx.app.log("DEBUG", Ansi.red("[AI] ")+Ansi.yellow("execute WanderAimlesslyActionTask"));
-        Gdx.app.log("DEBUG", Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute WanderAimlesslyActionTask"));
+        System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
         return Status.SUCCEEDED;
     }
 }

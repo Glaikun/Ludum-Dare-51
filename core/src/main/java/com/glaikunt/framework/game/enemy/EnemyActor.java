@@ -80,23 +80,23 @@ public class EnemyActor extends CommonActor {
     public void act(float delta) {
 
         if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
-        Gdx.app.log("DEBUG", "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
+        System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
             behaviorTree.step();
         }
 
         if (!getBody().getBeforeContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            System.out.println( "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
 //
 //            int c = 0;
 //            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 //                BodyComponent key = entry.getKey();
 //                ContactComponent contact = entry.getValue();
-//                Gdx.app.log("DEBUG", "[E] "+c+" "+key+" => "+contact);
+//                System.out.println( "[E] "+c+" "+key+" => "+contact);
 //                        c++;
 //            }
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            System.out.println( "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
     }
 
