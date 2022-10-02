@@ -1,7 +1,6 @@
 package com.glaikunt.framework.game.enemy;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.ai.btree.branch.Selector;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
@@ -29,7 +28,7 @@ public class BehaviourFactory {
 
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),
-                new MoveToHeatSourceActionTask(entity)
+                new MoveToNearestHeatSourceActionTask(entity)
         );
         Sequence<Entity> defensiveAttackSequence = new Sequence<>(
                 new PlayerNearbyConditionTask(entity),
@@ -49,7 +48,7 @@ public class BehaviourFactory {
     private static Task<Entity> passiveBehaviour(Entity entity) {
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),
-                new MoveToHeatSourceActionTask(entity)
+                new MoveToNearestHeatSourceActionTask(entity)
         );
         Sequence<Entity> wanderIfWarmSequence = new Sequence<>(
                 new IsWarmConditionTask(entity),
@@ -82,7 +81,7 @@ public class BehaviourFactory {
         );
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),
-                new MoveToHeatSourceActionTask(entity)
+                new MoveToNearestHeatSourceActionTask(entity)
         );
         return new Selector<>(attackIfCloseSequence, seekPlayerIfWarmSequence, findHeatSourceSequence);
     }

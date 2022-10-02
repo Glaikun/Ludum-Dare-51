@@ -33,6 +33,7 @@ public class EnemyActor extends CommonActor {
     private final AnimationComponent animation;
 
     private final WarmthComponent warmth;
+    private final TargetsComponent targets;
     private final BodyComponent body;
 
     private final Vector2 tmpVector2 = new Vector2();
@@ -49,21 +50,23 @@ public class EnemyActor extends CommonActor {
         this.velocity = new VelocityComponent();
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.ENEMY), 1, 1);
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
+        this.targets = new TargetsComponent();
 
         this.pos.set(pos);
         this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.ENEMY);
-        this.body.set(getX(), getY(), getWidth(), getHeight());
+        this.body.set(pos.x, pos.y, size.x, size.y);
 
         getEntity().add(acceleration);
         getEntity().add(velocity);
         getEntity().add(animation);
         getEntity().add(warmth);
+        getEntity().add(targets);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
-        ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
+        final ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
         getEntity().add(new EasyAccessComponent(level, playerEntities.get(0)));
         this.behaviorTree = new BehaviorTree<>(BehaviourFactory.getBehaviour(stance, entity));
         this.behaviorTree.start();

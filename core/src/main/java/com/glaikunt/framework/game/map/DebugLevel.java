@@ -158,7 +158,7 @@ public class DebugLevel extends CommonActor implements Level {
 
                     TiledMapTileLayer.Cell startCell = enemySpawns.getCell(x, y);
                     if (startCell != null) {
-                        EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos), this, Stance.AGGRESSIVE);
+                        EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos), this, Stance.DEFENSIVE);
                         enemies.add(enemy);
                         front.addActor(enemy);
                     }
@@ -184,5 +184,9 @@ public class DebugLevel extends CommonActor implements Level {
 
     public PlayerActor getPlayer() {
         return player;
+    }
+
+    public Array<HeatSourceActor> getHeatSources() {
+        return heatSources;
     }
 }

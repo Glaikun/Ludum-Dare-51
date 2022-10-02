@@ -2,10 +2,13 @@ package com.glaikunt.framework.esc.component.movement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.MathUtils;
 
 import static com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent.Animation.IDLE;
 
 public class PlayerInputComponent extends AbstractPlayerInputComponent implements InputProcessor {
+
+    private static final boolean CHAOS_MONKEY = false;
 
     @Override
     public boolean keyDown(int i) {
@@ -37,11 +40,11 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
     }
 
     public boolean isMovingLeft() {
-        return Gdx.input.isKeyPressed(moveLeftPrimaryKey) || Gdx.input.isKeyPressed(moveLeftSecondaryKey);
+        return Gdx.input.isKeyPressed(moveLeftPrimaryKey) || Gdx.input.isKeyPressed(moveLeftSecondaryKey) || (CHAOS_MONKEY && MathUtils.randomBoolean());
     }
 
     public boolean isMovingRight() {
-        return Gdx.input.isKeyPressed(moveRightPrimaryKey) || Gdx.input.isKeyPressed(moveRightSecondaryKey);
+        return Gdx.input.isKeyPressed(moveRightPrimaryKey) || Gdx.input.isKeyPressed(moveRightSecondaryKey) || (CHAOS_MONKEY && MathUtils.randomBoolean());
     }
 
     public boolean isMovingUp() {
@@ -54,7 +57,7 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
 
     @Override
     public boolean isJumping() {
-        return Gdx.input.isKeyPressed(jumpKeyPrimary);
+        return Gdx.input.isKeyPressed(jumpKeyPrimary) || (CHAOS_MONKEY && MathUtils.randomBoolean());
     }
 
     @Override
