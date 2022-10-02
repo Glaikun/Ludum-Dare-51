@@ -21,6 +21,7 @@ import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.common.WarmthComponent;
+import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
@@ -34,6 +35,7 @@ public class EnemyActor extends CommonActor {
 
     private final WarmthComponent warmth;
     private final TargetsComponent targets;
+    private final EnemyInputComponent input;
     private final BodyComponent body;
 
     private final Vector2 tmpVector2 = new Vector2();
@@ -52,6 +54,8 @@ public class EnemyActor extends CommonActor {
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
         this.targets = new TargetsComponent();
 
+        this.input = new EnemyInputComponent();
+
         this.pos.set(pos);
         this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
 
@@ -64,6 +68,7 @@ public class EnemyActor extends CommonActor {
         getEntity().add(animation);
         getEntity().add(warmth);
         getEntity().add(targets);
+        getEntity().add(input);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
         final ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
@@ -82,10 +87,10 @@ public class EnemyActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
-        System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
+//        if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
+            System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
             behaviorTree.step();
-        }
+//        }
 
         if (!getBody().getBeforeContacts().isEmpty()) {
             System.out.println( "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());

@@ -31,6 +31,7 @@ public class BehaviourFactory {
                 new MoveToNearestHeatSourceActionTask(entity)
         );
         Sequence<Entity> defensiveAttackSequence = new Sequence<>(
+                new IsWarmConditionTask(entity),
                 new PlayerNearbyConditionTask(entity),
                 new AttackPlayerHoldingGroundActionTask(entity)
         );
@@ -55,6 +56,7 @@ public class BehaviourFactory {
                 new WanderAimlesslyActionTask(entity)
         );
         Sequence<Entity> attackIfCloseSequence = new Sequence<>(
+                new IsWarmConditionTask(entity),
                 new PlayerNearbyConditionTask(entity),
                 new AttackPlayerActionTask(entity)
         );
@@ -72,6 +74,7 @@ public class BehaviourFactory {
     private static Task<Entity> aggressiveBehaviour(Entity entity) {
 
         Sequence<Entity> attackIfCloseSequence = new Sequence<>(
+                new IsWarmConditionTask(entity),
                 new PlayerNearbyConditionTask(entity),
                 new AttackPlayerActionTask(entity)
         );

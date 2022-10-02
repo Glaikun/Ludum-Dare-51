@@ -11,6 +11,7 @@ import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.AnimationSystem;
 import com.glaikunt.framework.esc.system.CameraControlsSystem;
+import com.glaikunt.framework.esc.system.EnemyInputSystem;
 import com.glaikunt.framework.esc.system.FadeSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.esc.system.WarmthSystem;
@@ -20,9 +21,7 @@ import com.glaikunt.framework.esc.system.physics.CollisionSystem;
 import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
-import com.glaikunt.framework.game.map.levels.DebugLevel;
 import com.glaikunt.framework.game.map.levels.LevelController;
-import com.glaikunt.framework.game.map.levels.NextDebugLevel;
 import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
@@ -64,6 +63,7 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
         getEngine().addSystem(new WarmthSystem(getEngine()));
         getEngine().addSystem(new AnimationSystem(getEngine()));
+        getEngine().addSystem(new EnemyInputSystem(getEngine()));
         getEngine().addSystem(new FadeSystem(getEngine()));
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
