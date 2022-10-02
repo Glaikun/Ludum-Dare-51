@@ -2,23 +2,23 @@ package com.glaikunt.framework.game.enemy;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
-import com.glaikunt.framework.game.map.Level;
+import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
 public class EasyAccessComponent implements Component {
-    private Level currentLevel;
+    private AbstractLevel currentAbstractLevel;
     private Entity playerEntity;
 
-    public EasyAccessComponent(Level currentLevel, Entity playerEntity) {
-        this.currentLevel = currentLevel;
+    public EasyAccessComponent(AbstractLevel currentAbstractLevel, Entity playerEntity) {
+        this.currentAbstractLevel = currentAbstractLevel;
         this.playerEntity = playerEntity;
     }
 
-    public Level getCurrentLevel() {
-        return currentLevel;
+    public AbstractLevel getCurrentLevel() {
+        return currentAbstractLevel;
     }
 
-    public void setCurrentLevel(Level currentLevel) {
-        this.currentLevel = currentLevel;
+    public void setCurrentLevel(AbstractLevel currentAbstractLevel) {
+        this.currentAbstractLevel = currentAbstractLevel;
     }
 
     public Entity getPlayerEntity() {

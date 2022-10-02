@@ -25,7 +25,7 @@ import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
-import com.glaikunt.framework.game.map.Level;
+import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
 public class EnemyActor extends CommonActor {
 
@@ -42,10 +42,10 @@ public class EnemyActor extends CommonActor {
 
     private final BehaviorTree<Entity> behaviorTree;
 
-    public EnemyActor(ApplicationResources applicationResources, Vector2 pos, Level level) {
-        this(applicationResources, pos, level, Stance.values()[MathUtils.random(Stance.values().length-1)]);
+    public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel) {
+        this(applicationResources, pos, abstractLevel, Stance.values()[MathUtils.random(Stance.values().length-1)]);
     }
-    public EnemyActor(ApplicationResources applicationResources, Vector2 pos, Level level, Stance stance) {
+    public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel, Stance stance) {
         super(applicationResources);
 
         this.acceleration = new AccelerationComponent();
@@ -72,7 +72,7 @@ public class EnemyActor extends CommonActor {
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
         final ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
-        getEntity().add(new EasyAccessComponent(level, playerEntities.get(0)));
+        getEntity().add(new EasyAccessComponent(abstractLevel, playerEntities.get(0)));
         this.behaviorTree = new BehaviorTree<>(BehaviourFactory.getBehaviour(stance, entity));
         this.behaviorTree.start();
     }

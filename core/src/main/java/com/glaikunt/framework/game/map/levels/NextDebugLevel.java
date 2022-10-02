@@ -1,7 +1,6 @@
-package com.glaikunt.framework.game.map;
+package com.glaikunt.framework.game.map.levels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -12,46 +11,46 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.glaikunt.framework.application.ApplicationResources;
-import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
+import com.glaikunt.framework.game.map.BlockActor;
+import com.glaikunt.framework.game.map.CheckPointActor;
+import com.glaikunt.framework.game.map.HeatSourceActor;
+import com.glaikunt.framework.game.map.IndoorAreaActor;
 import com.glaikunt.framework.game.player.PlayerActor;
 
-import java.io.Reader;
+public class NextDebugLevel extends AbstractLevel {
 
-public class DebugLevel extends CommonActor implements Level {
-
-    private final OrthogonalTiledMapRenderer renderer;
-    private final TiledMapTileLayer background;
+    private OrthogonalTiledMapRenderer renderer;
+    private TiledMapTileLayer background, foreground;
 
     private PlayerActor player;
     private final Array<EnemyActor> enemies = new Array<>();
     private final Array<HeatSourceActor> heatSources = new Array<>();
 
-    public DebugLevel(ApplicationResources applicationResources, Stage front) {
-        super(applicationResources);
+    public NextDebugLevel(ApplicationResources applicationResources, Stage front) {
+        super(applicationResources, front);
+    }
 
-        TiledMap map = applicationResources.getTiledMap(TiledCache.SOMETHING);
+    @Override
+    public void init() {
+        TiledMap map = getApplicationResources().getTiledMap(TiledCache.TRANSITION_DEBUG_MAP);
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
+        this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
 
-        createPlatforms(applicationResources, front, map);
+        createPlatforms(getApplicationResources(), getFront(), map);
 
+        createCheckpoints(getApplicationResources(), getFront(), map);
 
-        createCheckpoints(applicationResources, front, map);
+        createIndoors(getApplicationResources(), getFront(), map);
 
+        createHeatSources(getApplicationResources(), getFront(), map);
 
-        createIndoors(applicationResources, front, map);
+        createPlayer(getApplicationResources(), getFront(), map);
 
-
-        createHeatSources(applicationResources, front, map);
-
-
-        createPlayer(applicationResources, front, map);
-
-
-        createEnemies(applicationResources, front, map);
+        createEnemies(getApplicationResources(), getFront(), map);
     }
 
     private void createPlayer(ApplicationResources applicationResources, Stage front, TiledMap map) {
@@ -166,20 +165,24 @@ public class DebugLevel extends CommonActor implements Level {
             }
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void drawBackground() {
 
         renderer.getBatch().begin();
         renderer.renderTileLayer(background);
         renderer.getBatch().end();
     }
 
-    @Override
-    public void act(float delta) {
+    public void drawForeground() {
 
-        if (getStage() != null) {
-            renderer.setView((OrthographicCamera) getStage().getCamera());
-        }
+        renderer.getBatch().begin();
+        renderer.renderTileLayer(foreground);
+        renderer.getBatch().end();
+    }
+
+    @Override
+    public void act(Stage stage) {
+
+            renderer.setView((OrthographicCamera) stage.getCamera());
     }
 
     public PlayerActor getPlayer() {
