@@ -2,7 +2,6 @@ package com.glaikunt.framework.game.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +19,6 @@ import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponen
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
-import com.glaikunt.framework.game.GameConstants;
 
 import java.util.List;
 import java.util.stream.Collectors;

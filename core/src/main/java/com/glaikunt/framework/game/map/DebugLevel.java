@@ -1,5 +1,8 @@
 package com.glaikunt.framework.game.map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
+import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -11,11 +14,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.StreamUtils;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.player.PlayerActor;
+
+import java.io.Reader;
 
 public class DebugLevel extends CommonActor implements Level {
 
@@ -33,6 +39,84 @@ public class DebugLevel extends CommonActor implements Level {
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
 
+        createPlatforms(applicationResources, front, map);
+
+
+        createCheckpoints(applicationResources, front, map);
+
+
+        createIndoors(applicationResources, front, map);
+
+
+        createHeatSources(applicationResources, front, map);
+
+
+        createPlayer(applicationResources, front, map);
+
+
+        createEnemies(applicationResources, front, map);
+    }
+
+    private void createPlayer(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        TiledMapTileLayer playerStart = (TiledMapTileLayer) map.getLayers().get("Player");
+        for (int y = playerStart.getHeight(); y >= 0; y--) {
+            float yPos = (y * playerStart.getTileHeight());
+            for (int x = 0; x < playerStart.getWidth(); x++) {
+                float xPos = (x * playerStart.getTileWidth());
+
+                TiledMapTileLayer.Cell playerStartCell = playerStart.getCell(x, y);
+                if (playerStartCell != null) {
+
+                    if (player != null) {
+                        throw new IllegalStateException("Player already set");
+                    } else {
+                        this.player = new PlayerActor(applicationResources, new Vector2(xPos, yPos));
+                        front.addActor(player);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void createIndoors(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        MapLayer indoorAreas = map.getLayers().get("Inside");
+        for (MapObject mapObject : indoorAreas.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new IndoorAreaActor(applicationResources, pos, size));
+            }
+        }
+    }
+
+    private static void createCheckpoints(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        MapLayer levelCheckpoint = map.getLayers().get("Checkpoint");
+        for (MapObject mapObject : levelCheckpoint.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new CheckPointActor(applicationResources, pos, size));
+            }
+        }
+    }
+
+    private static void createPlatforms(ApplicationResources applicationResources, Stage front, TiledMap map) {
         MapLayer levelCollision = map.getLayers().get("Platforms");
         for (MapObject mapObject : levelCollision.getObjects()) {
 
@@ -49,97 +133,40 @@ public class DebugLevel extends CommonActor implements Level {
                 front.addActor(new BlockActor(applicationResources, pos, size));
             }
         }
+    }
 
-        {
-            MapLayer levelCheckpoint = map.getLayers().get("Checkpoint");
-            for (MapObject mapObject : levelCheckpoint.getObjects()) {
+    private void createHeatSources(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        TiledMapTileLayer heatsources = (TiledMapTileLayer) map.getLayers().get("Heatsource");
+        for (int y = heatsources.getHeight(); y >= 0; y--) {
+            float yPos = (y * heatsources.getTileHeight());
+            for (int x = 0; x < heatsources.getWidth(); x++) {
+                float xPos = (x * heatsources.getTileWidth());
 
-                if (mapObject instanceof RectangleMapObject) {
-                    RectangleMapObject r = (RectangleMapObject) mapObject;
-                    float x = r.getRectangle().getX();
-                    float y = r.getRectangle().getY();
-                    Vector2 pos = new Vector2(x, y);
-
-                    float width = r.getRectangle().getWidth();
-                    float height = r.getRectangle().getHeight();
-                    Vector2 size = new Vector2(width, height);
-
-                    front.addActor(new CheckPointActor(applicationResources, pos, size));
-                }
-            }
-        }
-
-        {
-            MapLayer indoorAreas = map.getLayers().get("Inside");
-            for (MapObject mapObject : indoorAreas.getObjects()) {
-
-                if (mapObject instanceof RectangleMapObject) {
-                    RectangleMapObject r = (RectangleMapObject) mapObject;
-                    float x = r.getRectangle().getX();
-                    float y = r.getRectangle().getY();
-                    Vector2 pos = new Vector2(x, y);
-
-                    float width = r.getRectangle().getWidth();
-                    float height = r.getRectangle().getHeight();
-                    Vector2 size = new Vector2(width, height);
-
-                    front.addActor(new IndoorAreaActor(applicationResources, pos, size));
-                }
-            }
-        }
-
-        {
-            TiledMapTileLayer heatsources = (TiledMapTileLayer) map.getLayers().get("Heatsource");
-            for (int y = heatsources.getHeight(); y >= 0; y--) {
-                float yPos = (y * heatsources.getTileHeight());
-                for (int x = 0; x < heatsources.getWidth(); x++) {
-                    float xPos = (x * heatsources.getTileWidth());
-
-                    TiledMapTileLayer.Cell startCell = heatsources.getCell(x, y);
-                    if (startCell != null) {
-                        HeatSourceActor heatsource = new HeatSourceActor(applicationResources, new Vector2(xPos, yPos));
-                        heatSources.add(heatsource);
-                        front.addActor(heatsource);
-                    }
-                }
-            }
-        }
-
-        {
-            TiledMapTileLayer playerStart = (TiledMapTileLayer) map.getLayers().get("Player");
-            for (int y = playerStart.getHeight(); y >= 0; y--) {
-                float yPos = (y * playerStart.getTileHeight());
-                for (int x = 0; x < playerStart.getWidth(); x++) {
-                    float xPos = (x * playerStart.getTileWidth());
-
-                    TiledMapTileLayer.Cell playerStartCell = playerStart.getCell(x, y);
-                    if (playerStartCell != null) {
-
-                        if (player != null) {
-                            throw new IllegalStateException("Player already set");
-                        } else {
-                            this.player = new PlayerActor(applicationResources, new Vector2(xPos, yPos));
-                            front.addActor(player);
-                        }
-                    }
-                }
-            }
-        }
-
-        TiledMapTileLayer enemySpawns = (TiledMapTileLayer) map.getLayers().get("EnemySpawn");
-        for (int y = enemySpawns.getHeight(); y >= 0; y--) {
-            float yPos = (y * enemySpawns.getTileHeight());
-            for (int x = 0; x < enemySpawns.getWidth(); x++) {
-                float xPos = (x * enemySpawns.getTileWidth());
-
-                TiledMapTileLayer.Cell startCell = enemySpawns.getCell(x, y);
+                TiledMapTileLayer.Cell startCell = heatsources.getCell(x, y);
                 if (startCell != null) {
-                    EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos));
-                    enemies.add(enemy);
-                    front.addActor(enemy);
+                    HeatSourceActor heatsource = new HeatSourceActor(applicationResources, new Vector2(xPos, yPos));
+                    heatSources.add(heatsource);
+                    front.addActor(heatsource);
                 }
             }
         }
+    }
+
+    private void createEnemies(ApplicationResources applicationResources, Stage front, TiledMap map) {
+            TiledMapTileLayer enemySpawns = (TiledMapTileLayer) map.getLayers().get("EnemySpawn");
+            for (int y = enemySpawns.getHeight(); y >= 0; y--) {
+                float yPos = (y * enemySpawns.getTileHeight());
+                for (int x = 0; x < enemySpawns.getWidth(); x++) {
+                    float xPos = (x * enemySpawns.getTileWidth());
+
+                    TiledMapTileLayer.Cell startCell = enemySpawns.getCell(x, y);
+                    if (startCell != null) {
+                        EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos));
+                        enemies.add(enemy);
+                        front.addActor(enemy);
+                    }
+                }
+            }
     }
 
     @Override

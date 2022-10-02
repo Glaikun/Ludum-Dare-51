@@ -1,8 +1,13 @@
 package com.glaikunt.framework.game.enemy;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.btree.BehaviorTree;
+import com.badlogic.gdx.ai.btree.Task;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.ApplicationResources;
@@ -11,29 +16,35 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.esc.component.common.WarmthComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
-
-import java.util.Map;
 
 public class EnemyActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
     private final VelocityComponent velocity;
     private final AnimationComponent animation;
+
+    private final WarmthComponent warmth;
     private final BodyComponent body;
 
     private final Vector2 tmpVector2 = new Vector2();
 
+    private final BehaviorTree<Entity> behaviorTree;
+
     public EnemyActor(ApplicationResources applicationResources, Vector2 pos) {
+        this(applicationResources, pos, Stance.values()[MathUtils.random(Stance.values().length-1)]);
+    }
+    public EnemyActor(ApplicationResources applicationResources, Vector2 pos, Stance stance) {
         super(applicationResources);
 
         this.acceleration = new AccelerationComponent();
         this.velocity = new VelocityComponent();
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.ENEMY), 1, 1);
+        this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
 
         this.pos.set(pos);
         this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
@@ -42,17 +53,21 @@ public class EnemyActor extends CommonActor {
         this.body.setBodyType(BodyType.ENEMY);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
+        this.behaviorTree = new BehaviorTree<>(BehaviourFactory.getBehaviour(stance, entity));
+
         getEntity().add(acceleration);
         getEntity().add(velocity);
         getEntity().add(animation);
+        getEntity().add(warmth);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-
+        batch.setColor(warmth.getWarmthFloat(), warmth.getWarmthFloat(), 1.0f, 1f);
         batch.draw(animation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
+        batch.setColor(Color.WHITE);
     }
 
     @Override
