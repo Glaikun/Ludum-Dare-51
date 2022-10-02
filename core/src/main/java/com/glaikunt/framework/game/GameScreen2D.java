@@ -11,6 +11,7 @@ import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.AnimationSystem;
 import com.glaikunt.framework.esc.system.CameraControlsSystem;
+import com.glaikunt.framework.esc.system.FadeSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.esc.system.WarmthSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityDecaySystem;
@@ -20,12 +21,13 @@ import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.levels.DebugLevel;
-import com.glaikunt.framework.game.map.Level;
+import com.glaikunt.framework.game.map.levels.LevelController;
+import com.glaikunt.framework.game.map.levels.NextDebugLevel;
 import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
 
-    private DebugLevel currentLevel;
+    private LevelController levelController;
 
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
@@ -44,8 +46,8 @@ public class GameScreen2D extends Screen {
         getApplicationResources().getImmutableGameEntity().add(cameraControls);
         getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
 
-        this.currentLevel = new DebugLevel(getApplicationResources(), getFront());
-        getFront().addActor(currentLevel);
+        this.levelController = new LevelController(getApplicationResources(), getFront());
+        getUX().addActor(levelController);
 
         // ########### Physics [Order Maters] ###########
         getEngine().addSystem(new GravitySystem(getEngine()));
@@ -62,6 +64,7 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
         getEngine().addSystem(new WarmthSystem(getEngine()));
         getEngine().addSystem(new AnimationSystem(getEngine()));
+        getEngine().addSystem(new FadeSystem(getEngine()));
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
     }
@@ -70,12 +73,13 @@ public class GameScreen2D extends Screen {
     public void setupCamera() {
 
         ((OrthographicCamera) this.getFront().getCamera()).zoom = GameConstants.ZOOM;
-        getFront().getCamera().position.set(currentLevel.getPlayer().getX() + (currentLevel.getPlayer().getWidth() / 2), (currentLevel.getPlayer().getY()) + (currentLevel.getPlayer().getHeight()*2), 0);
+        getFront().getCamera().position.set(levelController.getPlayer().getX() + (levelController.getPlayer().getWidth() / 2), (levelController.getPlayer().getY()) + (levelController.getPlayer().getHeight()*2), 0);
     }
 
     @Override
     public void update(float delta) {
 
+        levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);
         getUX().act(delta);
@@ -87,9 +91,9 @@ public class GameScreen2D extends Screen {
         Gdx.gl.glClearColor(FrameworkConstants.DARK_BLUE.r, FrameworkConstants.DARK_BLUE.g, FrameworkConstants.DARK_BLUE.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        currentLevel.drawBackground();
+        levelController.getCurrentLevel().drawBackground();
         getBackground().draw();
-        currentLevel.drawForeground();
+        levelController.getCurrentLevel().drawForeground();
         getFront().draw();
         getUX().draw();
     }

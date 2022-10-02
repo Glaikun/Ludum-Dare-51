@@ -134,4 +134,8 @@ public class PlayerActor extends CommonActor {
     public Rectangle getBodyRect() {
         return body;
     }
+
+    public PlayerInputComponent getPlayerInput() {
+        return playerInput;
+    }
 }

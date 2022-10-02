@@ -20,7 +20,7 @@ import com.glaikunt.framework.game.map.HeatSourceActor;
 import com.glaikunt.framework.game.map.IndoorAreaActor;
 import com.glaikunt.framework.game.player.PlayerActor;
 
-public class DebugLevel extends AbstractLevel {
+public class NextDebugLevel extends AbstractLevel {
 
     private OrthogonalTiledMapRenderer renderer;
     private TiledMapTileLayer background, foreground;
@@ -29,14 +29,13 @@ public class DebugLevel extends AbstractLevel {
     private final Array<EnemyActor> enemies = new Array<>();
     private final Array<HeatSourceActor> heatSources = new Array<>();
 
-    public DebugLevel(ApplicationResources applicationResources, Stage front) {
+    public NextDebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources, front);
     }
 
     @Override
     public void init() {
-
-        TiledMap map = getApplicationResources().getTiledMap(TiledCache.DEBUG_MAP);
+        TiledMap map = getApplicationResources().getTiledMap(TiledCache.TRANSITION_DEBUG_MAP);
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
         this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
@@ -53,7 +52,6 @@ public class DebugLevel extends AbstractLevel {
 
         createEnemies(getApplicationResources(), getFront(), map);
     }
-
 
     private void createPlayer(ApplicationResources applicationResources, Stage front, TiledMap map) {
         TiledMapTileLayer playerStart = (TiledMapTileLayer) map.getLayers().get("Player");
@@ -167,7 +165,6 @@ public class DebugLevel extends AbstractLevel {
             }
     }
 
-    @Override
     public void drawBackground() {
 
         renderer.getBatch().begin();
@@ -175,7 +172,6 @@ public class DebugLevel extends AbstractLevel {
         renderer.getBatch().end();
     }
 
-    @Override
     public void drawForeground() {
 
         renderer.getBatch().begin();
@@ -186,7 +182,7 @@ public class DebugLevel extends AbstractLevel {
     @Override
     public void act(Stage stage) {
 
-        renderer.setView((OrthographicCamera) stage.getCamera());
+            renderer.setView((OrthographicCamera) stage.getCamera());
     }
 
     public PlayerActor getPlayer() {

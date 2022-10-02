@@ -18,6 +18,8 @@ public abstract class AbstractPlayerInputComponent implements Movable, Component
     protected Animation animation = Animation.IDLE;
     protected Direction facing = Direction.DOWN;
     protected Animation forceAnimation = null;
+    private boolean disableInputMovement;
+    private boolean walkRight;
 
     protected boolean reset;
 
@@ -88,5 +90,21 @@ public abstract class AbstractPlayerInputComponent implements Movable, Component
 
     public void setReset(boolean reset) {
         this.reset = reset;
+    }
+
+    public boolean isDisableInputMovement() {
+        return disableInputMovement;
+    }
+
+    public void setDisableInputMovement(boolean disableInputMovement) {
+        this.disableInputMovement = disableInputMovement;
+    }
+
+    public boolean isWalkRight() {
+        return walkRight;
+    }
+
+    public void setWalkRight(boolean walkRight) {
+        this.walkRight = walkRight;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
 
     private static final boolean CHAOS_MONKEY = false;
 
+
     @Override
     public boolean keyDown(int i) {
         return false;
@@ -103,4 +104,6 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
     public boolean scrolled(float v, float v1) {
         return false;
     }
+
+
 }

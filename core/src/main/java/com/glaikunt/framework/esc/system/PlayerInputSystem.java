@@ -50,27 +50,36 @@ public class PlayerInputSystem extends EntitySystem {
             BodyComponent body = bcm.get(entity);
             WarmthComponent warmth = wcm.get(entity);
 
-            if (input.isMovingLeft()) {
+            if (!input.isDisableInputMovement()) {
+
+                if (input.isMovingLeft()) {
 //                pos.x -= speed;
-                ac.x = -LATERAL_ACCELERATION;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
-                input.setFacing(AbstractPlayerInputComponent.Direction.LEFT);
-            } else if (input.isMovingRight()) {
+                    ac.x = -LATERAL_ACCELERATION;
+                    input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
+                    input.setFacing(AbstractPlayerInputComponent.Direction.LEFT);
+                } else if (input.isMovingRight()) {
 //                pos.x += speed;
-                ac.x = LATERAL_ACCELERATION;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
-                input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
-            } else {
-                ac.x = 0;
-                input.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
+                    ac.x = LATERAL_ACCELERATION;
+                    input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
+                    input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
+                } else {
+                    ac.x = 0;
+                    input.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
+                }
+
+                if (input.isJumping() && body.isContactedWithFloor()) {
+//                pos.x += speed;
+                    if (warmth != null && !warmth.isFrozen()) {
+                        ac.y = JUMPING_ACCELERATION * GameUtils.clamp(.7f, 1f, warmth.getWarmthFloat() * 2);
+                        input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
+                    }
+                }
             }
 
-            if (input.isJumping() && body.isContactedWithFloor()) {
-//                pos.x += speed;
-                if (warmth != null && !warmth.isFrozen()) {
-                    ac.y = JUMPING_ACCELERATION * GameUtils.clamp(.7f, 1f, warmth.getWarmthFloat()*2);
-                    input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
-                }
+            if (input.isWalkRight()) {
+                ac.x = LATERAL_ACCELERATION/6;
+                input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
+                input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             }
 
 
