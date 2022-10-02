@@ -1,14 +1,17 @@
 package com.glaikunt.framework.game.enemy;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.ai.btree.branch.Selector;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
+import com.glaikunt.framework.Ansi;
 
 public class BehaviourFactory {
 
     private BehaviourFactory() {}
     public static Task<Entity> getBehaviour(Stance stance, Entity entity) {
+        Gdx.app.log("DEBUG", Ansi.red("[AI]] ")+Ansi.purple("Stance: ")+Ansi.yellow(stance.name()));
         switch (stance) {
             case DEFENSIVE: return defensiveBehaviour(entity);
             case PASSIVE: return passiveBehaviour(entity);
@@ -75,7 +78,7 @@ public class BehaviourFactory {
         );
         Sequence<Entity> seekPlayerIfWarmSequence = new Sequence<>(
                 new IsWarmConditionTask(entity),
-                new WanderAimlesslyActionTask(entity)
+                new HuntThePlayerDownActionTask(entity)
         );
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity),

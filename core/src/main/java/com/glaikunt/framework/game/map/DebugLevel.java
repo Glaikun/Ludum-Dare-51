@@ -1,8 +1,5 @@
 package com.glaikunt.framework.game.map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ai.btree.BehaviorTree;
-import com.badlogic.gdx.ai.btree.utils.BehaviorTreeParser;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
@@ -14,23 +11,23 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.StreamUtils;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
+import com.glaikunt.framework.game.enemy.Stance;
 import com.glaikunt.framework.game.player.PlayerActor;
 
 import java.io.Reader;
 
 public class DebugLevel extends CommonActor implements Level {
 
-    private OrthogonalTiledMapRenderer renderer;
-    private TiledMapTileLayer background;
+    private final OrthogonalTiledMapRenderer renderer;
+    private final TiledMapTileLayer background;
 
     private PlayerActor player;
-    private Array<EnemyActor> enemies = new Array<>();
-    private Array<HeatSourceActor> heatSources = new Array<>();
+    private final Array<EnemyActor> enemies = new Array<>();
+    private final Array<HeatSourceActor> heatSources = new Array<>();
 
     public DebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
@@ -161,7 +158,7 @@ public class DebugLevel extends CommonActor implements Level {
 
                     TiledMapTileLayer.Cell startCell = enemySpawns.getCell(x, y);
                     if (startCell != null) {
-                        EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos));
+                        EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos), this, Stance.AGGRESSIVE);
                         enemies.add(enemy);
                         front.addActor(enemy);
                     }
