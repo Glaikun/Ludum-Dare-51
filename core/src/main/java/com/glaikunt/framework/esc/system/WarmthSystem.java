@@ -26,15 +26,15 @@ public class WarmthSystem extends EntitySystem {
             WarmthComponent w = wc.get(entity);
 
             // if outdoors, deplete
-//            if (w.isOutside()) {
-//                w.setWarmth(w.getWarmth()-(DEPLETION_RATE_UNITS_PER_SECOND*delta));
-//            } else {
-//                w.setWarmth(w.getWarmth()+(INDOORS_UNITS_PER_SECOND*delta));
-//            }
-//
-//            if (w.isNearHeatSource()) {
-//                w.setWarmth(w.getWarmth() + (HEATSOURCE_UNITS_PER_SECOND * delta));
-//            }
+            if (w.isOutside()) {
+                w.setWarmth(w.getWarmth()-(DEPLETION_RATE_UNITS_PER_SECOND*delta));
+            } else {
+                w.setWarmth(w.getWarmth()+(INDOORS_UNITS_PER_SECOND*delta));
+            }
+
+            if (w.isNearHeatSource()) {
+                w.setWarmth(w.getWarmth() + (HEATSOURCE_UNITS_PER_SECOND * delta));
+            }
 
 //            Gdx.app.log("DEBUG", "warmth: "+w);
         }
