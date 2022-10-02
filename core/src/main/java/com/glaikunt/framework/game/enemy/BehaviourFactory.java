@@ -73,6 +73,7 @@ public class BehaviourFactory {
 
         Sequence<Entity> attackIfCloseSequence = new Sequence<>(
                 new PlayerNearbyConditionTask(entity),
+                new IsWarmConditionTask(entity),
                 new AttackPlayerActionTask(entity)
         );
         Sequence<Entity> seekPlayerIfWarmSequence = new Sequence<>(
