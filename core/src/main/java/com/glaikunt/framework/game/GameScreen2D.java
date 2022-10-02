@@ -19,13 +19,13 @@ import com.glaikunt.framework.esc.system.physics.CollisionSystem;
 import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
-import com.glaikunt.framework.game.map.DebugLevel;
+import com.glaikunt.framework.game.map.levels.DebugLevel;
 import com.glaikunt.framework.game.map.Level;
 import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
 
-    private Level currentLevel;
+    private DebugLevel currentLevel;
 
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
@@ -45,7 +45,7 @@ public class GameScreen2D extends Screen {
         getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
 
         this.currentLevel = new DebugLevel(getApplicationResources(), getFront());
-        getFront().addActor((DebugLevel) currentLevel);
+        getFront().addActor(currentLevel);
 
         // ########### Physics [Order Maters] ###########
         getEngine().addSystem(new GravitySystem(getEngine()));
@@ -87,7 +87,9 @@ public class GameScreen2D extends Screen {
         Gdx.gl.glClearColor(FrameworkConstants.DARK_BLUE.r, FrameworkConstants.DARK_BLUE.g, FrameworkConstants.DARK_BLUE.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        currentLevel.drawBackground();
         getBackground().draw();
+        currentLevel.drawForeground();
         getFront().draw();
         getUX().draw();
     }

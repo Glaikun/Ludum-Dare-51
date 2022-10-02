@@ -1,4 +1,4 @@
-package com.glaikunt.framework.game.map;
+package com.glaikunt.framework.game.map.levels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -16,14 +16,17 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
+import com.glaikunt.framework.game.map.BlockActor;
+import com.glaikunt.framework.game.map.CheckPointActor;
+import com.glaikunt.framework.game.map.HeatSourceActor;
+import com.glaikunt.framework.game.map.IndoorAreaActor;
+import com.glaikunt.framework.game.map.Level;
 import com.glaikunt.framework.game.player.PlayerActor;
-
-import java.io.Reader;
 
 public class DebugLevel extends CommonActor implements Level {
 
     private final OrthogonalTiledMapRenderer renderer;
-    private final TiledMapTileLayer background;
+    private final TiledMapTileLayer background, foreground;
 
     private PlayerActor player;
     private final Array<EnemyActor> enemies = new Array<>();
@@ -32,9 +35,10 @@ public class DebugLevel extends CommonActor implements Level {
     public DebugLevel(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
 
-        TiledMap map = applicationResources.getTiledMap(TiledCache.SOMETHING);
+        TiledMap map = applicationResources.getTiledMap(TiledCache.DEBUG_MAP);
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
+        this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
 
         createPlatforms(applicationResources, front, map);
 
@@ -46,7 +50,6 @@ public class DebugLevel extends CommonActor implements Level {
 
 
         createHeatSources(applicationResources, front, map);
-
 
         createPlayer(applicationResources, front, map);
 
@@ -166,11 +169,17 @@ public class DebugLevel extends CommonActor implements Level {
             }
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void drawBackground() {
 
         renderer.getBatch().begin();
         renderer.renderTileLayer(background);
+        renderer.getBatch().end();
+    }
+
+    public void drawForeground() {
+
+        renderer.getBatch().begin();
+        renderer.renderTileLayer(foreground);
         renderer.getBatch().end();
     }
 
