@@ -20,7 +20,7 @@ public class IsometricMapActor extends CommonActor {
     public IsometricMapActor(ApplicationResources applicationResources, Stage stage) {
         super(applicationResources);
 
-        TiledMap tiledMap = applicationResources.getTiledMap(TiledCache.SOMETHING);
+        TiledMap tiledMap = applicationResources.getTiledMap(TiledCache.DEBUG_MAP);
 
         MapProperties prop = tiledMap.getProperties();
         int tilePixelWidth = prop.get("tilewidth", Integer.class);

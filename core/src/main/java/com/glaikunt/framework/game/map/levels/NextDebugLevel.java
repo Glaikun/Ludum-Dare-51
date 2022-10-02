@@ -1,8 +1,6 @@
-package com.glaikunt.framework.game.map;
+package com.glaikunt.framework.game.map.levels;
 
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -13,48 +11,46 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.glaikunt.framework.application.ApplicationResources;
-import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
+import com.glaikunt.framework.game.map.BlockActor;
+import com.glaikunt.framework.game.map.CheckPointActor;
+import com.glaikunt.framework.game.map.HeatSourceActor;
+import com.glaikunt.framework.game.map.IndoorAreaActor;
 import com.glaikunt.framework.game.player.PlayerActor;
 
-public class DebugLevel extends CommonActor implements Level {
+public class NextDebugLevel extends AbstractLevel {
 
-    private final OrthogonalTiledMapRenderer renderer;
-    private final TiledMapTileLayer background;
+    private OrthogonalTiledMapRenderer renderer;
+    private TiledMapTileLayer background, foreground;
 
     private PlayerActor player;
     private final Array<EnemyActor> enemies = new Array<>();
     private final Array<HeatSourceActor> heatSources = new Array<>();
-    private final Array<BreakableActor> breakables = new Array<>();
 
-    public DebugLevel(ApplicationResources applicationResources, Stage front) {
-        super(applicationResources);
+    public NextDebugLevel(ApplicationResources applicationResources, Stage front) {
+        super(applicationResources, front);
+    }
 
-        TiledMap map = applicationResources.getTiledMap(TiledCache.SOMETHING);
+    @Override
+    public void init() {
+        TiledMap map = getApplicationResources().getTiledMap(TiledCache.TRANSITION_DEBUG_MAP);
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
+        this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
 
-        // Order here will also drive order actors are added to 'front' stage remember.
+        createPlatforms(getApplicationResources(), getFront(), map);
 
-        createPlatforms(applicationResources, front, map);
+        createCheckpoints(getApplicationResources(), getFront(), map);
 
+        createIndoors(getApplicationResources(), getFront(), map);
 
-        createCheckpoints(applicationResources, front, map);
+        createHeatSources(getApplicationResources(), getFront(), map);
 
+        createPlayer(getApplicationResources(), getFront(), map);
 
-        createIndoors(applicationResources, front, map);
-
-
-        createHeatSources(applicationResources, front, map);
-
-
-        createBreakables(applicationResources, front, map);
-
-
-        createPlayer(applicationResources, front, map); // player before enemies
-        createEnemies(applicationResources, front, map); // player before enemies
+        createEnemies(getApplicationResources(), getFront(), map);
     }
 
     private void createPlayer(ApplicationResources applicationResources, Stage front, TiledMap map) {
@@ -135,23 +131,6 @@ public class DebugLevel extends CommonActor implements Level {
         }
     }
 
-    private void createBreakables(ApplicationResources applicationResources, Stage front, TiledMap map) {
-        TiledMapTileLayer items = (TiledMapTileLayer) map.getLayers().get("Breakable");
-        for (int y = items.getHeight(); y >= 0; y--) {
-            float yPos = (y * items.getTileHeight());
-            for (int x = 0; x < items.getWidth(); x++) {
-                float xPos = (x * items.getTileWidth());
-
-                TiledMapTileLayer.Cell startCell = items.getCell(x, y);
-                if (startCell != null) {
-                    BreakableActor breakable = new BreakableActor(applicationResources, new Vector2(xPos, yPos));
-                    breakables.add(breakable);
-                    front.addActor(breakable);
-                }
-            }
-        }
-    }
-
     private void createHeatSources(ApplicationResources applicationResources, Stage front, TiledMap map) {
         TiledMapTileLayer heatsources = (TiledMapTileLayer) map.getLayers().get("Heatsource");
         for (int y = heatsources.getHeight(); y >= 0; y--) {
@@ -186,20 +165,24 @@ public class DebugLevel extends CommonActor implements Level {
             }
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
+    public void drawBackground() {
 
         renderer.getBatch().begin();
         renderer.renderTileLayer(background);
         renderer.getBatch().end();
     }
 
-    @Override
-    public void act(float delta) {
+    public void drawForeground() {
 
-        if (getStage() != null) {
-            renderer.setView((OrthographicCamera) getStage().getCamera());
-        }
+        renderer.getBatch().begin();
+        renderer.renderTileLayer(foreground);
+        renderer.getBatch().end();
+    }
+
+    @Override
+    public void act(Stage stage) {
+
+            renderer.setView((OrthographicCamera) stage.getCamera());
     }
 
     public PlayerActor getPlayer() {
@@ -208,23 +191,5 @@ public class DebugLevel extends CommonActor implements Level {
 
     public Array<HeatSourceActor> getHeatSources() {
         return heatSources;
-    }
-
-    public Array<BreakableActor> getBreakables() {
-        return breakables;
-    }
-
-    public void removeBreakable(Entity entity) {
-        BreakableActor match = null;
-        for (BreakableActor b : breakables) {
-            if (b.getEntity() == entity) {
-                match = b;
-                break;
-            }
-        }
-        if (match != null) {
-            match.remove();
-            breakables.removeValue(match, true);
-        }
     }
 }
