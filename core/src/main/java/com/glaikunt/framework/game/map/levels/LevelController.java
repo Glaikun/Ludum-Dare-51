@@ -78,12 +78,10 @@ public class LevelController extends CommonActor {
         }
 
         if (fade.getFade() >= 1) {
-            for (Actor actor : front.getActors()) {
-               actor. remove();
-            }
-//            getStage().clear();
-//            getEngine().removeAllEntities();
-//            getEngine().addEntity(getEntity());
+            //FIXME THERE BE DRAGONS
+           front.clear();
+            getEngine().removeAllEntities();
+            getEngine().addEntity(getEntity());
 
 
                     AbstractLevel abstractLevel = levels.get(0);
