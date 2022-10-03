@@ -49,6 +49,8 @@ public class LevelController extends CommonActor {
         this.levels.add(new Level1(applicationResources, front));
         this.levels.add(new Level2(applicationResources, front));
         this.levels.add(new Level3(applicationResources, front));
+        this.levels.add(new Level4(applicationResources, front));
+
 
 //        this.levels.add(new DebugLevel(applicationResources, front));
 //        this.levels.add(new NextDebugLevel(applicationResources, front));

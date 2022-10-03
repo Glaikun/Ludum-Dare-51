@@ -16,7 +16,7 @@ public class IsWarmConditionTask extends AbstractLeafTask {
     @Override
     public Status execute() {
         if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute IsWarmConditionTask [")+Ansi.green(warmth.toString())+Ansi.yellow("]"));
-        if (!warmth.isFrozen() && warmth.getWarmthFloat() > 0.8f) {
+        if (!warmth.isFrozen() && warmth.getWarmthFloat() >= 0.5f) {
             if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("~~ TOASTY ~~"));
             if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;

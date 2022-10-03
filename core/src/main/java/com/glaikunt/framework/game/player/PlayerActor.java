@@ -93,7 +93,7 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (warmth.isFrozen() || player.getHealth() <= 0 || pos.y < 0) {
+        if ((warmth.isFrozen() || player.getHealth() <= 0 || pos.y < 0) && !player.isLevelComplete()) {
             player.setDead(true);
             playerInput.setDisableInputMovement(true);
         }

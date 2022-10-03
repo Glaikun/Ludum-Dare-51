@@ -41,7 +41,6 @@ public class BehaviourFactory {
         );
         Sequence<Entity> defensiveAttackSequence = new Sequence<>(
                 new IsWarmConditionTask(entity, applicationResources),
-                new PlayerNearbyConditionTask(entity, applicationResources),
                 new AttackPlayerHoldingGroundActionTask(entity, applicationResources)
         );
 

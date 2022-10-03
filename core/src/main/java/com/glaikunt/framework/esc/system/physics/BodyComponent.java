@@ -28,7 +28,7 @@ public class BodyComponent extends Rectangle implements Component {
 
     public boolean isContactedWithPlayer() {
         return contactsByBody.values().stream()
-                .anyMatch(c -> c.getNormal().x != 0 && BodyType.PLAYER.equals(c.getBodyBType()));
+                .anyMatch(c -> BodyType.PLAYER.equals(c.getBodyBType()));
     }
 
     public ContactComponent getPlayerContact() {
