@@ -51,27 +51,30 @@ public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
             ContactComponent playerContact = bc.getPlayerContact();
             player.setHealth(player.getHealth()-1);
 
-            if (playerContact.getNormal().x >= 1) {
-                playerVel.x += LATERAL_ACCELERATION;
-//                playerVel.y += LATERAL_ACCELERATION;
-                if (player.getHealth() <= 0) {
-                    player.setDeathFrom(-1);
-                    ic.setLeft(false);
-                    ic.setRight(false);
-                    ic.setJump(false);
-                    ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
-                }
-            } else  if (playerContact.getNormal().x <= -1) {
-                playerVel.x -= LATERAL_ACCELERATION;
-//                playerVel.y += LATERAL_ACCELERATION;
-                if (player.getHealth() <= 0) {
-                    player.setDeathFrom(1);
-                    ic.setLeft(false);
-                    ic.setRight(false);
-                    ic.setJump(false);
-                    ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
-                }
+            if (playerContact != null && playerContact.getNormal() != null) {
 
+                if (playerContact.getNormal().x >= 1) {
+                    playerVel.x += LATERAL_ACCELERATION;
+//                playerVel.y += LATERAL_ACCELERATION;
+                    if (player.getHealth() <= 0) {
+                        player.setDeathFrom(-1);
+                        ic.setLeft(false);
+                        ic.setRight(false);
+                        ic.setJump(false);
+                        ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
+                    }
+                } else if (playerContact.getNormal().x <= -1) {
+                    playerVel.x -= LATERAL_ACCELERATION;
+//                playerVel.y += LATERAL_ACCELERATION;
+                    if (player.getHealth() <= 0) {
+                        player.setDeathFrom(1);
+                        ic.setLeft(false);
+                        ic.setRight(false);
+                        ic.setJump(false);
+                        ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
+                    }
+
+                }
             }
 
             if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
