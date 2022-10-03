@@ -38,7 +38,7 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
     public Status execute() {
         System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackPlayerActionTask"));
 
-        if (bc.isContactedWithPlayer()) {
+        if (bc.isContactedWithPlayer() && !player.isDead()) {
 
             ContactComponent playerContact = bc.getPlayerContact();
 
