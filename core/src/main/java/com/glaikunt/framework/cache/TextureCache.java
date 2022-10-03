@@ -32,6 +32,7 @@ public class TextureCache implements Cache {
     public static final String ENEMY = "enemy/enemy.png";
     public static final String HEATSOURCE = "heatsource/heatsource.png";
     public static final String BREAKABLE_DEBUG = "breakable/breakable-debug.png";
+    public static final String HEART = "tmp/heart_icon.png";
 
     private final Map<String, Texture> textureMap = new HashMap<>();
     private final Map<String, TextureRegion[][]> textureRegionMap = new HashMap<>();
@@ -42,7 +43,7 @@ public class TextureCache implements Cache {
 
         add(assetManager, PIXEL, SNOWFLAKE, SPRITESHEET, PLAYER, ENEMY);
         add(assetManager, HEATSOURCE, BREAKABLE_DEBUG);
-        add(assetManager, IDLE_PLAYER, RUNNING_PLAYER, DEATH_PLAYER);
+        add(assetManager, IDLE_PLAYER, RUNNING_PLAYER, DEATH_PLAYER, HEART);
         addWrapped(assetManager, FOG);
     }
 

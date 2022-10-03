@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Align;
 import com.glaikunt.framework.Display2D;
 import com.glaikunt.framework.application.ApplicationResources;
 
+import static com.glaikunt.framework.cache.FontCache.BASIC_FONT;
+
 public class CreditTextActor extends Actor {
 
     private BitmapFont baseFont;
@@ -21,7 +23,7 @@ public class CreditTextActor extends Actor {
 
     public CreditTextActor(ApplicationResources applicationResources, String txt) {
 
-        this.baseFont = applicationResources.getCacheRetriever().getFontCache(null);
+        this.baseFont = applicationResources.getCacheRetriever().getFontCache(BASIC_FONT);
         this.layout = new GlyphLayout();
         this.layout.setText(baseFont, txt, new Color(1f, 1f, 1f, alpha), 0, Align.left, false);
         this.txt = txt;
