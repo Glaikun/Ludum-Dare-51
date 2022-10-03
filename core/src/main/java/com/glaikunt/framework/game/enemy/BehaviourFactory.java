@@ -82,7 +82,7 @@ public class BehaviourFactory {
     private static Task<Entity> aggressiveBehaviour(Entity entity) {
 
         Sequence<Entity> attackIfCloseSequence = new Sequence<>(
-                new IsWarmConditionTask(entity),
+                new NotTooColdConditionTask(entity),
                 new PlayerNearbyConditionTask(entity),
                 new AttackPlayerActionTask(entity)
         );
@@ -98,6 +98,9 @@ public class BehaviourFactory {
                 new TooColdConditionTask(entity),
                 new MoveToNearestHeatSourceActionTask(entity)
         );
-        return new Selector<>(attackIfCloseSequence, breakObstaclesSequence, seekPlayerIfWarmSequence, findHeatSourceSequence);
+        Sequence<Entity> fallback = new Sequence<>(
+                new MoveToNearestHeatSourceActionTask(entity)
+        );
+        return new Selector<>(attackIfCloseSequence, breakObstaclesSequence, seekPlayerIfWarmSequence, findHeatSourceSequence, fallback);
     }
 }

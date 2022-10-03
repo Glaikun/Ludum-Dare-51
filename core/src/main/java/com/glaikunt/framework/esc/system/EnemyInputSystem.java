@@ -12,7 +12,7 @@ import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class EnemyInputSystem extends EntitySystem {
-    private static final float LATERAL_ACCELERATION = 20f;
+    private static final float LATERAL_ACCELERATION = 40f;
     private static final float JUMPING_ACCELERATION = 75;
     private final ImmutableArray<Entity> animationEntities;
 

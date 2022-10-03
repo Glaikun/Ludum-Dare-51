@@ -36,10 +36,12 @@ public class TargetsComponent implements Component {
     }
 
     public void setTargetBreakable(Entity targetBreakable) {
-        if (targetBreakable != null && targetBreakable.getComponent(HealthComponent.class) != null) {
-            this.targetBreakable = targetBreakable;
-        } else {
-            Gdx.app.debug("DEBUG", "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
+        if (targetBreakable != null) {
+            if (targetBreakable.getComponent(HealthComponent.class) != null) {
+                this.targetBreakable = targetBreakable;
+            } else {
+                Gdx.app.debug("DEBUG", "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
+            }
         }
     }
 

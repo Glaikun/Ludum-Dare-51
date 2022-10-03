@@ -1,6 +1,7 @@
 package com.glaikunt.framework.esc.component.common;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.Gdx;
 
 public class WarmthComponent implements Component {
 
@@ -27,6 +28,9 @@ public class WarmthComponent implements Component {
     }
 
     public void setWarmth(float warmth) {
+        if (warmth-this.warmth > 10f) {
+            Gdx.app.debug("DEBUG", "Big delta in warmth jump?");
+        }
         this.warmth = warmth;
         if (this.warmth > WARMTH_MAX) {
             this.warmth = WARMTH_MAX;
