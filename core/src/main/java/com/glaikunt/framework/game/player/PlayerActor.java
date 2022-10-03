@@ -93,7 +93,7 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (player.getHealth() <= 0) {
+        if (warmth.isFrozen() || player.getHealth() <= 0) {
             player.setDead(true);
             playerInput.setDisableInputMovement(true);
         }
@@ -126,9 +126,7 @@ public class PlayerActor extends CommonActor {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()-(delta*AUDIO_RAMP)));
             }
 
-            if (breathingTimer.isTimerEventReady()) {
-
-
+            if (!player.isDead() && breathingTimer.isTimerEventReady()) {
                 int yDelta = 50;
                 int xDelta = 100;
                 if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT)) {
