@@ -2,6 +2,7 @@ package com.glaikunt.framework.game.map.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,6 +15,7 @@ import com.glaikunt.framework.effects.FogActor;
 import com.glaikunt.framework.esc.component.misc.FadeComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.game.player.PlayerActor;
 import com.glaikunt.framework.pixels.PixelBlizzardActor;
 import com.glaikunt.framework.pixels.PixelStarsActor;
@@ -84,6 +86,8 @@ public class LevelController extends CommonActor {
     @Override
     public void act(float delta) {
 
+        updateEffects();
+
         levelTransitionUpdate();
 
         resetLevelUpdate(delta);
@@ -94,6 +98,13 @@ public class LevelController extends CommonActor {
             currentPlayer.getPlayerInput().setDisableInputMovement(false);
             fade.setFadeOut(false);
         }
+    }
+
+    private void updateEffects() {
+        front.getCamera().update();
+        getBlizzard().updatePosition(front.getCamera().position.x, front.getCamera().position.y);
+        getFogActor().updatePosition(front.getCamera().position.x, front.getCamera().position.y);
+        getFogActor2().updatePosition(front.getCamera().position.x, front.getCamera().position.y);
     }
 
     private void resetLevelUpdate(float delta) {
@@ -116,10 +127,11 @@ public class LevelController extends CommonActor {
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
             getCurrentLevel().reset();
-            createEffects(front, background);
-
             getCurrentLevel().init();
             this.currentPlayer = currentLevel.getPlayer();
+            ((OrthographicCamera) front.getCamera()).zoom = GameConstants.ZOOM;
+            front.getCamera().position.set(getPlayer().getX() + (getPlayer().getWidth() / 2), (getPlayer().getY()) + (getPlayer().getHeight()*2), 0);
+            createEffects(front, background);
             fade.setFadeOut(true);
         }
     }
@@ -143,16 +155,17 @@ public class LevelController extends CommonActor {
             front.clear();
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
-            createEffects(front, background);
 
             AbstractLevel abstractLevel = levels.get(0);
             currentLevel = abstractLevel;
             currentLevel.init();
             currentPlayer = currentLevel.getPlayer();
             levels.remove(0);
+            ((OrthographicCamera) front.getCamera()).zoom = GameConstants.ZOOM;
+            front.getCamera().position.set(getPlayer().getX() + (getPlayer().getWidth() / 2), (getPlayer().getY()) + (getPlayer().getHeight()*2), 0);
+            createEffects(front, background);
             fade.setFadeOut(true);
             currentPlayer.getPlayerInput().setDisableInputMovement(true);
-
         }
     }
 

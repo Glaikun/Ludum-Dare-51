@@ -51,7 +51,7 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
         }
 
         if (tc.getTargetBreakable().getComponent(HealthComponent.class).isExpired()) {
-            getApplicationResources().getSound(SoundCache.SMASH).play();
+            getApplicationResources().getSound(SoundCache.SMASH).play(1f, 1f, -1f);
             bc.getContactsByBody().remove(tc.getTargetBreakable().getComponent(BodyComponent.class));
             eac.getCurrentLevel().removeBreakable(tc.getTargetBreakable());
             tc.setTargetBreakable(null);

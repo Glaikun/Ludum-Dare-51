@@ -5,6 +5,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
+import com.glaikunt.framework.esc.component.common.SpeedComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.common.WarmthComponent;
 import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
@@ -12,7 +13,6 @@ import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class EnemyInputSystem extends EntitySystem {
-    private static final float LATERAL_ACCELERATION = 40f;
     private static final float JUMPING_ACCELERATION = 75;
     private final ImmutableArray<Entity> animationEntities;
 
@@ -22,6 +22,7 @@ public class EnemyInputSystem extends EntitySystem {
     private final ComponentMapper<EnemyInputComponent> eic = ComponentMapper.getFor(EnemyInputComponent.class);
     private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
     private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
+    private ComponentMapper<SpeedComponent> sc = ComponentMapper.getFor(SpeedComponent.class);
 
     //TODO Jumping State
 
@@ -43,15 +44,16 @@ public class EnemyInputSystem extends EntitySystem {
             AbstractPlayerInputComponent input = eic.get(entity);
             BodyComponent body = bcm.get(entity);
             WarmthComponent warmth = wcm.get(entity);
+            SpeedComponent speed = sc.get(entity);
 
             if (input.isMovingLeft()) {
 //                pos.x -= speed;
-                ac.x = -LATERAL_ACCELERATION;
+                ac.x = -speed.getSpeed();
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.LEFT);
             } else if (input.isMovingRight()) {
 //                pos.x += speed;
-                ac.x = LATERAL_ACCELERATION;
+                ac.x = speed.getSpeed();
                 input.setAnimation(AbstractPlayerInputComponent.Animation.MOVEMENT);
                 input.setFacing(AbstractPlayerInputComponent.Direction.RIGHT);
             } else {

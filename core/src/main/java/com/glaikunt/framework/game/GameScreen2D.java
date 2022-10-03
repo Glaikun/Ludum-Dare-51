@@ -97,9 +97,6 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
-        levelController.getBlizzard().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
-        levelController.getFogActor().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
-        levelController.getFogActor2().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
         levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);
