@@ -7,6 +7,7 @@ import com.glaikunt.framework.esc.component.common.AccelerationComponent;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.PlayerComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
@@ -48,12 +49,20 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
 //                playerVel.y += LATERAL_ACCELERATION;
                 if (player.getHealth() <= 0) {
                     player.setDeathFrom(-1);
+                    ic.setLeft(false);
+                    ic.setRight(false);
+                    ic.setJump(false);
+                    ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
                 }
             } else  if (playerContact.getNormal().x <= -1) {
                 playerVel.x -= LATERAL_ACCELERATION;
 //                playerVel.y += LATERAL_ACCELERATION;
                 if (player.getHealth() <= 0) {
                     player.setDeathFrom(1);
+                    ic.setLeft(false);
+                    ic.setRight(false);
+                    ic.setJump(false);
+                    ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
                 }
 
             }
