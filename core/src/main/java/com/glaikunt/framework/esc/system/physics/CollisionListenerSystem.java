@@ -109,6 +109,7 @@ public class CollisionListenerSystem extends EntitySystem {
 
                     bodyA.getBeforeContacts().add(contact);
                     bodyA.getContactsByBody().put(bodyB, contact);
+                    bodyB.getContactsByBody().put(bodyA, contact);
 
 //                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" putting ContactsByBody with "+bodyB.getBodyType()+" "+bodyB+" => "+contact);
                 }
@@ -116,6 +117,7 @@ public class CollisionListenerSystem extends EntitySystem {
                 if (bodyA.getContactsByBody().containsKey(bodyB) && !tmpBodyA.intersects(tmpBodyB)) {
 
                     bodyA.getContactsByBody().remove(bodyB);
+                    bodyB.getContactsByBody().remove(bodyA);
 
                     ContactComponent contact = new ContactComponent();
                     contact.setBodyA(bodyA);
