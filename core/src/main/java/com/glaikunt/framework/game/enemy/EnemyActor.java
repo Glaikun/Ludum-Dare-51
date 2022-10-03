@@ -7,7 +7,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
 import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,6 +20,7 @@ import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.*;
+import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -30,7 +33,7 @@ public class EnemyActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
     private final VelocityComponent velocity;
-    private final AnimationComponent animation;
+    private final AnimationComponent idleAnimation, runningAnimation;
 
     private final WarmthComponent warmth;
     private final TargetsComponent targets;
@@ -45,12 +48,21 @@ public class EnemyActor extends CommonActor {
     public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel) {
         this(applicationResources, pos, abstractLevel, Stance.values()[MathUtils.random(Stance.values().length-1)]);
     }
+
     public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel, Stance stance) {
         super(applicationResources);
 
         this.acceleration = new AccelerationComponent();
         this.velocity = new VelocityComponent();
-        this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.ENEMY), 1, 1);
+
+        this.idleAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.IDLE_PLAYER), 6, 1);
+        this.idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        this.idleAnimation.setFramerate(0.15f);
+
+        this.runningAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.RUNNING_PLAYER), 4, 1);
+        this.runningAnimation.setPlayMode(Animation.PlayMode.LOOP);
+        this.runningAnimation.setFramerate(0.1f);
+
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
         this.targets = new TargetsComponent();
         this.damage = new DamageComponent(10f);
@@ -58,7 +70,7 @@ public class EnemyActor extends CommonActor {
         this.input = new EnemyInputComponent();
 
         this.pos.set(pos);
-        this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
+        this.size.set(idleAnimation.getCurrentFrame().getRegionWidth(), idleAnimation.getCurrentFrame().getRegionHeight());
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.ENEMY);
@@ -66,7 +78,7 @@ public class EnemyActor extends CommonActor {
 
         getEntity().add(acceleration);
         getEntity().add(velocity);
-        getEntity().add(animation);
+        getEntity().add(idleAnimation);
         getEntity().add(warmth);
         getEntity().add(targets);
         getEntity().add(damage);
@@ -81,13 +93,16 @@ public class EnemyActor extends CommonActor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(warmth.getWarmthFloat(), warmth.getWarmthFloat(), 1.0f, 1f);
-        batch.draw(animation.getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
+
+        batch.setColor(warmth.getWarmthFloat(), warmth.getWarmthFloat()*.5f, .5f, 1f);
+        batch.draw(getEntity().getComponent(AnimationComponent.class).getCurrentFrame(), getX(), getY(), getWidth(), getHeight());
         batch.setColor(Color.WHITE);
     }
 
     @Override
     public void act(float delta) {
+
+        animationUpdate();
 
 //        if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
             System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
@@ -114,6 +129,26 @@ public class EnemyActor extends CommonActor {
 //                System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
 //                c++;
 //            }
+        }
+    }
+
+    private void animationUpdate() {
+        if (input.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(false);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
+            }
+        } else  if (input.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && !getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(true);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
+            }
+        }
+
+        if (input.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
+            getEntity().add(idleAnimation);
+        } else if (input.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
+            getEntity().add(runningAnimation);
         }
     }
 
