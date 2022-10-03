@@ -147,6 +147,7 @@ public class LevelController extends CommonActor {
                     fade.setFadeIn(true);
                     currentPlayer.getPlayerInput().setDisableInputMovement(true);
                     currentPlayer.getPlayerInput().setWalkRight(true);
+                    currentPlayer.getPlayer().setLevelComplete(true);
                 }
             }
 

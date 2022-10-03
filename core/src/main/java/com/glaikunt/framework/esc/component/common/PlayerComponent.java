@@ -7,6 +7,7 @@ public class PlayerComponent implements Component {
     private int health = 1;
     private boolean hit, dead;
     private int deathFrom;
+    private boolean levelComplete;
 
     public int getHealth() {
         return health;
@@ -38,5 +39,13 @@ public class PlayerComponent implements Component {
 
     public void setDeathFrom(int deathFrom) {
         this.deathFrom = deathFrom;
+    }
+
+    public boolean isLevelComplete() {
+        return levelComplete;
+    }
+
+    public void setLevelComplete(boolean levelComplete) {
+        this.levelComplete = levelComplete;
     }
 }

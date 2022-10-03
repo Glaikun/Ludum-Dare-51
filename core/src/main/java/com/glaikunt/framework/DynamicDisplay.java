@@ -6,6 +6,7 @@ import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.splash.SplashScreen;
 
 import static com.badlogic.gdx.utils.Logger.DEBUG;
+import static com.badlogic.gdx.utils.Logger.NONE;
 
 public class DynamicDisplay extends Display {
 
@@ -22,7 +23,7 @@ public class DynamicDisplay extends Display {
     @Override
     public void create() {
 
-        Gdx.app.setLogLevel(DEBUG);
+        Gdx.app.setLogLevel(NONE);
 
         initApplicationResource2D();
 //        initApplicationResource3D();

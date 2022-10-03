@@ -118,10 +118,10 @@ public class GameScreen2D extends Screen {
             vfxManager.beginInputCapture();
         }
 
-        levelController.getCurrentLevel().drawBackground();
         getBackground().draw();
-        levelController.getCurrentLevel().drawForeground();
+        levelController.getCurrentLevel().drawBackground();
         getFront().draw();
+        levelController.getCurrentLevel().drawForeground();
         getUX().draw();
 
         if (isVFX) {
