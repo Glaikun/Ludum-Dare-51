@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 
+import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.cache.MusicCache;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
@@ -20,6 +22,7 @@ import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponen
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+import com.glaikunt.framework.pixels.FlamePixelActor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +39,7 @@ public class PlayerActor extends CommonActor {
 
     private final Vector2 tmpVector2 = new Vector2();
     private static final float AUDIO_RAMP = 5f;
+    private final TickTimer breathingTimer = new TickTimer(1.5f);
 
     public PlayerActor(ApplicationResources applicationResources, Vector2 pos) {
         super(applicationResources);
@@ -112,6 +116,8 @@ public class PlayerActor extends CommonActor {
         }
 
         if (warmth.isOutside()) {
+
+            breathingTimer.tick(delta);
             if (!getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).isPlaying()) {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setLooping(true);
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).play();
@@ -122,6 +128,23 @@ public class PlayerActor extends CommonActor {
             if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() > 0f) {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()-(delta*AUDIO_RAMP)));
             }
+
+            if (breathingTimer.isTimerEventReady()) {
+
+
+                int yDelta = 50;
+                int xDelta = 100;
+                if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT)) {
+                    float x = getX()+(getWidth()-5);
+                    float y = getY()+(getHeight()-15);
+                    getStage().addActor(new FlamePixelActor(getApplicationResources(), x, y, x + xDelta, y + yDelta, 1, 1, FrameworkConstants.WHITE, 30, 15));
+                } else {
+                    float x = getX()+5;
+                    float y = getY()+(getHeight()-15);
+                    getStage().addActor(new FlamePixelActor(getApplicationResources(), x, y, x - xDelta, y + yDelta, 1, 1, FrameworkConstants.WHITE, 30, 15));
+                }
+            }
+
         } else {
             if (!getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).isPlaying()) {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setLooping(true);
