@@ -57,6 +57,10 @@ public class BodyComponent extends Rectangle implements Component {
         this.bodyType = bodyType;
     }
 
+    public long getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

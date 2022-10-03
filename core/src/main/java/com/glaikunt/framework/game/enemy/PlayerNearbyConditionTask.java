@@ -34,8 +34,6 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
         tmpCircle.set(bc.x, bc.y, RADIUS);
 
         System.out.println( Ansi.red("  |- ")+Ansi.purple("P:"+playerBC+" E:"+bc+" in sight?: "+tmpCircle.contains(playerBC.x, playerBC.y)+" testing against radius ")+Ansi.yellow(RADIUS));
-//        System.out.println( Ansi.red("  |- ")+Ansi.purple("P:"+playerBC+" E:"+bc+" dist: "+tmpVector2b.sub(tmpVector2a).len()+" testing against range ")+Ansi.yellow(RADIUS));
-//        if (tmpVector2b.sub(tmpVector2a).len() < RADIUS) {
         if (tmpCircle.contains(playerBC.x, playerBC.y)) {
             tmpVector2b.sub(tmpVector2a);
             int x = Math.round(tmpVector2b.x);

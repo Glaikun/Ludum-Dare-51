@@ -13,7 +13,6 @@ import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class AttackBreakableActionTask extends AbstractLeafTask {
     private final EasyAccessComponent eac;
-    private final BodyComponent playerBC;
     private final BodyComponent bc;
     private final TargetsComponent tc;
     private final DamageComponent dc;
@@ -22,7 +21,6 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
         super(entity, applicationResources);
         this.eac = entity.getComponent(EasyAccessComponent.class);
         this.bc = entity.getComponent(BodyComponent.class);
-        this.playerBC = eac.getPlayerEntity().getComponent(BodyComponent.class);
         this.tc = entity.getComponent(TargetsComponent.class);
         this.ic = entity.getComponent(EnemyInputComponent.class);
         this.dc = entity.getComponent(DamageComponent.class);
@@ -62,6 +60,7 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
             System.out.println( Ansi.red("  |- ")+Ansi.green("Reminder of TC now: ")+Ansi.cyan(tc.toString()));
         }
 
+        System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
         return Status.SUCCEEDED;
     }
 }

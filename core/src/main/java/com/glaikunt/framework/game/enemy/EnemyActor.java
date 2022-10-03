@@ -108,7 +108,7 @@ public class EnemyActor extends CommonActor {
         animationUpdate();
 
 //        if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
-            System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
+            System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] (Id: "+body.getId()+") behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
             behaviorTree.step();
 //        }
 
