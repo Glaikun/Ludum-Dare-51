@@ -40,6 +40,7 @@ public abstract class AbstractLevel extends CommonActor {
     public AbstractLevel(ApplicationResources applicationResources, Stage front, String level) {
         super(applicationResources);
         this.front = front;
+        this.level = level;
     }
 
     public void drawBackground() {
