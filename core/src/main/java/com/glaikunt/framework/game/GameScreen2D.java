@@ -22,11 +22,13 @@ import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.levels.LevelController;
+import com.glaikunt.framework.pixels.PixelBlizzardActor;
 import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
 
     private LevelController levelController;
+    private PixelBlizzardActor blizzard;
 
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
@@ -67,6 +69,7 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new FadeSystem(getEngine()));
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
+        getFront().addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
     }
 
     @Override
@@ -78,6 +81,7 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
+        blizzard.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
         levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);

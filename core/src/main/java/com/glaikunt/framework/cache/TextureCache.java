@@ -12,6 +12,7 @@ public class TextureCache implements Cache {
 
 //   ################## EXAMPLE ##################
     public static final String PIXEL = "tmp/pixel.png";
+    public static final String SNOWFLAKE = "tmp/snowflake.png";
 //   ################## EXAMPLE ##################
 
     //   ################## SPRITE TILES ##################
@@ -36,7 +37,7 @@ public class TextureCache implements Cache {
     @Override
     public void loadCache(AssetManager assetManager) {
 
-        add(assetManager, PIXEL, SPRITESHEET, PLAYER, ENEMY);
+        add(assetManager, PIXEL, SNOWFLAKE, SPRITESHEET, PLAYER, ENEMY);
         add(assetManager, HEATSOURCE, BREAKABLE_DEBUG);
         add(assetManager, IDLE_PLAYER, RUNNING_PLAYER);
     }
