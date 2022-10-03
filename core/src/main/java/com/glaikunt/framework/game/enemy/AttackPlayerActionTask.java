@@ -41,24 +41,22 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
         if (bc.isContactedWithPlayer() && !player.isDead()) {
 
             ContactComponent playerContact = bc.getPlayerContact();
+            player.setHealth(player.getHealth()-1);
 
             if (playerContact.getNormal().x >= 1) {
                 playerVel.x += LATERAL_ACCELERATION;
 //                playerVel.y += LATERAL_ACCELERATION;
-                player.setHealth(player.getHealth()-1);
                 if (player.getHealth() <= 0) {
                     player.setDeathFrom(-1);
                 }
             } else  if (playerContact.getNormal().x <= -1) {
                 playerVel.x -= LATERAL_ACCELERATION;
 //                playerVel.y += LATERAL_ACCELERATION;
-                player.setHealth(player.getHealth()-1);
                 if (player.getHealth() <= 0) {
                     player.setDeathFrom(1);
                 }
 
             }
-            player.setHealth(player.getHealth()-1);
 
             return Status.SUCCEEDED;
         } else {
