@@ -74,6 +74,9 @@ public class PlayerInputSystem extends EntitySystem {
                         input.setAnimation(AbstractPlayerInputComponent.Animation.JUMP);
                     }
                 }
+            } else {
+                ac.x = 0;
+                input.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
             }
 
             if (input.isWalkRight()) {
