@@ -229,4 +229,15 @@ public class NextDebugLevel extends AbstractLevel {
             breakables.removeValue(match, true);
         }
     }
+
+    public void reset() {
+        renderer = null;
+        background = null;
+        foreground = null;
+        player = null;
+
+        enemies.clear();
+        heatSources.clear();
+        breakables.clear();
+    }
 }

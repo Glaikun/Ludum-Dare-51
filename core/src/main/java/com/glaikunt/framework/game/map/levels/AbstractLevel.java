@@ -43,4 +43,8 @@ public abstract class AbstractLevel extends CommonActor {
     public abstract Array<BreakableActor> getBreakables();
 
     public abstract void removeBreakable(Entity entity);
+
+    public void reset() {
+
+    }
 }

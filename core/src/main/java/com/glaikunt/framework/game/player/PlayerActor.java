@@ -226,4 +226,8 @@ public class PlayerActor extends CommonActor {
     public PlayerInputComponent getPlayerInput() {
         return playerInput;
     }
+
+    public PlayerComponent getPlayer() {
+        return player;
+    }
 }

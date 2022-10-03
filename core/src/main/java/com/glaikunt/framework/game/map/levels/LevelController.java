@@ -3,10 +3,10 @@ package com.glaikunt.framework.game.map.levels;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
+import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.misc.FadeComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -26,7 +26,8 @@ public class LevelController extends CommonActor {
 
     private FadeComponent.Fade fade;
 
-    private boolean startTransition = false;
+    private boolean startLevelTransition, resetLevel;
+    private TickTimer resetLevelTimer = new TickTimer(2f);
 
     public LevelController(ApplicationResources applicationResources, Stage front) {
         super(applicationResources);
@@ -65,38 +66,73 @@ public class LevelController extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (!startTransition) {
+        levelTransitionUpdate();
+
+        resetLevelUpdate(delta);
+
+        if (fade.getFade() == 0 && fade.isFadeOut()) {
+            startLevelTransition = false;
+            resetLevel = false;
+            currentPlayer.getPlayerInput().setDisableInputMovement(false);
+            fade.setFadeOut(false);
+        }
+    }
+
+    private void resetLevelUpdate(float delta) {
+        if (!resetLevel && !startLevelTransition) {
+
+            if (getPlayer().getPlayer().isDead()) {
+                resetLevel = true;
+            }
+        }
+
+        if (resetLevel && !fade.isFadeOut() && !fade.isFadeIn()) {
+            resetLevelTimer.tick(delta);
+            if (resetLevelTimer.isTimerEventReady()) {
+                fade.setFadeIn(true);
+            }
+        }
+
+        if (fade.getFade() >= 1 && resetLevel) {
+            front.clear();
+            getEngine().removeAllEntities();
+            getEngine().addEntity(getEntity());
+            getCurrentLevel().reset();
+
+            getCurrentLevel().init();
+            this.currentPlayer = currentLevel.getPlayer();
+            fade.setFadeOut(true);
+        }
+    }
+
+    private void levelTransitionUpdate() {
+        if (!startLevelTransition && !resetLevel) {
             for (BodyComponent contract : currentPlayer.getBody().getContactsByBody().keySet()) {
 
                 if (contract.getBodyType().equals(BodyType.CHECKPOINT)) {
-                    startTransition = true;
+                    startLevelTransition = true;
                     fade.setFadeIn(true);
                     currentPlayer.getPlayerInput().setDisableInputMovement(true);
                     currentPlayer.getPlayerInput().setWalkRight(true);
                 }
             }
+
         }
 
-        if (fade.getFade() >= 1) {
+        if (fade.getFade() >= 1 && startLevelTransition) {
             //FIXME THERE BE DRAGONS
-           front.clear();
+            front.clear();
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
 
 
-                    AbstractLevel abstractLevel = levels.get(0);
-                    currentLevel = abstractLevel;
-                    currentLevel.init();
-                    currentPlayer = currentLevel.getPlayer();
-                    levels.remove(0);
-                    fade.setFadeOut(true);
-                    currentPlayer.getPlayerInput().setDisableInputMovement(true);
-        }
-
-        if (fade.getFade() == 0 && fade.isFadeOut()) {
-            startTransition = false;
-            currentPlayer.getPlayerInput().setDisableInputMovement(false);
-            fade.setFadeOut(false);
+            AbstractLevel abstractLevel = levels.get(0);
+            currentLevel = abstractLevel;
+            currentLevel.init();
+            currentPlayer = currentLevel.getPlayer();
+            levels.remove(0);
+            fade.setFadeOut(true);
+            currentPlayer.getPlayerInput().setDisableInputMovement(true);
         }
     }
 
