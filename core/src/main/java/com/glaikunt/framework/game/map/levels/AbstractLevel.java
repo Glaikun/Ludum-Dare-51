@@ -174,6 +174,7 @@ public abstract class AbstractLevel extends CommonActor {
 
     private static void createChasms(ApplicationResources applicationResources, Stage front, TiledMap map) {
         MapLayer chasms = map.getLayers().get("Chasm");
+        if (chasms == null) return;
         for (MapObject mapObject : chasms.getObjects()) {
 
             if (mapObject instanceof RectangleMapObject) {
