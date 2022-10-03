@@ -26,6 +26,17 @@ public class BodyComponent extends Rectangle implements Component {
                 .anyMatch(c -> c.getNormal().y <= -1 && includeList.contains(c.getBodyBType()));
     }
 
+    public boolean isContactedWithPlayer() {
+        return contactsByBody.values().stream()
+                .anyMatch(c -> c.getNormal().x != 0 && BodyType.PLAYER.equals(c.getBodyBType()));
+    }
+
+    public ContactComponent getPlayerContact() {
+        return contactsByBody.values().stream()
+                .filter(c -> c.getNormal().x != 0 && BodyType.PLAYER.equals(c.getBodyBType()))
+                .findAny().orElse(null);
+    }
+
     public List<ContactComponent> getBeforeContacts() {
         return beforeContacts;
     }

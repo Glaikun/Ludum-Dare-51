@@ -93,7 +93,7 @@ public class LevelController extends CommonActor {
                     currentPlayer.getPlayerInput().setDisableInputMovement(true);
         }
 
-        if (fade.getFade() == 0) {
+        if (fade.getFade() == 0 && fade.isFadeOut()) {
             startTransition = false;
             currentPlayer.getPlayerInput().setDisableInputMovement(false);
             fade.setFadeOut(false);

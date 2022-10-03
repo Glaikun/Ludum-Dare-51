@@ -43,12 +43,15 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
             if (x < 0) {
                 ic.setLeft(true);
                 ic.setRight(false);
+                ic.setJump(false);
             } else if (x > 0) {
                 ic.setLeft(false);
                 ic.setRight(true);
+                ic.setJump(false);
             } else {
                 ic.setLeft(false);
                 ic.setRight(false);
+                ic.setJump(false);
             }
             System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;

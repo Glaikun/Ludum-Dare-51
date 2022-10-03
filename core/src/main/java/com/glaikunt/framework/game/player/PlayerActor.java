@@ -31,8 +31,9 @@ public class PlayerActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
     private final VelocityComponent velocity;
-    private final AnimationComponent idleAnimation, runningAnimation;
+    private final AnimationComponent idleAnimation, runningAnimation, deathAnimation;
     private final PlayerInputComponent playerInput;
+    private final PlayerComponent player;
 
     private final WarmthComponent warmth;
     private final BodyComponent body;
@@ -46,6 +47,7 @@ public class PlayerActor extends CommonActor {
 
         this.acceleration = new AccelerationComponent();
         this.velocity = new VelocityComponent();
+        this.player = new PlayerComponent();
 
         this.idleAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.IDLE_PLAYER), 6, 1);
         this.idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -54,6 +56,11 @@ public class PlayerActor extends CommonActor {
         this.runningAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.RUNNING_PLAYER), 4, 1);
         this.runningAnimation.setPlayMode(Animation.PlayMode.LOOP);
         this.runningAnimation.setFramerate(0.1f);
+
+        this.deathAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.DEATH_PLAYER), 4, 1);
+        this.deathAnimation.setPlayMode(Animation.PlayMode.NORMAL);
+        this.deathAnimation.setFramerate(0.15f);
+        this.deathAnimation.setPlaying(false);
 
         this.playerInput = new PlayerInputComponent();
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
@@ -65,6 +72,7 @@ public class PlayerActor extends CommonActor {
         this.body.setBodyType(BodyType.PLAYER);
         this.body.set(getX()+1, getY()+1, getWidth()-2, getHeight()-2);
 
+        getEntity().add(player);
         getEntity().add(acceleration);
         getEntity().add(velocity);
         getEntity().add(idleAnimation);
@@ -85,23 +93,12 @@ public class PlayerActor extends CommonActor {
     @Override
     public void act(float delta) {
 
-        if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && getEntity().getComponent(AnimationComponent.class).isxFlip()) {
-            getEntity().getComponent(AnimationComponent.class).setxFlip(false);
-            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
-                region.flip(true, false);
-            }
-        } else  if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && !getEntity().getComponent(AnimationComponent.class).isxFlip()) {
-            getEntity().getComponent(AnimationComponent.class).setxFlip(true);
-            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
-                region.flip(true, false);
-            }
+        if (player.getHealth() <= 0) {
+            player.setDead(true);
+            playerInput.setDisableInputMovement(true);
         }
 
-        if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
-            getEntity().add(idleAnimation);
-        } else if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
-            getEntity().add(runningAnimation);
-        }
+        animationUpdate();
 
         cameraUpdate(delta);
 
@@ -156,6 +153,48 @@ public class PlayerActor extends CommonActor {
             if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() > 0f) {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume()-(delta*AUDIO_RAMP)));
             }
+        }
+    }
+
+    private void animationUpdate() {
+        if (player.isDead()) {
+
+            if (!deathAnimation.isPlaying()) {
+
+                getEntity().add(deathAnimation);
+                deathAnimation.setPlaying(true);
+                if (player.getDeathFrom() <= -1 && getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+                    getEntity().getComponent(AnimationComponent.class).setxFlip(false);
+                    for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                        region.flip(true, false);
+                    }
+                } else  if (player.getDeathFrom() >= -1 && !getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+                    getEntity().getComponent(AnimationComponent.class).setxFlip(true);
+                    for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                        region.flip(true, false);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.RIGHT) && getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(false);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
+            }
+        } else  if (playerInput.getFacing().equals(AbstractPlayerInputComponent.Direction.LEFT) && !getEntity().getComponent(AnimationComponent.class).isxFlip()) {
+            getEntity().getComponent(AnimationComponent.class).setxFlip(true);
+            for (TextureRegion region : getEntity().getComponent(AnimationComponent.class).getCurrentAnimation().getKeyFrames()) {
+                region.flip(true, false);
+            }
+        }
+
+        if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.IDLE) && !getEntity().getComponents().contains(idleAnimation, true)) {
+            getEntity().add(idleAnimation);
+        } else if (playerInput.getAnimation().equals(AbstractPlayerInputComponent.Animation.MOVEMENT) && !getEntity().getComponents().contains(runningAnimation, true)) {
+            getEntity().add(runningAnimation);
         }
     }
 
