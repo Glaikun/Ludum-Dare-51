@@ -67,7 +67,7 @@ public class PixelBlizzardActor extends Actor {
             if (xPos[i] < globalXOffset-(Display2D.WORLD_WIDTH/2)) {
                 xPosVol[i] = -xPosVol[i];
                 this.xPos[i] = globalXOffset+(Display2D.WORLD_WIDTH/2);
-                this.yPos[i] = (MathUtils.random()* Display2D.WORLD_HEIGHT)-globalYOffset;
+                this.yPos[i] = MathUtils.random(globalYOffset/2, Display2D.WORLD_HEIGHT*2);
 
             } else if (xPos[i] > globalXOffset+(Display2D.WORLD_WIDTH/2)) {
                 xPosVol[i] = -xPosVol[i];
@@ -76,7 +76,7 @@ public class PixelBlizzardActor extends Actor {
 
                 yPosVol[i] = -yPosVol[i];
                 this.xPos[i] = globalXOffset+(Display2D.WORLD_WIDTH/2);
-                this.yPos[i] = (MathUtils.random()* Display2D.WORLD_HEIGHT)-globalYOffset;
+                this.yPos[i] = MathUtils.random(globalYOffset/2, Display2D.WORLD_HEIGHT*2);
             } else if (yPos[i] > globalYOffset+Display2D.WORLD_HEIGHT) {
                 yPosVol[i] = -yPosVol[i];
             }
