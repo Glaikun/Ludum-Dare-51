@@ -25,6 +25,7 @@ import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
 import java.util.Map;
@@ -108,28 +109,28 @@ public class EnemyActor extends CommonActor {
         animationUpdate();
 
 //        if (!Task.Status.SUCCEEDED.equals(behaviorTree.getStatus())) {
-            System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] (Id: "+body.getId()+") behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( "FrameId: "+Gdx.graphics.getFrameId()+" [E] (Id: "+body.getId()+") behaviorTree.getStatus() "+behaviorTree.getStatus()+" behaviorTree.step()");
             behaviorTree.step();
 //        }
 
         if (!getBody().getBeforeContacts().isEmpty()) {
-            System.out.println( "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( "[E] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
 //
 //            int c = 0;
 //            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 //                BodyComponent key = entry.getKey();
 //                ContactComponent contact = entry.getValue();
-//                System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
+//                if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
 //                        c++;
 //            }
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            System.out.println( "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
 //            int c = 0;
 //            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 //                BodyComponent key = entry.getKey();
 //                ContactComponent contact = entry.getValue();
-//                System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
+//                if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
 //                c++;
 //            }
         }

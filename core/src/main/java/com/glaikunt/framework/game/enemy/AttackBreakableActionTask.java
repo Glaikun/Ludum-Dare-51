@@ -9,6 +9,7 @@ import com.glaikunt.framework.esc.component.common.DamageComponent;
 import com.glaikunt.framework.esc.component.common.HealthComponent;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 
 public class AttackBreakableActionTask extends AbstractLeafTask {
@@ -28,14 +29,14 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackBreakableActionTask"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackBreakableActionTask"));
         if (tc.getTargetBreakable() == null) {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED (no target)"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED (no target)"));
             return Status.FAILED;
         }
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("target is: ")+Ansi.cyan(""+tc.getTargetBreakable().getComponent(HealthComponent.class).getHealthPercent()+"%"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("target is: ")+Ansi.cyan(""+tc.getTargetBreakable().getComponent(HealthComponent.class).getHealthPercent()+"%"));
         if (tc.getTargetBreakable().getComponent(HealthComponent.class).isExpired()) {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED (can't attack a broken thing)"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED (can't attack a broken thing)"));
             eac.getCurrentLevel().removeBreakable(tc.getTargetBreakable());
             bc.getContactsByBody().remove(tc.getTargetBreakable().getComponent(BodyComponent.class));
             tc.setTargetBreakable(null);
@@ -43,7 +44,7 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
         }
 
         if (!dc.isRecentlyIssuedDamaged(1000)) { // sync with sound?
-            System.out.println(Ansi.red("  |- ") + Ansi.green("Knock knock, Neo ") + Ansi.cyan("DMG: " + dc.getDamage()) + " // TODO remember cooldown time!");
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println(Ansi.red("  |- ") + Ansi.green("Knock knock, Neo ") + Ansi.cyan("DMG: " + dc.getDamage()) + " // TODO remember cooldown time!");
             getApplicationResources().getSound(SoundCache.BANGING_DOOR_VARIANTS.get(MathUtils.random(SoundCache.BANGING_DOOR_VARIANTS.size()-1))).play(1f, 1f, -1f);
             tc.getTargetBreakable().getComponent(HealthComponent.class).damage(dc.doDamage());
         }
@@ -57,10 +58,10 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
             eac.getCurrentLevel().removeBreakable(tc.getTargetBreakable());
             tc.setTargetBreakable(null);
             ic.setJump(true);
-            System.out.println( Ansi.red("  |- ")+Ansi.green("Reminder of TC now: ")+Ansi.cyan(tc.toString()));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Reminder of TC now: ")+Ansi.cyan(tc.toString()));
         }
 
-        System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
         return Status.SUCCEEDED;
     }
 }

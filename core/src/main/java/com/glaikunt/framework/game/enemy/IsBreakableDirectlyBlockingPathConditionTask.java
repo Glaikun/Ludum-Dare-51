@@ -7,6 +7,7 @@ import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.common.HealthComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.game.map.BreakableActor;
 
 public class IsBreakableDirectlyBlockingPathConditionTask extends AbstractLeafTask {
@@ -27,24 +28,24 @@ public class IsBreakableDirectlyBlockingPathConditionTask extends AbstractLeafTa
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute IsBreakableDirectlyBlockingPathConditionTask"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute IsBreakableDirectlyBlockingPathConditionTask"));
         if (eac.getCurrentLevel().getBreakables().isEmpty()) {
             if (tc.getTargetBreakable() != null) {
                 tc.setTargetBreakable(null);
             }
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
             return Status.FAILED;
         }
 
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("Previous target? ")+Ansi.cyan(""+tc.getTargetBreakable()));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("Previous target? ")+Ansi.cyan(""+tc.getTargetBreakable()));
         tmpVector2a.set(bc.x, bc.y);
         tmpCircle.set(bc.x, bc.y, RADIUS);
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("bodyC: ")+Ansi.yellow(bc+" => "+tmpVector2a));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("bodyC: ")+Ansi.yellow(bc+" => "+tmpVector2a));
         float dist = Float.MAX_VALUE;
 
         for (BreakableActor b : eac.getCurrentLevel().getBreakables()) {
             if (tmpCircle.contains(b.getX(), b.getY())) {
-                System.out.println( Ansi.red("  |- ")+Ansi.green("Found a breakable next to me ")+Ansi.cyan(""+b.getEntity().getComponent(HealthComponent.class).getHealthPercent()+"%"));
+                if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Found a breakable next to me ")+Ansi.cyan(""+b.getEntity().getComponent(HealthComponent.class).getHealthPercent()+"%"));
                 if (b.getEntity().getComponent(HealthComponent.class).isExpired()) {
                     if (tc.getTargetBreakable() == b.getEntity()) {
                         tc.setTargetBreakable(null);
@@ -56,15 +57,15 @@ public class IsBreakableDirectlyBlockingPathConditionTask extends AbstractLeafTa
                 if (d < dist) {
                     dist = d;
                     tc.setTargetBreakable(b.getEntity());
-                    System.out.println(Ansi.red("  |  |- ") + Ansi.purple("breakable [" + b.getX() + "," + b.getY() + "] range: ") + Ansi.yellow("" + d) + Ansi.cyan(" " + tmpVector2b));
+                    if (GameConstants.BEHAVIOUR_LOGGING) System.out.println(Ansi.red("  |  |- ") + Ansi.purple("breakable [" + b.getX() + "," + b.getY() + "] range: ") + Ansi.yellow("" + d) + Ansi.cyan(" " + tmpVector2b));
                 }
             }
         }
         if (tc.getTargetBreakable() == null) {
-            System.out.println(Ansi.red("  |- ") + Ansi.red("Status.FAILED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println(Ansi.red("  |- ") + Ansi.red("Status.FAILED"));
             return Status.FAILED;
         } else {
-            System.out.println(Ansi.red("  |- ") + Ansi.green("Status.SUCCEEDED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println(Ansi.red("  |- ") + Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;
         }
     }
