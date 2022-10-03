@@ -1,7 +1,6 @@
 package com.glaikunt.framework.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -12,7 +11,6 @@ import com.crashinvaders.vfx.effects.VignettingEffect;
 import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
-import com.glaikunt.framework.effects.FogActor;
 import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.AnimationSystem;
@@ -21,22 +19,17 @@ import com.glaikunt.framework.esc.system.EnemyInputSystem;
 import com.glaikunt.framework.esc.system.FadeSystem;
 import com.glaikunt.framework.esc.system.PlayerInputSystem;
 import com.glaikunt.framework.esc.system.WarmthSystem;
-import com.glaikunt.framework.esc.system.physics.VelocityDecaySystem;
 import com.glaikunt.framework.esc.system.physics.CollisionListenerSystem;
 import com.glaikunt.framework.esc.system.physics.CollisionSystem;
 import com.glaikunt.framework.esc.system.physics.GravitySystem;
 import com.glaikunt.framework.esc.system.physics.PositionIterationsSystem;
+import com.glaikunt.framework.esc.system.physics.VelocityDecaySystem;
 import com.glaikunt.framework.esc.system.physics.VelocityIterationsSystem;
 import com.glaikunt.framework.game.map.levels.LevelController;
-import com.glaikunt.framework.pixels.PixelBlizzardActor;
-import com.glaikunt.framework.pixels.PixelStarsActor;
 
 public class GameScreen2D extends Screen {
 
     private LevelController levelController;
-    private PixelBlizzardActor blizzard;
-    private FogActor fogActor;
-    private FogActor fogActor2;
 
     private static final boolean isVFX = false;
     private  VfxManager vfxManager;
@@ -73,7 +66,7 @@ public class GameScreen2D extends Screen {
         getApplicationResources().getImmutableGameEntity().add(cameraControls);
         getEngine().addEntity(getApplicationResources().getImmutableGameEntity());
 
-        this.levelController = new LevelController(getApplicationResources(), getFront());
+        this.levelController = new LevelController(getApplicationResources(), getFront(), getBackground());
         getUX().addActor(levelController);
 
         // ########### Physics [Order Maters] ###########
@@ -93,11 +86,6 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new WarmthSystem(getEngine()));
         getEngine().addSystem(new AnimationSystem(getEngine()));
         getEngine().addSystem(new FadeSystem(getEngine()));
-
-        getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
-        getFront().addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
-        getFront().addActor(fogActor = new FogActor(getApplicationResources(), 0.04f, Color.WHITE));
-        getFront().addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f, Color.WHITE));
     }
 
     @Override
@@ -109,9 +97,9 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
-        blizzard.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
-        fogActor.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
-        fogActor2.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
+        levelController.getBlizzard().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
+        levelController.getFogActor().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
+        levelController.getFogActor2().updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
         levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);

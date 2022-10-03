@@ -1,38 +1,47 @@
 package com.glaikunt.framework.game.map.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.cache.TextureCache;
+import com.glaikunt.framework.effects.FogActor;
 import com.glaikunt.framework.esc.component.misc.FadeComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.player.PlayerActor;
+import com.glaikunt.framework.pixels.PixelBlizzardActor;
+import com.glaikunt.framework.pixels.PixelStarsActor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LevelController extends CommonActor {
 
-    private Stage front;
+    private Stage front, background;
     private List<AbstractLevel> levels = new ArrayList<>();
     private AbstractLevel currentLevel;
     private PlayerActor currentPlayer;
     private Texture pixel;
+    private PixelBlizzardActor blizzard;
+    private FogActor fogActor;
+    private FogActor fogActor2;
 
     private FadeComponent.Fade fade;
 
     private boolean startLevelTransition, resetLevel;
     private TickTimer resetLevelTimer = new TickTimer(2f);
 
-    public LevelController(ApplicationResources applicationResources, Stage front) {
+    public LevelController(ApplicationResources applicationResources, Stage front, Stage background) {
         super(applicationResources);
 
         this.front = front;
+        this.background = background;
         this.pixel = applicationResources.getTexture(TextureCache.PIXEL);
 
         this.levels.add(new DebugLevel(applicationResources, front));
@@ -44,6 +53,8 @@ public class LevelController extends CommonActor {
         this.currentPlayer = currentLevel.getPlayer();
         this.levels.remove(0);
 
+        createEffects(front, background);
+
         FadeComponent fadeComponent = new FadeComponent();
         this.fade = new FadeComponent.Fade();
         this.fade.setFade(0);
@@ -51,6 +62,13 @@ public class LevelController extends CommonActor {
         this.fade.setMaxFade(1);
         fadeComponent.addFade(fade);
         getEntity().add(fadeComponent);
+    }
+
+    private void createEffects(Stage front, Stage background) {
+        background.addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
+        front.addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
+        front.addActor(fogActor = new FogActor(getApplicationResources(), 0.04f, Color.WHITE));
+        front.addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f, Color.WHITE));
     }
 
     @Override
@@ -98,6 +116,7 @@ public class LevelController extends CommonActor {
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
             getCurrentLevel().reset();
+            createEffects(front, background);
 
             getCurrentLevel().init();
             this.currentPlayer = currentLevel.getPlayer();
@@ -124,7 +143,7 @@ public class LevelController extends CommonActor {
             front.clear();
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
-
+            createEffects(front, background);
 
             AbstractLevel abstractLevel = levels.get(0);
             currentLevel = abstractLevel;
@@ -133,6 +152,7 @@ public class LevelController extends CommonActor {
             levels.remove(0);
             fade.setFadeOut(true);
             currentPlayer.getPlayerInput().setDisableInputMovement(true);
+
         }
     }
 
@@ -142,5 +162,17 @@ public class LevelController extends CommonActor {
 
     public PlayerActor getPlayer() {
         return currentPlayer;
+    }
+
+    public PixelBlizzardActor getBlizzard() {
+        return blizzard;
+    }
+
+    public FogActor getFogActor() {
+        return fogActor;
+    }
+
+    public FogActor getFogActor2() {
+        return fogActor2;
     }
 }
