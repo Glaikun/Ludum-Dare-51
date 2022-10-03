@@ -6,15 +6,9 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.glaikunt.framework.application.GameUtils;
 import com.glaikunt.framework.esc.component.common.AccelerationComponent;
-import com.glaikunt.framework.esc.component.common.ContactComponent;
-import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
-
-import java.util.Map;
-
 
 /**
  * This is gravity movement based on pixels.

@@ -24,6 +24,8 @@ import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
+import java.util.Map;
+
 public class EnemyActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
@@ -60,7 +62,7 @@ public class EnemyActor extends CommonActor {
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.ENEMY);
-        this.body.set(pos.x, pos.y, size.x, size.y);
+        this.body.set(getX()+1, getY()+1, getWidth()-2, getHeight()-2);
 
         getEntity().add(acceleration);
         getEntity().add(velocity);
@@ -99,12 +101,19 @@ public class EnemyActor extends CommonActor {
 //            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
 //                BodyComponent key = entry.getKey();
 //                ContactComponent contact = entry.getValue();
-//                System.out.println( "[E] "+c+" "+key+" => "+contact);
+//                System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
 //                        c++;
 //            }
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             System.out.println( "[E] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+//            int c = 0;
+//            for (Map.Entry<BodyComponent, ContactComponent> entry : body.getContactsByBody().entrySet()) {
+//                BodyComponent key = entry.getKey();
+//                ContactComponent contact = entry.getValue();
+//                System.out.println( "  |- [E] "+c+" "+key+" => "+contact);
+//                c++;
+//            }
         }
     }
 

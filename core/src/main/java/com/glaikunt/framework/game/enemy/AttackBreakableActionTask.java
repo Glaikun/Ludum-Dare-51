@@ -36,6 +36,7 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
         if (tc.getTargetBreakable().getComponent(HealthComponent.class).isExpired()) {
             System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED (can't attack a broken thing)"));
             eac.getCurrentLevel().removeBreakable(tc.getTargetBreakable());
+            bc.getContactsByBody().remove(tc.getTargetBreakable().getComponent(BodyComponent.class));
             tc.setTargetBreakable(null);
             return Status.FAILED;
         }
@@ -44,6 +45,7 @@ public class AttackBreakableActionTask extends AbstractLeafTask {
         tc.getTargetBreakable().getComponent(HealthComponent.class).damage(dc.getDamage());
 
         if (tc.getTargetBreakable().getComponent(HealthComponent.class).isExpired()) {
+            bc.getContactsByBody().remove(tc.getTargetBreakable().getComponent(BodyComponent.class));
             eac.getCurrentLevel().removeBreakable(tc.getTargetBreakable());
             tc.setTargetBreakable(null);
             ic.setJump(true);
