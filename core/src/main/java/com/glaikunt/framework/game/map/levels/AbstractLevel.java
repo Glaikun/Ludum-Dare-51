@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
-import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
 import com.glaikunt.framework.game.map.BlockActor;
@@ -21,6 +20,7 @@ import com.glaikunt.framework.game.map.BreakableActor;
 import com.glaikunt.framework.game.map.CheckPointActor;
 import com.glaikunt.framework.game.map.HeatSourceActor;
 import com.glaikunt.framework.game.map.IndoorAreaActor;
+import com.glaikunt.framework.game.map.PlayerOnlyBlockActor;
 import com.glaikunt.framework.game.player.PlayerActor;
 
 public abstract class AbstractLevel extends CommonActor {
@@ -96,6 +96,8 @@ public abstract class AbstractLevel extends CommonActor {
         this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
 
         createPlatforms(getApplicationResources(), getFront(), map);
+
+        createPlayerOnlyPlatforms(getApplicationResources(), getFront(), map);
 
         createCheckpoints(getApplicationResources(), getFront(), map);
 
@@ -188,6 +190,25 @@ public abstract class AbstractLevel extends CommonActor {
                 Vector2 size = new Vector2(width, height);
 
                 front.addActor(new BlockActor(applicationResources, pos, size));
+            }
+        }
+    }
+
+    private static void createPlayerOnlyPlatforms(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        MapLayer levelCollision = map.getLayers().get("Player Only Platforms");
+        for (MapObject mapObject : levelCollision.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new PlayerOnlyBlockActor(applicationResources, pos, size));
             }
         }
     }

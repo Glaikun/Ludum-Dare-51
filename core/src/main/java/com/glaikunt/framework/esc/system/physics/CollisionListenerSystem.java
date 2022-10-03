@@ -66,7 +66,8 @@ public class CollisionListenerSystem extends EntitySystem {
                 Entity entityB = allBodyEntities.get(eiB);
                 BodyComponent bodyB = bcm.get(entityB);
 
-                if (bodyA == bodyB) {
+                if (bodyA == bodyB
+                        || ((bodyA.getBodyType().equals(BodyType.ENEMY) && bodyB.getBodyType().equals(BodyType.PLAYER_ONLY_BLOCK)))) {
                     continue;
                 }
 

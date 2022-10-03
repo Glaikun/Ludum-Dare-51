@@ -10,5 +10,6 @@ public enum BodyType {
     ENEMY,
     PLAYER,
     BLOCK,
+    PLAYER_ONLY_BLOCK,
     BREAKABLE // wondering about flags here e.g. blocking/non-blocking,etc
 }

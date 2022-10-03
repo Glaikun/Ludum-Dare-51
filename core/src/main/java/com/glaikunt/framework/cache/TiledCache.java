@@ -16,6 +16,10 @@ public class TiledCache implements Cache {
     public static final String TRANSITION_DEBUG_MAP = "maps/debug_map_2.tmx";
 //   ################## EXAMPLE ##################
 
+    //   ################## LEVELS ##################
+    public static final String LEVEL_1 = "maps/levels/level1.tmx";
+    //   ################## LEVELS ##################
+
     private Map<String, TiledMap> tiledMap = new HashMap<>();
     private boolean loaded = false;
 
@@ -34,6 +38,9 @@ public class TiledCache implements Cache {
 
         assetManager.load(TRANSITION_DEBUG_MAP, TiledMap.class, params);
         getTiledMap().put(TRANSITION_DEBUG_MAP, null);
+
+        assetManager.load(LEVEL_1, TiledMap.class, params);
+        getTiledMap().put(LEVEL_1, null);
     }
 
     @Override
