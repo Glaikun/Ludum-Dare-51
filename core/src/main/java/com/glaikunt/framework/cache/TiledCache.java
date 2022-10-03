@@ -22,6 +22,7 @@ public class TiledCache implements Cache {
     public static final String LEVEL_3 = "maps/levels/level3.tmx";
     public static final String LEVEL_4 = "maps/levels/level4.tmx";
     public static final String LEVEL_5 = "maps/levels/level5.tmx";
+    public static final String LEVEL_6 = "maps/levels/level6.tmx";
     //   ################## LEVELS ##################
 
     private final Map<String, TiledMap> tiledMap = new HashMap<>();
@@ -57,6 +58,9 @@ public class TiledCache implements Cache {
 
         assetManager.load(LEVEL_5, TiledMap.class, params);
         getTiledMap().put(LEVEL_5, null);
+
+        assetManager.load(LEVEL_6, TiledMap.class, params);
+        getTiledMap().put(LEVEL_6, null);
     }
 
     @Override
