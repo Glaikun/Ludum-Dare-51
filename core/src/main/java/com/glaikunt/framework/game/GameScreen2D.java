@@ -97,10 +97,10 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
-        levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);
         getUX().act(delta);
+        levelController.getCurrentLevel().act(getFront());
     }
 
     @Override
@@ -120,8 +120,8 @@ public class GameScreen2D extends Screen {
 
         getBackground().draw();
         levelController.getCurrentLevel().drawBackground();
-        getFront().draw();
         levelController.getCurrentLevel().drawForeground();
+        getFront().draw();
         getUX().draw();
 
         if (isVFX) {

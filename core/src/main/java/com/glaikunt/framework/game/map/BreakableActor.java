@@ -24,7 +24,7 @@ public class BreakableActor extends CommonActor {
 
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.BREAKABLE_DEBUG), 1, 1);
         this.pos.set(pos);
-        this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
+        this.size.set(animation.getCurrentFrame().getRegionWidth(), animation.getCurrentFrame().getRegionHeight());
 
         this.body = new BodyComponent();
         this.body.setBodyType(BodyType.BREAKABLE);
