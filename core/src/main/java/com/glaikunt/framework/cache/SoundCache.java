@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class SoundCache implements Cache {
 
-//   public static final String SOMETHING = "sounds/example.wav";
+   public static final String SMASH = "sound/148074__sandyrb__lightbulb-smash-002.ogg";
 
     public static final ImmutableArray<String> BANGING_DOOR_VARIANTS = new ImmutableArray<>(new Array<>(new String[]{
             "sound/85541__maj061785__banging-screen-door-1.ogg",
@@ -23,7 +23,7 @@ public class SoundCache implements Cache {
     @Override
     public void loadCache(AssetManager assetManager) {
 
-//        add(assetManager, SOMETHING);
+        add(assetManager, SMASH);
         add(assetManager, BANGING_DOOR_VARIANTS.toArray());
     }
 
