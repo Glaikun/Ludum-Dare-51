@@ -51,6 +51,7 @@ public class GameScreen2D extends Screen {
         // ########### Physics [Order Maters] ###########
         getEngine().addSystem(new GravitySystem(getEngine()));
         getEngine().addSystem(new PlayerInputSystem(getEngine()));
+        getEngine().addSystem(new EnemyInputSystem(getEngine()));
         getEngine().addSystem(new VelocityIterationsSystem(getEngine()));
 
         getEngine().addSystem(new CollisionListenerSystem(getEngine()));
@@ -63,7 +64,6 @@ public class GameScreen2D extends Screen {
         getEngine().addSystem(new CameraControlsSystem(getEngine()));
         getEngine().addSystem(new WarmthSystem(getEngine()));
         getEngine().addSystem(new AnimationSystem(getEngine()));
-        getEngine().addSystem(new EnemyInputSystem(getEngine()));
         getEngine().addSystem(new FadeSystem(getEngine()));
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
@@ -78,7 +78,6 @@ public class GameScreen2D extends Screen {
 
     @Override
     public void update(float delta) {
-
         levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);
