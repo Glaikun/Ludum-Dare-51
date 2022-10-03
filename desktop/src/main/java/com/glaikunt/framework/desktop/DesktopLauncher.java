@@ -18,6 +18,8 @@ public class DesktopLauncher {
 		config.useVsync(true);
 		config.setForegroundFPS(60);
 		config.setWindowedMode(1280, 960);
+		// 948 x 533
+//		config.setWindowedMode(948, 533);
 		config.setResizable(false);
 //		new LwjglApplication(new Display2D(), config);
 //		new LwjglApplication(new Display3D(), config);
