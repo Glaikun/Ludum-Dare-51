@@ -1,7 +1,6 @@
 package com.glaikunt.framework.game.enemy;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
 
