@@ -52,7 +52,6 @@ public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
             player.setHealth(player.getHealth()-1);
 
             if (playerContact != null && playerContact.getNormal() != null) {
-
                 if (playerContact.getNormal().x >= 1) {
                     playerVel.x += LATERAL_ACCELERATION;
 //                playerVel.y += LATERAL_ACCELERATION;
@@ -73,7 +72,6 @@ public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
                         ic.setJump(false);
                         ic.setAnimation(AbstractPlayerInputComponent.Animation.IDLE);
                     }
-
                 }
             }
 
