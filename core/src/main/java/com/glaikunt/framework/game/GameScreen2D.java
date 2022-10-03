@@ -1,9 +1,14 @@
 package com.glaikunt.framework.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Scaling;
+import com.crashinvaders.vfx.VfxManager;
+import com.crashinvaders.vfx.effects.BloomEffect;
+import com.crashinvaders.vfx.effects.VignettingEffect;
 import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
@@ -33,8 +38,26 @@ public class GameScreen2D extends Screen {
     private FogActor fogActor;
     private FogActor fogActor2;
 
+    private static final boolean isVFX = false;
+    private  VfxManager vfxManager;
+    private  VignettingEffect vfxVignettingEffect;
+    private  BloomEffect vfxBloomEffect;
+
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
+
+        if (isVFX) {
+            vfxManager = new VfxManager(Pixmap.Format.RGBA8888);
+
+            // Create and add an effect.
+            // VfxEffect derivative classes serve as controllers for the effects.
+            // They provide public properties to configure and control them.
+
+            vfxVignettingEffect = new VignettingEffect(false);
+//        vfxBloomEffect = new BloomEffect();
+            vfxManager.addEffect(vfxVignettingEffect);
+//        vfxManager.addEffect(vfxBloomEffect);
+        }
     }
 
     @Override
@@ -73,8 +96,8 @@ public class GameScreen2D extends Screen {
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
         getFront().addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
-        getFront().addActor(fogActor = new FogActor(getApplicationResources(), 0.04f));
-        getFront().addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f));
+        getFront().addActor(fogActor = new FogActor(getApplicationResources(), 0.04f, Color.WHITE));
+        getFront().addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f, Color.WHITE));
     }
 
     @Override
@@ -101,11 +124,32 @@ public class GameScreen2D extends Screen {
         Gdx.gl.glClearColor(FrameworkConstants.DARK_BLUE.r, FrameworkConstants.DARK_BLUE.g, FrameworkConstants.DARK_BLUE.b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        if (isVFX) {
+            // Clean up internal buffers, as we don't need any information from the last render.
+            vfxManager.cleanUpBuffers();
+
+            // Begin render to an off-screen buffer.
+            vfxManager.beginInputCapture();
+        }
+
         levelController.getCurrentLevel().drawBackground();
         getBackground().draw();
         levelController.getCurrentLevel().drawForeground();
         getFront().draw();
         getUX().draw();
+
+        if (isVFX) {
+            // End render to an off-screen buffer.
+            vfxManager.endInputCapture();
+
+            // Apply the effects chain to the captured frame.
+            vfxManager.applyEffects();
+
+            // Render result to the screen.
+            vfxManager.renderToScreen();
+        }
+
     }
 
     @Override
@@ -116,5 +160,20 @@ public class GameScreen2D extends Screen {
     @Override
     public void resume() {
 
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (isVFX) {
+            // Since VfxManager has internal frame buffers,
+            // it implements Disposable interface and thus should be utilized properly.
+            vfxManager.dispose();
+
+            // *** PLEASE NOTE ***
+            // VfxManager doesn't dispose attached VfxEffects.
+            // This is your responsibility to manage their lifecycle.
+            vfxVignettingEffect.dispose();
+        }
     }
 }
