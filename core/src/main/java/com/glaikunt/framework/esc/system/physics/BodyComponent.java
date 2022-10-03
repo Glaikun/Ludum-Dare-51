@@ -15,7 +15,7 @@ public class BodyComponent extends Rectangle implements Component {
     private BodyType bodyType;
     private static long idCounter = 0;
     private final long id = idCounter++;
-    private final List<BodyType> includeList = Arrays.asList(BodyType.BLOCK, BodyType.ENEMY);
+    private final List<BodyType> includeList = Arrays.asList(BodyType.BLOCK, BodyType.PLAYER_ONLY_BLOCK);
 
     /**
      * plus the only things it's allowed to jump off from (not a heatsource for example)
