@@ -153,7 +153,6 @@ public class LevelController extends CommonActor {
         }
 
         if (fade.getFade() >= 1 && startLevelTransition) {
-            //FIXME THERE BE DRAGONS
             front.clear();
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
