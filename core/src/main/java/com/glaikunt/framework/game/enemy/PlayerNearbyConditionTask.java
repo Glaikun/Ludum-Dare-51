@@ -7,6 +7,7 @@ import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 public class PlayerNearbyConditionTask extends AbstractLeafTask {
 
@@ -27,13 +28,13 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute PlayerNearbyConditionTask"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute PlayerNearbyConditionTask"));
 
         tmpVector2a.set(bc.x, bc.y);
         tmpVector2b.set(playerBC.x, playerBC.y);
         tmpCircle.set(bc.x, bc.y, RADIUS);
 
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("P:"+playerBC+" E:"+bc+" in sight?: "+tmpCircle.contains(playerBC.x, playerBC.y)+" testing against radius ")+Ansi.yellow(RADIUS));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("P:"+playerBC+" E:"+bc+" in sight?: "+tmpCircle.contains(playerBC.x, playerBC.y)+" testing against radius ")+Ansi.yellow(RADIUS));
         if (tmpCircle.contains(playerBC.x, playerBC.y)) {
             tmpVector2b.sub(tmpVector2a);
             int x = Math.round(tmpVector2b.x);
@@ -51,10 +52,10 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
                 ic.setRight(false);
                 ic.setJump(false);
             }
-            System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;
         } else {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
             return Status.FAILED;
         }
     }

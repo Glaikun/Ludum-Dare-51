@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.common.WarmthComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 public class IsWarmConditionTask extends AbstractLeafTask {
     private final WarmthComponent warmth;
@@ -14,13 +15,13 @@ public class IsWarmConditionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute IsWarmConditionTask [")+Ansi.green(warmth.toString())+Ansi.yellow("]"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute IsWarmConditionTask [")+Ansi.green(warmth.toString())+Ansi.yellow("]"));
         if (!warmth.isFrozen() && warmth.getWarmthFloat() > 0.8f) {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("~~ TOASTY ~~"));
-            System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("~~ TOASTY ~~"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;
         } else {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
             return Status.FAILED;
         }
     }

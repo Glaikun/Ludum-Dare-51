@@ -6,12 +6,13 @@ import com.badlogic.gdx.ai.btree.branch.Selector;
 import com.badlogic.gdx.ai.btree.branch.Sequence;
 import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
+import com.glaikunt.framework.game.GameConstants;
 
 public class BehaviourFactory {
 
     private BehaviourFactory() {}
     public static Task<Entity> getBehaviour(Stance stance, Entity entity, ApplicationResources applicationResources) {
-        System.out.println( Ansi.red("[AI]] ")+Ansi.purple("Stance: ")+Ansi.yellow(stance.name()));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI]] ")+Ansi.purple("Stance: ")+Ansi.yellow(stance.name()));
         switch (stance) {
             case DEFENSIVE: return defensiveBehaviour(entity, applicationResources);
             case PASSIVE: return passiveBehaviour(entity, applicationResources);

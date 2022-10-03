@@ -6,6 +6,7 @@ import com.glaikunt.framework.Ansi;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.game.map.HeatSourceActor;
 
 public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
@@ -27,11 +28,11 @@ public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute MoveToNearestHeatSourceActionTask"));
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("Previous target? ")+Ansi.cyan(""+tc.getTargetHeatSource()));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute MoveToNearestHeatSourceActionTask"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("Previous target? ")+Ansi.cyan(""+tc.getTargetHeatSource()));
         // TODO if we're sure the heat source target is still valid, use that and don't recompute the below
         tmpVector2a.set(bc.x, bc.y);
-        System.out.println( Ansi.red("  |- ")+Ansi.purple("bodyC: ")+Ansi.yellow(bc+" => "+tmpVector2a));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.purple("bodyC: ")+Ansi.yellow(bc+" => "+tmpVector2a));
         float dist = Float.MAX_VALUE;
         tmpVector2Target.set(0,0);
         for (HeatSourceActor hs : eac.getCurrentLevel().getHeatSources()) {
@@ -40,7 +41,7 @@ public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
             if (d < dist) {
                 dist = d;
                 tmpVector2Target.set(hs.getX(), hs.getY());
-                System.out.println( Ansi.red("  |  |- ")+Ansi.purple("heatsource ["+hs.getX()+","+hs.getY()+"] range: ")+Ansi.yellow(""+d)+Ansi.cyan(" "+tmpVector2b));
+                if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |  |- ")+Ansi.purple("heatsource ["+hs.getX()+","+hs.getY()+"] range: ")+Ansi.yellow(""+d)+Ansi.cyan(" "+tmpVector2b));
             }
         }
         if (!tmpVector2Target.equals(Vector2.Zero)) {
@@ -58,8 +59,8 @@ public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
                 ic.setLeft(false);
                 ic.setRight(false);
             }
-            System.out.println( Ansi.red("  |  |- ")+Ansi.green("heatsource ["+tmpVector2Target+"] "+tmpVector2b));
-            System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |  |- ")+Ansi.green("heatsource ["+tmpVector2Target+"] "+tmpVector2b));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.green("Status.SUCCEEDED"));
             return Status.SUCCEEDED;
         }
 

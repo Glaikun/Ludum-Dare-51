@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public interface GameConstants {
 
+    boolean BEHAVIOUR_LOGGING = false;
+
     Vector2 vec2 = new Vector2();
     Vector2 vec3 = new Vector2();
 

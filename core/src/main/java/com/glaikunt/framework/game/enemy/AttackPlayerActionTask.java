@@ -11,6 +11,7 @@ import com.glaikunt.framework.esc.component.common.VelocityComponent;
 import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 public class AttackPlayerActionTask extends AbstractLeafTask {
     private static final int RADIUS = 32; // tile
@@ -39,12 +40,12 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
 
     @Override
     public Status execute() {
-        System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackPlayerActionTask"));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("[AI] ")+Ansi.yellow("execute AttackPlayerActionTask"));
 
         tmpVector2a.set(bc.x, bc.y);
         tmpVector2b.set(playerBC.x, playerBC.y);
         tmpCircle.set(bc.x, bc.y, RADIUS);
-        System.out.println( Ansi.red("  |- ")+Ansi.yellow("tmpCircle.contains(playerBC.x, playerBC.y) ")+Ansi.cyan(""+tmpCircle.contains(playerBC.x, playerBC.y)));
+        if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.yellow("tmpCircle.contains(playerBC.x, playerBC.y) ")+Ansi.cyan(""+tmpCircle.contains(playerBC.x, playerBC.y)));
 
         if (tmpCircle.contains(playerBC.x, playerBC.y) && bc.isContactedWithPlayer() && !player.isDead()) {
 
@@ -76,7 +77,7 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
 
             return Status.SUCCEEDED;
         } else {
-            System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
+            if (GameConstants.BEHAVIOUR_LOGGING) System.out.println( Ansi.red("  |- ")+Ansi.red("Status.FAILED"));
             return Status.FAILED;
         }
     }
