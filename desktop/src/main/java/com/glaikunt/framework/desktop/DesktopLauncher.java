@@ -14,7 +14,7 @@ import com.glaikunt.framework.DynamicDisplay;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-		config.setTitle("Libgdx Framework");
+		config.setTitle("Baltic - LD51");
 		config.useVsync(true);
 		config.setForegroundFPS(60);
 		config.setWindowedMode(1280, 960);
