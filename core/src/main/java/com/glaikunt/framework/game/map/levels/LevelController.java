@@ -11,6 +11,7 @@ import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.cache.TextureCache;
+import com.glaikunt.framework.credits.CreditScreen;
 import com.glaikunt.framework.effects.FogActor;
 import com.glaikunt.framework.esc.component.misc.FadeComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
@@ -46,11 +47,11 @@ public class LevelController extends CommonActor {
         this.background = background;
         this.pixel = applicationResources.getTexture(TextureCache.PIXEL);
 
-        this.levels.add(new Level1(applicationResources, front));
-        this.levels.add(new Level2(applicationResources, front));
-        this.levels.add(new Level3(applicationResources, front));
-        this.levels.add(new Level4(applicationResources, front));
-        this.levels.add(new Level5(applicationResources, front));
+//        this.levels.add(new Level1(applicationResources, front));
+//        this.levels.add(new Level2(applicationResources, front));
+//        this.levels.add(new Level3(applicationResources, front));
+//        this.levels.add(new Level4(applicationResources, front));
+//        this.levels.add(new Level5(applicationResources, front));
         this.levels.add(new Level6(applicationResources, front));
 
 //        this.levels.add(new DebugLevel(applicationResources, front));
@@ -145,14 +146,20 @@ public class LevelController extends CommonActor {
 
     private void levelTransitionUpdate() {
         if (!startLevelTransition && !resetLevel) {
+
             for (BodyComponent contract : currentPlayer.getBody().getContactsByBody().keySet()) {
 
                 if (contract.getBodyType().equals(BodyType.CHECKPOINT)) {
-                    startLevelTransition = true;
-                    fade.setFadeIn(true);
-                    currentPlayer.getPlayerInput().setDisableInputMovement(true);
-                    currentPlayer.getPlayerInput().setWalkRight(true);
-                    currentPlayer.getPlayer().setLevelComplete(true);
+
+                    if (levels.isEmpty()) {
+                        getApplicationResources().getDisplay().setScreen(new CreditScreen(getApplicationResources()));
+                    } else {
+                        startLevelTransition = true;
+                        fade.setFadeIn(true);
+                        currentPlayer.getPlayerInput().setDisableInputMovement(true);
+                        currentPlayer.getPlayerInput().setWalkRight(true);
+                        currentPlayer.getPlayer().setLevelComplete(true);
+                    }
                 }
             }
 

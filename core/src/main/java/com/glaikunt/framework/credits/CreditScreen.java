@@ -10,6 +10,7 @@ import com.glaikunt.framework.Display2D;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
 import com.glaikunt.framework.application.TickTimer;
+import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.misc.BloatingComponent;
 import com.glaikunt.framework.esc.system.BloatingSystem;
 
@@ -43,7 +44,7 @@ public class CreditScreen extends Screen {
         getApplicationResources().getEngine().addEntity(endScreenEntity);
         getApplicationResources().getEngine().addSystem(new BloatingSystem(getEngine()));
 
-        this.heart = getApplicationResources().getCacheRetriever().geTextureCache(null);
+        this.heart = getApplicationResources().getCacheRetriever().geTextureCache(TextureCache.HEART);
         this.size = new Vector2(heart.getWidth() * 8, heart.getHeight() * 8);
 
         this.textTimer = new TickTimer(3);
