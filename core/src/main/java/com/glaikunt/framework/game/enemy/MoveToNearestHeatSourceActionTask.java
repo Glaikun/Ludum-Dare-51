@@ -3,6 +3,7 @@ package com.glaikunt.framework.game.enemy;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.Ansi;
+import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.game.map.HeatSourceActor;
@@ -16,8 +17,8 @@ public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
     private final Vector2 tmpVector2a = new Vector2();
     private final Vector2 tmpVector2b = new Vector2();
     private final Vector2 tmpVector2Target = new Vector2();
-    public MoveToNearestHeatSourceActionTask(Entity entity) {
-        super(entity);
+    public MoveToNearestHeatSourceActionTask(Entity entity, ApplicationResources applicationResources) {
+        super(entity, applicationResources);
         this.eac = entity.getComponent(EasyAccessComponent.class);
         this.bc = entity.getComponent(BodyComponent.class);
         this.tc = entity.getComponent(TargetsComponent.class);

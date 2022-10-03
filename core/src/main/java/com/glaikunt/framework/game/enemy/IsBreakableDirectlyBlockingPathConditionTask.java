@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.Ansi;
+import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.common.HealthComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.game.map.BreakableActor;
@@ -17,8 +18,8 @@ public class IsBreakableDirectlyBlockingPathConditionTask extends AbstractLeafTa
     private final Vector2 tmpVector2a = new Vector2();
     private final Vector2 tmpVector2b = new Vector2();
     private final Circle tmpCircle = new Circle();
-    public IsBreakableDirectlyBlockingPathConditionTask(Entity entity) {
-        super(entity);
+    public IsBreakableDirectlyBlockingPathConditionTask(Entity entity, ApplicationResources applicationResources) {
+        super(entity, applicationResources);
         this.eac = entity.getComponent(EasyAccessComponent.class);
         this.bc = entity.getComponent(BodyComponent.class);
         this.tc = entity.getComponent(TargetsComponent.class);

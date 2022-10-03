@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.Ansi;
+import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.movement.EnemyInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
@@ -16,8 +17,8 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
     private final Vector2 tmpVector2a = new Vector2();
     private final Vector2 tmpVector2b = new Vector2();
     private final Circle tmpCircle = new Circle();
-    public PlayerNearbyConditionTask(Entity entity) {
-        super(entity);
+    public PlayerNearbyConditionTask(Entity entity, ApplicationResources applicationResources) {
+        super(entity, applicationResources);
         EasyAccessComponent eac = entity.getComponent(EasyAccessComponent.class);
         this.bc = entity.getComponent(BodyComponent.class);
         this.playerBC = eac.getPlayerEntity().getComponent(BodyComponent.class);

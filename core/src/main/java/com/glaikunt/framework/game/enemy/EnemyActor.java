@@ -87,7 +87,7 @@ public class EnemyActor extends CommonActor {
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
         final ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
         getEntity().add(new EasyAccessComponent(abstractLevel, playerEntities.get(0)));
-        this.behaviorTree = new BehaviorTree<>(BehaviourFactory.getBehaviour(stance, entity));
+        this.behaviorTree = new BehaviorTree<>(BehaviourFactory.getBehaviour(stance, entity, applicationResources));
         this.behaviorTree.start();
     }
 

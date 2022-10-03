@@ -1,16 +1,21 @@
 package com.glaikunt.framework.cache;
 
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SoundCache implements Cache {
 
-//   ################## EXAMPLE ##################
 //   public static final String SOMETHING = "sounds/example.wav";
-//   ################## EXAMPLE ##################
+
+    public static final ImmutableArray<String> BANGING_DOOR_VARIANTS = new ImmutableArray<>(new Array<>(new String[]{
+            "sound/85541__maj061785__banging-screen-door-1.ogg",
+            "sound/85541__maj061785__banging-screen-door-2.ogg"
+    }));
 
     private Map<String, Sound> sounds = new HashMap<>();
     private boolean loaded = false;
@@ -19,6 +24,7 @@ public class SoundCache implements Cache {
     public void loadCache(AssetManager assetManager) {
 
 //        add(assetManager, SOMETHING);
+        add(assetManager, BANGING_DOOR_VARIANTS.toArray());
     }
 
     @Override
