@@ -38,6 +38,7 @@ public class EnemyActor extends CommonActor {
     private final WarmthComponent warmth;
     private final TargetsComponent targets;
     private final DamageComponent damage;
+    private final SpeedComponent speed;
     private final EnemyInputComponent input;
     private final BodyComponent body;
 
@@ -66,6 +67,7 @@ public class EnemyActor extends CommonActor {
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
         this.targets = new TargetsComponent();
         this.damage = new DamageComponent(10f);
+        this.speed = new SpeedComponent(stance.speed);
 
         this.input = new EnemyInputComponent();
 
@@ -83,6 +85,7 @@ public class EnemyActor extends CommonActor {
         getEntity().add(targets);
         getEntity().add(damage);
         getEntity().add(input);
+        getEntity().add(speed);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
         final ImmutableArray<Entity> playerEntities = applicationResources.getEngine().getEntitiesFor(Family.all(PlayerInputComponent.class).get());
