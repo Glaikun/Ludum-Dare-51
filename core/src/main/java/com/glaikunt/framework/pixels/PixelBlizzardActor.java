@@ -11,7 +11,7 @@ import com.glaikunt.framework.cache.TextureCache;
 
 public class PixelBlizzardActor extends Actor {
 
-    private TextureRegion pixel;
+    private final TextureRegion pixel;
 
     private float[] xPos, yPos, xPosVol, yPosVol, angle, energy, width, height;
     private Color[] colour;
@@ -22,7 +22,7 @@ public class PixelBlizzardActor extends Actor {
     public PixelBlizzardActor(ApplicationResources applicationResources, Color colour) {
 
         this.pixel = new TextureRegion(applicationResources.getTexture(TextureCache.SNOWFLAKE));
-        int index = 1000;
+        int index = 500;
         this.xPos = new float[index];
         this.yPos = new float[index];
         this.xPosVol = new float[index];

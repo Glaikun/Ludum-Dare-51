@@ -11,7 +11,7 @@ import com.glaikunt.framework.cache.TextureCache;
 
 public class PixelStarsActor extends Actor {
 
-    private TextureRegion pixel;
+    private final TextureRegion pixel;
 
     private float[] xPos, yPos, xPosVol, yPosVol, angle, energy, width, height;
     private Color[] colour;

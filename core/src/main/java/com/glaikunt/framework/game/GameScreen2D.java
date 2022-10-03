@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.glaikunt.framework.FrameworkConstants;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
+import com.glaikunt.framework.effects.FogActor;
 import com.glaikunt.framework.esc.component.camera.CameraControlsComponent;
 import com.glaikunt.framework.esc.component.common.GravityComponent;
 import com.glaikunt.framework.esc.system.AnimationSystem;
@@ -29,6 +30,8 @@ public class GameScreen2D extends Screen {
 
     private LevelController levelController;
     private PixelBlizzardActor blizzard;
+    private FogActor fogActor;
+    private FogActor fogActor2;
 
     public GameScreen2D(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.none, Scaling.stretch);
@@ -70,6 +73,8 @@ public class GameScreen2D extends Screen {
 
         getBackground().addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
         getFront().addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
+        getFront().addActor(fogActor = new FogActor(getApplicationResources(), 0.04f));
+        getFront().addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f));
     }
 
     @Override
@@ -82,6 +87,8 @@ public class GameScreen2D extends Screen {
     @Override
     public void update(float delta) {
         blizzard.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
+        fogActor.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
+        fogActor2.updatePosition(getFront().getCamera().position.x, getFront().getCamera().position.y);
         levelController.getCurrentLevel().act(getFront());
         getBackground().act(delta);
         getFront().act(delta);

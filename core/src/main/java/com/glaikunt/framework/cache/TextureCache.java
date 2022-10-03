@@ -1,6 +1,7 @@
 package com.glaikunt.framework.cache;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.glaikunt.framework.application.Pair;
@@ -10,10 +11,11 @@ import java.util.Map;
 
 public class TextureCache implements Cache {
 
-//   ################## EXAMPLE ##################
     public static final String PIXEL = "tmp/pixel.png";
     public static final String SNOWFLAKE = "tmp/snowflake.png";
-//   ################## EXAMPLE ##################
+
+    public static final String FOG = "tmp/clouds2.png";
+
 
     //   ################## SPRITE TILES ##################
     public static final String SPRITESHEET = "spritesheet/spritesheet.png";
@@ -41,6 +43,7 @@ public class TextureCache implements Cache {
         add(assetManager, PIXEL, SNOWFLAKE, SPRITESHEET, PLAYER, ENEMY);
         add(assetManager, HEATSOURCE, BREAKABLE_DEBUG);
         add(assetManager, IDLE_PLAYER, RUNNING_PLAYER, DEATH_PLAYER);
+        addWrapped(assetManager, FOG);
     }
 
     @Override
@@ -70,6 +73,18 @@ public class TextureCache implements Cache {
         for (String image : images) {
             assetManager.load(image, Texture.class);
             getTextureMap().put(image, null);
+        }
+    }
+
+    public void addWrapped(AssetManager assetManager, String... images) {
+        TextureLoader.TextureParameter textureParam = new TextureLoader.TextureParameter();
+        textureParam.wrapU = Texture.TextureWrap.Repeat;
+        textureParam.wrapV = Texture.TextureWrap.Repeat;
+        for (String image : images) {
+            assetManager.load(image, Texture.class, textureParam);
+            if (!textureMap.containsKey(image)) {
+                textureMap.put(image, null);
+            }
         }
     }
 
