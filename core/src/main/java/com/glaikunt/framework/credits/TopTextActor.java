@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.Align;
 import com.glaikunt.framework.Display2D;
 import com.glaikunt.framework.application.ApplicationResources;
 
+import static com.glaikunt.framework.cache.FontCache.BASIC_FONT;
+
 public class TopTextActor extends Actor {
     private BitmapFont baseFont;
     private GlyphLayout layout;
@@ -17,7 +19,7 @@ public class TopTextActor extends Actor {
 
     public TopTextActor(ApplicationResources applicationResources, String txt) {
 
-        this.baseFont = applicationResources.getCacheRetriever().getFontCache(null);
+        this.baseFont = applicationResources.getCacheRetriever().getFontCache(BASIC_FONT);
         this.layout = new GlyphLayout();
         this.layout.setText(baseFont, txt, new Color(1f, 1f, 1f, 1), 0, Align.left, false);
         this.pos = new Vector2(((Display2D.WORLD_WIDTH / 2f) - (layout.width / 2)), ((Display2D.WORLD_HEIGHT - 150)  + (layout.height/2)));
