@@ -55,6 +55,12 @@ public class CollisionSystem extends EntitySystem {
                 } else if (key.getBodyType() == BodyType.CHECKPOINT) {
                     Gdx.app.log("DEBUG", "CHECKPOINT!!!");
                     continue;
+                } else if (key.getBodyType() == BodyType.CHASM) {
+                    if (warmth != null) {
+                        warmth.setWarmth(-1);
+                        warmth.setOutside(false);
+                    }
+                    continue;
                 } else if (key.getBodyType() == BodyType.INDOORS) {
                     if (warmth != null) {
                         warmth.setOutside(false);

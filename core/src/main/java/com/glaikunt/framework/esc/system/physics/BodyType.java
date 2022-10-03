@@ -11,5 +11,6 @@ public enum BodyType {
     PLAYER,
     BLOCK,
     PLAYER_ONLY_BLOCK,
-    BREAKABLE // wondering about flags here e.g. blocking/non-blocking,etc
+    BREAKABLE, // wondering about flags here e.g. blocking/non-blocking,etc
+    CHASM
 }

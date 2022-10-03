@@ -23,7 +23,7 @@ public class DynamicDisplay extends Display {
     @Override
     public void create() {
 
-        Gdx.app.setLogLevel(NONE);
+        Gdx.app.setLogLevel(DEBUG);
 
         initApplicationResource2D();
 //        initApplicationResource3D();

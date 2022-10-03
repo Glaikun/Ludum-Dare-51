@@ -15,12 +15,7 @@ import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
-import com.glaikunt.framework.game.map.BlockActor;
-import com.glaikunt.framework.game.map.BreakableActor;
-import com.glaikunt.framework.game.map.CheckPointActor;
-import com.glaikunt.framework.game.map.HeatSourceActor;
-import com.glaikunt.framework.game.map.IndoorAreaActor;
-import com.glaikunt.framework.game.map.PlayerOnlyBlockActor;
+import com.glaikunt.framework.game.map.*;
 import com.glaikunt.framework.game.player.PlayerActor;
 
 public abstract class AbstractLevel extends CommonActor {
@@ -101,6 +96,8 @@ public abstract class AbstractLevel extends CommonActor {
 
         createCheckpoints(getApplicationResources(), getFront(), map);
 
+        createChasms(getApplicationResources(), getFront(), map);
+
         createIndoors(getApplicationResources(), getFront(), map);
 
         createHeatSources(getApplicationResources(), getFront(), map);
@@ -171,6 +168,25 @@ public abstract class AbstractLevel extends CommonActor {
                 Vector2 size = new Vector2(width, height);
 
                 front.addActor(new CheckPointActor(applicationResources, pos, size));
+            }
+        }
+    }
+
+    private static void createChasms(ApplicationResources applicationResources, Stage front, TiledMap map) {
+        MapLayer chasms = map.getLayers().get("Chasm");
+        for (MapObject mapObject : chasms.getObjects()) {
+
+            if (mapObject instanceof RectangleMapObject) {
+                RectangleMapObject r = (RectangleMapObject) mapObject;
+                float x = r.getRectangle().getX();
+                float y = r.getRectangle().getY();
+                Vector2 pos = new Vector2(x, y);
+
+                float width = r.getRectangle().getWidth();
+                float height = r.getRectangle().getHeight();
+                Vector2 size = new Vector2(width, height);
+
+                front.addActor(new ChasmActor(applicationResources, pos, size));
             }
         }
     }
