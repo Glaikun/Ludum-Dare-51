@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
 
+import com.glaikunt.framework.cache.MusicCache;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.esc.component.common.*;
@@ -34,6 +35,7 @@ public class PlayerActor extends CommonActor {
     private final BodyComponent body;
 
     private final Vector2 tmpVector2 = new Vector2();
+    private static final float AUDIO_RAMP = 5f;
 
     public PlayerActor(ApplicationResources applicationResources, Vector2 pos) {
         super(applicationResources);
@@ -107,6 +109,30 @@ public class PlayerActor extends CommonActor {
         }
         if (!getBody().getAfterContacts().isEmpty()) {
             Gdx.app.log("DEBUG", "[P] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+        }
+
+        if (warmth.isOutside()) {
+            if (!getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).isPlaying()) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setLooping(true);
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).play();
+            }
+            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() < 1f) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(Math.min(1f, getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume()+(delta*AUDIO_RAMP)));
+            }
+            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() > 0f) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()-(delta*AUDIO_RAMP)));
+            }
+        } else {
+            if (!getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).isPlaying()) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setLooping(true);
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).play();
+            }
+            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() < 1f) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.min(1f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()+(delta*AUDIO_RAMP)));
+            }
+            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() > 0f) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume()-(delta*AUDIO_RAMP)));
+            }
         }
     }
 

@@ -8,48 +8,46 @@ import java.util.Map;
 
 public class MusicCache implements Cache {
 
-//   ################## EXAMPLE ##################
-//   public static final String SOMETHING = "sounds/example.wav";
-//   ################## EXAMPLE ##################
+   public static final String BLIZZARD_EXTERNAL = "sound/573290__kevp888__210523-1598-fr-blizzard.ogg";
+   public static final String BLIZZARD_INTERNAL = "sound/173096__stormpetrel__whistling-antarctic-blizzard.ogg"; // real Antarctic SFX!
 
-    private Map<String, Music> music = new HashMap<>();
+    private Map<String, Music> sounds = new HashMap<>();
     private boolean loaded = false;
 
     @Override
     public void loadCache(AssetManager assetManager) {
 
-//        add(assetManager, SOMETHING);
+        add(assetManager, BLIZZARD_EXTERNAL);
+        add(assetManager, BLIZZARD_INTERNAL);
     }
 
     @Override
     public boolean isLoaded(AssetManager assetManager) {
-        if (music.isEmpty()) return false;
+        if (sounds.isEmpty()) return false;
 
-        for (String key : music.keySet()) {
+        for (String key : sounds.keySet()) {
             if (!assetManager.isLoaded(key)) {
                 return false;
             }
         }
 
         if (!isLoaded()) {
-            for (String key : music.keySet()) {
-                getMusic().put(key, (Music) assetManager.get(key));
-            }
+            sounds.replaceAll((k, v) -> assetManager.get(k));
             setLoaded(true);
         }
 
         return true;
     }
 
-    public Music getSoundCache(String key) {
-        return getMusic().get(key);
+    public Music getMusicPiece(String key) {
+        return sounds.get(key);
     }
 
 
-    public void add(AssetManager assetManager, String... sounds) {
-        for (String sound : sounds) {
+    public void add(AssetManager assetManager, String... sfx) {
+        for (String sound : sfx) {
             assetManager.load(sound, Music.class);
-            getMusic().put(sound, null);
+            sounds.put(sound, null);
         }
     }
 
@@ -62,6 +60,7 @@ public class MusicCache implements Cache {
     }
 
     public Map<String, Music> getMusic() {
-        return music;
+        return sounds;
     }
 }
+

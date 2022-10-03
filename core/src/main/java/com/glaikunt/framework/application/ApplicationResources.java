@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -100,6 +101,9 @@ public class ApplicationResources {
 
     public Sound getSound(String cache) {
         return getCacheRetriever().getSoundCache().getSoundCache(cache);
+    }
+    public Music getMusic(String cache) {
+        return getCacheRetriever().getMusicCache().getMusicPiece(cache);
     }
 
     public void setEnableBox2d(boolean enableBox2d) {

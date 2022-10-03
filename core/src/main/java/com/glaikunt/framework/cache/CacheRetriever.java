@@ -1,6 +1,7 @@
 package com.glaikunt.framework.cache;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -77,7 +78,7 @@ public class CacheRetriever {
         return getFontCache().getFontCache(key);
     }
 
-    public Sound getSoundCache(String key) {
+    public Sound getSound(String key) {
         return getSoundCache().getSoundCache(key);
     }
 
@@ -92,7 +93,9 @@ public class CacheRetriever {
     public MusicCache getMusicCache() {
         return musicCache;
     }
-
+    public Music getMusic(String cache) {
+        return getMusicCache().getMusicPiece(cache);
+    }
 
     public TiledCache getTiledCache() {
         return tiledCache;
