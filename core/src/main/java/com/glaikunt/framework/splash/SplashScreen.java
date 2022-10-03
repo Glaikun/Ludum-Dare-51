@@ -63,7 +63,6 @@ public class SplashScreen extends Screen {
 
         //Put in renderer due to flash of clear colour.
         if (logo.isComplete() && fadeActor == null) {
-
             this.fadeActor = new FadeActor(getApplicationResources());
             this.fadeActor.setColor(Color.BLACK);
             getUX().addActor(fadeActor);

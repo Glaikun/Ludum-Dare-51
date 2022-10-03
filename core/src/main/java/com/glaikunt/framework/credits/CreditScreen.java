@@ -10,6 +10,7 @@ import com.glaikunt.framework.Display2D;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.Screen;
 import com.glaikunt.framework.application.TickTimer;
+import com.glaikunt.framework.cache.MusicCache;
 import com.glaikunt.framework.cache.TextureCache;
 import com.glaikunt.framework.esc.component.misc.BloatingComponent;
 import com.glaikunt.framework.esc.system.BloatingSystem;
@@ -36,6 +37,17 @@ public class CreditScreen extends Screen {
     @Override
     public void show() {
 
+        if (!getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).isPlaying()) {
+            getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setLooping(true);
+            getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).play();
+        }
+        if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() < 1f) {
+            getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(1f);
+        }
+        if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() > 0f) {
+            getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(0f);
+        }
+
         this.endScreenEntity = new Entity();
         this.bloating = new BloatingComponent();
         this.bloating.setMaxBloating(5);
@@ -50,16 +62,15 @@ public class CreditScreen extends Screen {
         this.textTimer = new TickTimer(3);
         this.textTimer.setTick(textTimer.getTargetTime());
 
-        credits.add(new CreditTextActor(getApplicationResources(), "Programmer - Glaikunt"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Art - Glaikunt"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Music - KennyNL"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - Benboncan"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - Rudmer"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - Jammaj"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - Miss Burusdeer"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - InspectorJ"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - TRNGLE"));
-        credits.add(new CreditTextActor(getApplicationResources(), "Sounds - Msantoro11"));
+        credits.add(new CreditTextActor(getApplicationResources(), "Programming - Glaikunt and Vault101"));
+        credits.add(new CreditTextActor(getApplicationResources(), "Art - Glaikunt and Vault101"));
+//        credits.add(new CreditTextActor(getApplicationResources(), "Music - "));
+        credits.add(new CreditTextActor(getApplicationResources(), "www.freesound.org"));
+        credits.add(new CreditTextActor(getApplicationResources(), "  - kevp888"));
+        credits.add(new CreditTextActor(getApplicationResources(), "  - Stormpetrel"));
+        credits.add(new CreditTextActor(getApplicationResources(), "  - MAJ061785"));
+        credits.add(new CreditTextActor(getApplicationResources(), "  - sandyrb"));
+        credits.add(new CreditTextActor(getApplicationResources(), "See license"));
 
         credits.add(new CreditTextActor(getApplicationResources(), "   ---   "));
 

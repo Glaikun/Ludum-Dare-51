@@ -47,11 +47,11 @@ public class LevelController extends CommonActor {
         this.background = background;
         this.pixel = applicationResources.getTexture(TextureCache.PIXEL);
 
-//        this.levels.add(new Level1(applicationResources, front));
-//        this.levels.add(new Level2(applicationResources, front));
-//        this.levels.add(new Level3(applicationResources, front));
-//        this.levels.add(new Level4(applicationResources, front));
-//        this.levels.add(new Level5(applicationResources, front));
+        this.levels.add(new Level1(applicationResources, front));
+        this.levels.add(new Level2(applicationResources, front));
+        this.levels.add(new Level3(applicationResources, front));
+        this.levels.add(new Level4(applicationResources, front));
+        this.levels.add(new Level5(applicationResources, front));
         this.levels.add(new Level6(applicationResources, front));
 
 //        this.levels.add(new DebugLevel(applicationResources, front));
