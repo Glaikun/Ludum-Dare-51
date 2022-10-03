@@ -6,7 +6,8 @@
 	<inherits name='com.badlogic.gdx.ai' />
 
     <inherits name='main.java.framework.GdxDefinition' />
-    
+	<extend-configuration-property name="gdx.reflect.include" value="com.badlogic.gdx.ai.btree.Task" />
+
     <collapse-all-properties />
     
 	<add-linker name="xsiframe"/>	

@@ -19,7 +19,7 @@ public class DamageComponent implements Component {
         return damage;
     }
     public float doDamage() {
-        lastDamagedNanotime = System.nanoTime();
+        lastDamagedNanotime = TimeUtils.nanoTime();
         return damage;
     }
 

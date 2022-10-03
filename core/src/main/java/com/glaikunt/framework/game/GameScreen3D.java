@@ -2,10 +2,8 @@ package com.glaikunt.framework.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.glaikunt.framework.application3d.ApplicationResources;
 import com.glaikunt.framework.application3d.Screen;
-import com.glaikunt.framework.debug.CoordinateActor;
 
 public class GameScreen3D extends Screen {
 
@@ -16,9 +14,9 @@ public class GameScreen3D extends Screen {
     @Override
     public void show() {
 
-        CoordinateActor actor = new CoordinateActor(getApplicationResources(), (PerspectiveCamera) getSecondary().getCamera());
-        getMain().addActor(actor);
-        getMain().enableCameraMovement(false);
+//        CoordinateActor actor = new CoordinateActor(getApplicationResources(), (PerspectiveCamera) getSecondary().getCamera());
+//        getMain().addActor(actor);
+//        getMain().enableCameraMovement(false);
 
 //        getUX().addActor(new Image(getApplicationResources().getTexture(TextureCache.SOMETHING)));
     }
@@ -26,11 +24,11 @@ public class GameScreen3D extends Screen {
     @Override
     public void update(float delta) {
 
-        getDebugLabels().getDebugPlayerLabel().setText(
-                        "Px: " + getMain().getCamera().position.x +
-                        " Py: " + getMain().getCamera().position.y +
-                        " Pz: " + getMain().getCamera().position.z
-        );
+//        getDebugLabels().getDebugPlayerLabel().setText(
+//                        "Px: " + getMain().getCamera().position.x +
+//                        " Py: " + getMain().getCamera().position.y +
+//                        " Pz: " + getMain().getCamera().position.z
+//        );
 
         getMain().act(delta);
         getSecondary().act(delta);

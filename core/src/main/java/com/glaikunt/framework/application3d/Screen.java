@@ -5,15 +5,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.glaikunt.framework.application3d.scene.Stage;
 import com.glaikunt.framework.DynamicDisplay;
+import com.glaikunt.framework.application3d.scene.Stage;
 import com.glaikunt.framework.cache.CacheRetriever;
-import com.glaikunt.framework.debug.DebugLabels;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,8 +24,8 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
     private Stage main, secondary;
     private com.badlogic.gdx.scenes.scene2d.Stage ux;
 
-    private final GLProfiler glProfiler;
-    private final DebugLabels debugLabels;
+//    private final GLProfiler glProfiler;
+//    private final DebugLabels debugLabels;
 
     protected Screen(ApplicationResources applicationResources) {
         this.applicationResources = applicationResources;
@@ -39,19 +36,19 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         ((OrthographicCamera) this.ux.getCamera()).setToOrtho(false);
         this.ux.setDebugAll(false);
 
-        if (Gdx.app.getLogLevel() != Logger.NONE) {
-            this.debugLabels = new DebugLabels();
-            this.glProfiler = new GLProfiler(Gdx.graphics);
-            this.glProfiler.enable();
-
-            getUX().addActor(debugLabels.getDebugPlayerLabel());
-            getUX().addActor(debugLabels.getDebugGCLabel());
-            getUX().addActor(debugLabels.getDebugProfilerLabel());
-            getUX().addActor(debugLabels.getVersionLabel());
-        } else {
-            this.debugLabels = null;
-            this.glProfiler = null;
-        }
+//        if (Gdx.app.getLogLevel() != Logger.NONE) {
+//            this.debugLabels = new DebugLabels();
+//            this.glProfiler = new GLProfiler(Gdx.graphics);
+//            this.glProfiler.enable();
+//
+//            getUX().addActor(debugLabels.getDebugPlayerLabel());
+//            getUX().addActor(debugLabels.getDebugGCLabel());
+//            getUX().addActor(debugLabels.getDebugProfilerLabel());
+//            getUX().addActor(debugLabels.getVersionLabel());
+//        } else {
+//            this.debugLabels = null;
+//            this.glProfiler = null;
+//        }
     }
 
     @Override
@@ -74,15 +71,15 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         }
         render2D(delta);
 
-        if (Gdx.app.getLogLevel() != Logger.NONE) {
-            debugLabels.update(glProfiler);
-            glProfiler.reset();
-        }
+//        if (Gdx.app.getLogLevel() != Logger.NONE) {
+//            debugLabels.update(glProfiler);
+//            glProfiler.reset();
+//        }
     }
 
-    public DebugLabels getDebugLabels() {
-        return debugLabels;
-    }
+//    public DebugLabels getDebugLabels() {
+//        return debugLabels;
+//    }
 
     public abstract void update(float delta);
 

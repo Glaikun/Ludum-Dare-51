@@ -1,6 +1,7 @@
 package com.glaikunt.framework.esc.component.common;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class HealthComponent implements Component {
@@ -42,7 +43,7 @@ public class HealthComponent implements Component {
 
     public HealthComponent setHealth(float health) {
         if (health < this.health) {
-            lastDamagedNanotime = System.nanoTime();
+            lastDamagedNanotime = TimeUtils.nanoTime();
         }
         this.health = health;
         return this;
