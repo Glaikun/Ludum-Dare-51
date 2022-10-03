@@ -15,10 +15,7 @@ import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.cache.TiledCache;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
-import com.glaikunt.framework.game.map.BlockActor;
-import com.glaikunt.framework.game.map.CheckPointActor;
-import com.glaikunt.framework.game.map.HeatSourceActor;
-import com.glaikunt.framework.game.map.IndoorAreaActor;
+import com.glaikunt.framework.game.map.*;
 import com.glaikunt.framework.game.player.PlayerActor;
 
 public class DebugLevel extends AbstractLevel {
@@ -50,6 +47,8 @@ public class DebugLevel extends AbstractLevel {
         createIndoors(getApplicationResources(), getFront(), map);
 
         createHeatSources(getApplicationResources(), getFront(), map);
+
+        createBreakables(getApplicationResources(), getFront(), map);
 
         createPlayer(getApplicationResources(), getFront(), map);
 
@@ -137,6 +136,7 @@ public class DebugLevel extends AbstractLevel {
 
     private void createBreakables(ApplicationResources applicationResources, Stage front, TiledMap map) {
         TiledMapTileLayer items = (TiledMapTileLayer) map.getLayers().get("Breakable");
+        if (items == null) return;
         for (int y = items.getHeight(); y >= 0; y--) {
             float yPos = (y * items.getTileHeight());
             for (int x = 0; x < items.getWidth(); x++) {
