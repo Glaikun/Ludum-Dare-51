@@ -257,7 +257,11 @@ public abstract class AbstractLevel extends CommonActor {
 
                 TiledMapTileLayer.Cell startCell = enemySpawns.getCell(x, y);
                 if (startCell != null) {
-                    EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos), this, Stance.AGGRESSIVE);
+                    int stance = Stance.AGGRESSIVE.ordinal();
+                    if (startCell.getTile().getProperties().containsKey("stance")) {
+                        stance = startCell.getTile().getProperties().get("stance", Integer.class);
+                    }
+                    EnemyActor enemy = new EnemyActor(applicationResources, new Vector2(xPos, yPos), this, Stance.values()[stance]);
                     enemies.add(enemy);
                     front.addActor(enemy);
                 }

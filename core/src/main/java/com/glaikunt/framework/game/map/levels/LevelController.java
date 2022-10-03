@@ -26,18 +26,18 @@ import java.util.List;
 public class LevelController extends CommonActor {
 
     private Stage front, background;
-    private List<AbstractLevel> levels = new ArrayList<>();
+    private final List<AbstractLevel> levels = new ArrayList<>();
     private AbstractLevel currentLevel;
     private PlayerActor currentPlayer;
-    private Texture pixel;
+    private final Texture pixel;
     private PixelBlizzardActor blizzard;
     private FogActor fogActor;
     private FogActor fogActor2;
 
-    private FadeComponent.Fade fade;
+    private final FadeComponent.Fade fade;
 
     private boolean startLevelTransition, resetLevel;
-    private TickTimer resetLevelTimer = new TickTimer(2f);
+    private final TickTimer resetLevelTimer = new TickTimer(2f);
 
     public LevelController(ApplicationResources applicationResources, Stage front, Stage background) {
         super(applicationResources);
@@ -47,6 +47,7 @@ public class LevelController extends CommonActor {
         this.pixel = applicationResources.getTexture(TextureCache.PIXEL);
 
         this.levels.add(new Level1(applicationResources, front));
+        this.levels.add(new Level3(applicationResources, front));
 
 //        this.levels.add(new DebugLevel(applicationResources, front));
 //        this.levels.add(new NextDebugLevel(applicationResources, front));
