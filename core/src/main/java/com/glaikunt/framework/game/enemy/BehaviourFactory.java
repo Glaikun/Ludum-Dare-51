@@ -17,6 +17,7 @@ public class BehaviourFactory {
             case DEFENSIVE: return defensiveBehaviour(entity, applicationResources);
             case PASSIVE: return passiveBehaviour(entity, applicationResources);
             case AGGRESSIVE: return aggressiveBehaviour(entity, applicationResources);
+            case AGGRESSIVE_WARM: return aggressiveWarmerBehaviour(entity, applicationResources);
             default: return null;
         }
     }
@@ -121,6 +122,49 @@ public class BehaviourFactory {
         Sequence<Entity> findHeatSourceSequence = new Sequence<>(
                 new TooColdConditionTask(entity, applicationResources),
                 new MoveToNearestHeatSourceActionTask(entity, applicationResources)
+        );
+        Sequence<Entity> fallback = new Sequence<>(
+                new MoveToNearestHeatSourceActionTask(entity, applicationResources)
+        );
+        return new Selector<>(
+                new LevelCompleteConditionTask(entity, applicationResources),
+                playerStateSequence,
+                attackIfCloseSequence,
+                breakObstaclesSequence,
+                seekPlayerIfWarmSequence,
+                findHeatSourceSequence,
+                fallback
+        );
+    }
+
+    /**
+     * Priorities:
+     *  - attack if player close
+     *  - seek player if warm
+     *  - find heatsource if too cold
+     * @return
+     */
+    private static Task<Entity> aggressiveWarmerBehaviour(Entity entity, ApplicationResources applicationResources) {
+        Sequence<Entity> playerStateSequence = new Sequence<>(
+                new PlayerDeadConditionTask(entity, applicationResources),
+                new EatPlayerActionTask(entity, applicationResources)
+        );
+        Sequence<Entity> findHeatSourceSequence = new Sequence<>(
+                new HeatUpConditionTask(entity, applicationResources),
+                new MoveToNearestHeatSourceActionTask(entity, applicationResources)
+        );
+        Sequence<Entity> attackIfCloseSequence = new Sequence<>(
+                new NotTooColdConditionTask(entity, applicationResources),
+                new PlayerNearbyConditionTask(entity, applicationResources),
+                new AttackPlayerActionTask(entity, applicationResources)
+        );
+        Sequence<Entity> breakObstaclesSequence = new Sequence<>(
+                new IsBreakableDirectlyBlockingPathConditionTask(entity, applicationResources),
+                new AttackBreakableActionTask(entity, applicationResources)
+        );
+        Sequence<Entity> seekPlayerIfWarmSequence = new Sequence<>(
+                new IsWarmConditionTask(entity, applicationResources),
+                new HuntThePlayerDownActionTask(entity, applicationResources)
         );
         Sequence<Entity> fallback = new Sequence<>(
                 new MoveToNearestHeatSourceActionTask(entity, applicationResources)
