@@ -27,7 +27,7 @@ public class HeatSourceActor extends CommonActor {
 
         this.animation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.HEATSOURCE), 4, 1);
         this.pos.set(pos);
-        this.size.set(animation.getCurrentFrame().getRegionWidth()-1, animation.getCurrentFrame().getRegionHeight()-1);
+        this.size.set(animation.getCurrentFrame().getRegionWidth(), animation.getCurrentFrame().getRegionHeight());
 
 
         this.body = new BodyComponent();
