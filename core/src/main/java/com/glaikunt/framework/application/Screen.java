@@ -18,8 +18,6 @@ import com.glaikunt.framework.game.GameConstants;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.glaikunt.framework.Display3D.WORLD_HEIGHT;
-import static com.glaikunt.framework.Display3D.WORLD_WIDTH;
 
 public abstract class Screen implements com.badlogic.gdx.Screen {
 
@@ -91,8 +89,6 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
 
         Gdx.app.log(logDEBUG(), "Width: " + Gdx.graphics.getWidth());
         Gdx.app.log(logDEBUG(), "Height: " + Gdx.graphics.getHeight());
-        Gdx.app.log(logDEBUG(), "worldWidth: " + WORLD_WIDTH);
-        Gdx.app.log(logDEBUG(), "worldHeight: " + WORLD_HEIGHT);
     }
 
     public void setupCamera() {

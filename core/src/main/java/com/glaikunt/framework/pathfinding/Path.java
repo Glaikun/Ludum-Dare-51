@@ -15,7 +15,7 @@ public class Path {
 	 * 
 	 * @author Kevin Glass with modifications from Vault101 / Peter D Bell
 	 */
-	public class Step {
+	public static class Step {
 		/** The x coordinate at the given step */
 		private final int x;
 		/** The y coordinate at the given step */

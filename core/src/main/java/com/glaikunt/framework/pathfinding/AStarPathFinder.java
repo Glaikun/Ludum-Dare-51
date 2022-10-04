@@ -17,7 +17,7 @@ public class AStarPathFinder implements PathFinder {
 	/**
 	 * A single node in the search graph
 	 */
-	private class Node implements Comparable<Node> {
+	private static class Node implements Comparable<Node> {
 		/** The x coordinate of the node */
 		private final int x;
 		/** The y coordinate of the node */
@@ -38,7 +38,6 @@ public class AStarPathFinder implements PathFinder {
 		 * @param y The y coordinate of the node
 		 */
 		public Node(final int x, final int y) {
-			statsNodesCreated++;
 			this.x = x;
 			this.y = y;
 		}
@@ -75,9 +74,6 @@ public class AStarPathFinder implements PathFinder {
 		}
 	}
 
-	public static long statsCreated;
-	public static long statsNodesCreated;
-	
 	/** The set of nodes that have been searched through */
 	private final ArrayList<Node> closed = new ArrayList<>();
 	/** The set of nodes that we do not yet consider fully searched */
@@ -106,7 +102,6 @@ public class AStarPathFinder implements PathFinder {
 	 */
 	public AStarPathFinder(final TileBasedMap map, final int maxSearchDistance, final boolean allowDiagMovement) {
 		this(map, maxSearchDistance, allowDiagMovement, new ClosestHeuristic());
-		statsCreated++;
 	}
 	
 	/**
@@ -130,7 +125,6 @@ public class AStarPathFinder implements PathFinder {
 				nodes[x][y] = new Node(x,y);
 			}
 		}
-		statsCreated++;
 	}
 
 	/**

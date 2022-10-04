@@ -13,7 +13,7 @@ public class TickTimer {
 
         if (tick < targetTime) {
             tick += (1 * delta);
-        } else if (tick != targetTime) {
+        } else if (tick > targetTime) {
             tick = targetTime;
         }
     }

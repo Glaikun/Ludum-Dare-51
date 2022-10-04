@@ -14,9 +14,6 @@ public class DynamicDisplay extends Display {
     public static final float WORLD_HEIGHT = 960; //480 //1080 //240
 
     private ApplicationResources applicationResources2D;
-    private com.glaikunt.framework.application3d.ApplicationResources applicationResources3D;
-
-    private TickTimer logTImer = new TickTimer(2.5f);
 
     private boolean paused;
 
@@ -88,9 +85,5 @@ public class DynamicDisplay extends Display {
 
     public ApplicationResources getApplicationResources2D() {
         return applicationResources2D;
-    }
-
-    public com.glaikunt.framework.application3d.ApplicationResources getApplicationResources3D() {
-        return applicationResources3D;
     }
 }
