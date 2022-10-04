@@ -73,25 +73,16 @@ public class Display2D extends Display {
 
 		SequenceAction sequenceAction_1 = new SequenceAction();
 		sequenceAction_1.addAction(fadeOut(1.5f));
-		sequenceAction_1.addAction(run(new Runnable() {
-			@Override
-			public void run() {
-				Gdx.app.postRunnable(new Runnable() {
-					@Override
-					public void run() {
-						setScreen(screen);
+		sequenceAction_1.addAction(run(() -> Gdx.app.postRunnable(() -> {
+			setScreen(screen);
 
-						for (Stage stage : screen.getStages()) {
+			for (Stage stage : screen.getStages()) {
 
-							stage.getRoot().getColor().a = 0;
-							stage.getRoot().addAction(fadeIn(1.5f));
-						}
-						transitioning = false;
-					}
-				});
-
+				stage.getRoot().getColor().a = 0;
+				stage.getRoot().addAction(fadeIn(1.5f));
 			}
-		}));
+			transitioning = false;
+		})));
 		for (Stage stage : ((Screen) getScreen()).getStages()) {
 
 			if (((Screen) getScreen()).getStages().indexOf(stage) == 0) {

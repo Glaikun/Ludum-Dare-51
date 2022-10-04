@@ -103,9 +103,4 @@ public class GameScreen2D extends Screen {
     public void resume() {
 
     }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
 }

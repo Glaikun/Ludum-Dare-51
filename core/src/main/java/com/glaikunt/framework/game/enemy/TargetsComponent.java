@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.esc.component.common.HealthComponent;
 
+import static com.glaikunt.framework.game.GameConstants.DEBUG;
+
 /**
  * Used during the behaviourtree to track what's the target in one task and the subject in another
  */
@@ -40,7 +42,7 @@ public class TargetsComponent implements Component {
             if (targetBreakable.getComponent(HealthComponent.class) != null) {
                 this.targetBreakable = targetBreakable;
             } else {
-                Gdx.app.debug("DEBUG", "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
+                Gdx.app.debug(DEBUG, "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
             }
         }
     }

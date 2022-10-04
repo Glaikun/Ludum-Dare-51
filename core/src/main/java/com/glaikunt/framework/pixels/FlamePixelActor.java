@@ -52,7 +52,7 @@ public class FlamePixelActor extends Actor {
             float xDiff = -(xPos - targetXPos);
             float yDiff = -(yPos - targetYPos);
 
-            this.angle[i] = (float) ((Math.atan2(yDiff, xDiff)));
+            this.angle[i] = (float) (Math.atan2(yDiff, xDiff));
             if (angle[i] == 0) {
                 angle[i] = .1f;
             }

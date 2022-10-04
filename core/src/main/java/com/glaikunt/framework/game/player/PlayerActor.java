@@ -29,24 +29,22 @@ import java.util.stream.Collectors;
 
 public class PlayerActor extends CommonActor {
 
-    private final AccelerationComponent acceleration;
-    private final VelocityComponent velocity;
-    private final AnimationComponent idleAnimation, runningAnimation, deathAnimation;
+    private final AnimationComponent idleAnimation;
+    private final AnimationComponent runningAnimation;
+    private final AnimationComponent deathAnimation;
     private final PlayerInputComponent playerInput;
     private final PlayerComponent player;
 
     private final WarmthComponent warmth;
     private final BodyComponent body;
-
-    private final Vector2 tmpVector2 = new Vector2();
     private static final float AUDIO_RAMP = 5f;
     private final TickTimer breathingTimer = new TickTimer(1.5f);
 
     public PlayerActor(ApplicationResources applicationResources, Vector2 pos) {
         super(applicationResources);
 
-        this.acceleration = new AccelerationComponent();
-        this.velocity = new VelocityComponent();
+        AccelerationComponent acceleration = new AccelerationComponent();
+        VelocityComponent velocity = new VelocityComponent();
         this.player = new PlayerComponent();
 
         this.idleAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.IDLE_PLAYER), 6, 1);

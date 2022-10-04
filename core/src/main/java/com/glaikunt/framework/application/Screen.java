@@ -18,6 +18,8 @@ import com.glaikunt.framework.game.GameConstants;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.glaikunt.framework.game.GameConstants.DEBUG;
+
 
 public abstract class Screen implements com.badlogic.gdx.Screen {
 
@@ -90,8 +92,8 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         getBackground().getCamera().update();
         getUX().getCamera().update();
 
-        Gdx.app.log(logDEBUG(), "Width: " + Gdx.graphics.getWidth());
-        Gdx.app.log(logDEBUG(), "Height: " + Gdx.graphics.getHeight());
+        Gdx.app.log(DEBUG, "Width: " + Gdx.graphics.getWidth());
+        Gdx.app.log(DEBUG, "Height: " + Gdx.graphics.getHeight());
     }
 
     public void setupCamera() {
@@ -175,11 +177,6 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
     public abstract void update(float delta);
 
     public abstract void render2D();
-
-    protected String logDEBUG() {
-        return "DEBUG";
-    }
-
     @Override
     public void hide() {
 

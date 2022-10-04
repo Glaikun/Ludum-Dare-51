@@ -3,11 +3,14 @@ package com.glaikunt.framework.esc.component.common;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
 
+import static com.glaikunt.framework.game.GameConstants.DEBUG;
+
 public class WarmthComponent implements Component {
 
     public static final float WARMTH_MAX = 100f;
     public static final float WARMTH_THRESHOLD = 0f;
     public static final float WARMTH_MIN = -1f;
+
     private float warmth;
     private boolean outside;
     private boolean nearHeatSource;
@@ -29,7 +32,7 @@ public class WarmthComponent implements Component {
 
     public void setWarmth(float warmth) {
         if (warmth-this.warmth > 10f) {
-            Gdx.app.debug("DEBUG", "Big delta in warmth jump?");
+            Gdx.app.debug(DEBUG, "Big delta in warmth jump?");
         }
         this.warmth = warmth;
         if (this.warmth > WARMTH_MAX) {

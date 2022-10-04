@@ -2,7 +2,6 @@ package com.glaikunt.framework.esc.component.movement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.MathUtils;
 
 import static com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent.Animation.IDLE;
 

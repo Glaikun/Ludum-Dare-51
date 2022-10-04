@@ -29,14 +29,9 @@ import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
 public class EnemyActor extends CommonActor {
 
-    private final AccelerationComponent acceleration;
-    private final VelocityComponent velocity;
-    private final AnimationComponent idleAnimation, runningAnimation;
-
+    private final AnimationComponent idleAnimation;
+    private final AnimationComponent runningAnimation;
     private final WarmthComponent warmth;
-    private final TargetsComponent targets;
-    private final DamageComponent damage;
-    private final SpeedComponent speed;
     private final EnemyInputComponent input;
     private final BodyComponent body;
     private final BehaviorTree<Entity> behaviorTree;
@@ -48,8 +43,8 @@ public class EnemyActor extends CommonActor {
     public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel, Stance stance) {
         super(applicationResources);
 
-        this.acceleration = new AccelerationComponent();
-        this.velocity = new VelocityComponent();
+        AccelerationComponent acceleration = new AccelerationComponent();
+        VelocityComponent velocity = new VelocityComponent();
 
         this.idleAnimation = new AnimationComponent(applicationResources.getCacheRetriever().geTextureCache(TextureCache.IDLE_PLAYER), 6, 1);
         this.idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -60,9 +55,9 @@ public class EnemyActor extends CommonActor {
         this.runningAnimation.setFramerate(0.1f);
 
         this.warmth = new WarmthComponent(WarmthComponent.WARMTH_MAX);
-        this.targets = new TargetsComponent();
-        this.damage = new DamageComponent(10f);
-        this.speed = new SpeedComponent(stance.speed);
+        TargetsComponent targets = new TargetsComponent();
+        DamageComponent damage = new DamageComponent(10f);
+        SpeedComponent speed = new SpeedComponent(stance.speed);
 
         this.input = new EnemyInputComponent();
 

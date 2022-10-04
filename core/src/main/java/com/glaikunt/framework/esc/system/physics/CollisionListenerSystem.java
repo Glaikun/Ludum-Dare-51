@@ -16,6 +16,8 @@ import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
 
+import static com.glaikunt.framework.game.GameConstants.DEBUG;
+
 
 /**
  * This is gravity movement based on pixels.
@@ -66,7 +68,7 @@ public class CollisionListenerSystem extends EntitySystem {
                 BodyComponent bodyB = bcm.get(entityB);
 
                 if (bodyA == bodyB
-                        || ((bodyA.getBodyType().equals(BodyType.ENEMY) && bodyB.getBodyType().equals(BodyType.PLAYER_ONLY_BLOCK)))) {
+                        || (bodyA.getBodyType().equals(BodyType.ENEMY) && bodyB.getBodyType().equals(BodyType.PLAYER_ONLY_BLOCK))) {
                     continue;
                 }
 
@@ -93,16 +95,16 @@ public class CollisionListenerSystem extends EntitySystem {
                         if (Math.abs(tmpVecContact.x) > Math.abs(tmpVecContact.y)) {
                             contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                             contact.getNormal().y = 0;
-                            Gdx.app.log("DEBUG", bodyA.getBodyType() + " x contact normal: " + contact.getNormal());
+                            Gdx.app.log(DEBUG, bodyA.getBodyType() + " x contact normal: " + contact.getNormal());
                         } else {
                             contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                             contact.getNormal().x = 0;
-                            Gdx.app.log("DEBUG", bodyA.getBodyType() + " y contact normal: " + contact.getNormal());
+                            Gdx.app.log(DEBUG, bodyA.getBodyType() + " y contact normal: " + contact.getNormal());
                         }
                     } else {
                         contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                         contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
-                        Gdx.app.log("DEBUG", bodyA.getBodyType() + " x & y contact normal: " + contact.getNormal());
+                        Gdx.app.log(DEBUG, bodyA.getBodyType() + " x & y contact normal: " + contact.getNormal());
                     }
                     contact.setInteraction(tmpContact);
 
