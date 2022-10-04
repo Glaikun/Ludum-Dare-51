@@ -23,13 +23,11 @@ public class TextureCache implements Cache {
     //   ################## SPRITE TILES ##################
 
 //   ################## PLAYER ##################
-    public static final String PLAYER = "player/player.png";
     public static final String IDLE_PLAYER = "player/idle.png";
     public static final String RUNNING_PLAYER = "player/running.png";
     public static final String DEATH_PLAYER = "player/death.png";
 //   ################## PLAYER ##################
 
-    public static final String ENEMY = "enemy/enemy.png";
     public static final String HEATSOURCE = "heatsource/heatsource.png";
     public static final String BREAKABLE_DEBUG = "breakable/breakable-debug.png";
     public static final String HEART = "tmp/heart_icon.png";
@@ -41,7 +39,7 @@ public class TextureCache implements Cache {
     @Override
     public void loadCache(AssetManager assetManager) {
 
-        add(assetManager, PIXEL, SNOWFLAKE, SPRITESHEET, PLAYER, ENEMY);
+        add(assetManager, PIXEL, SNOWFLAKE, SPRITESHEET);
         add(assetManager, HEATSOURCE, BREAKABLE_DEBUG);
         add(assetManager, IDLE_PLAYER, RUNNING_PLAYER, DEATH_PLAYER, HEART);
         addWrapped(assetManager, FOG);
