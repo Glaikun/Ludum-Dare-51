@@ -76,7 +76,6 @@ public class ExplodePixelActor extends Actor {
         }
 
         if (destroy) {
-            Gdx.app.log("INFO", "Removing " + getClass().getSimpleName());
             remove();
         }
     }

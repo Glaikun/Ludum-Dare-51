@@ -92,8 +92,8 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
         getBackground().getCamera().update();
         getUX().getCamera().update();
 
-        Gdx.app.log(DEBUG, "Width: " + Gdx.graphics.getWidth());
-        Gdx.app.log(DEBUG, "Height: " + Gdx.graphics.getHeight());
+        if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "Width: " + Gdx.graphics.getWidth());
+        if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "Height: " + Gdx.graphics.getHeight());
     }
 
     public void setupCamera() {
@@ -128,7 +128,7 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
 
         this.logTimer.tick(delta);
         if (logTimer.isTimerEventReady()) {
-            Gdx.app.log("INFO",
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG,
                     "delta time [" + delta + "]"
                             + ", fps [" + Gdx.graphics.getFramesPerSecond() + "]"
             );
@@ -164,7 +164,7 @@ public abstract class Screen implements com.badlogic.gdx.Screen {
 
         this.logTimer.tick(delta);
         if (logTimer.isTimerEventReady()) {
-            Gdx.app.log("INFO",
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG,
                     "delta time [" + delta + "]"
                             + ", count [" + count + "]"
                             + ", step [" + GameConstants.TIME_STEP + "]"

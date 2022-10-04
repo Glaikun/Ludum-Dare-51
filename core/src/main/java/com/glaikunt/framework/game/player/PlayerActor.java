@@ -22,10 +22,13 @@ import com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponen
 import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 import com.glaikunt.framework.esc.system.physics.BodyType;
+import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.pixels.FlamePixelActor;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.glaikunt.framework.game.GameConstants.DEBUG;
 
 public class PlayerActor extends CommonActor {
 
@@ -78,6 +81,8 @@ public class PlayerActor extends CommonActor {
         getEntity().add(warmth);
         getEntity().add(body);
         getEntity().add(getApplicationResources().getGlobalEntity().getComponent(GravityComponent.class));
+
+        if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "new PlayerActor: "+toString());
     }
 
     @Override
@@ -101,13 +106,13 @@ public class PlayerActor extends CommonActor {
         cameraUpdate(delta);
 
         if (!getBody().getBeforeContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "[P] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "[P] Before Collide Intersection: " + getBody().getBeforeContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
             List<Vector2> collect = getBody().getBeforeContacts().stream().map(ContactComponent::getNormal)
                     .collect(Collectors.toList());
-            Gdx.app.log("DEBUG", "[P] Before Collide normal mappings: " + collect);
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "[P] Before Collide normal mappings: " + collect);
         }
         if (!getBody().getAfterContacts().isEmpty()) {
-            Gdx.app.log("DEBUG", "[P] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "[P] After Collide Intersection: " + getBody().getAfterContacts().size() + ", and body contacts is now: " + getBody().getContactsByBody().size());
         }
 
         if (warmth.isOutside()) {
@@ -225,5 +230,22 @@ public class PlayerActor extends CommonActor {
 
     public PlayerComponent getPlayer() {
         return player;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerActor{" +
+//                "idleAnimation=" + idleAnimation +
+//                ", runningAnimation=" + runningAnimation +
+//                ", deathAnimation=" + deathAnimation +
+//                ", playerInput=" + playerInput +
+                ", player=" + player +
+                ", warmth=" + warmth +
+                ", body=" + body +
+//                ", breathingTimer=" + breathingTimer +
+                ", pos=" + pos +
+                ", size=" + size +
+//                ", entity=" + entity +
+                '}';
     }
 }

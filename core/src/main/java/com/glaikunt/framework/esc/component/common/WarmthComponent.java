@@ -2,6 +2,7 @@ package com.glaikunt.framework.esc.component.common;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.Gdx;
+import com.glaikunt.framework.game.GameConstants;
 
 import static com.glaikunt.framework.game.GameConstants.DEBUG;
 
@@ -32,7 +33,7 @@ public class WarmthComponent implements Component {
 
     public void setWarmth(float warmth) {
         if (warmth-this.warmth > 10f) {
-            Gdx.app.debug(DEBUG, "Big delta in warmth jump?");
+            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "Big delta in warmth jump?");
         }
         this.warmth = warmth;
         if (this.warmth > WARMTH_MAX) {

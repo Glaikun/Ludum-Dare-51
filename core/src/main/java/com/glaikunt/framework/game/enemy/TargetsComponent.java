@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.esc.component.common.HealthComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 import static com.glaikunt.framework.game.GameConstants.DEBUG;
 
@@ -42,7 +43,7 @@ public class TargetsComponent implements Component {
             if (targetBreakable.getComponent(HealthComponent.class) != null) {
                 this.targetBreakable = targetBreakable;
             } else {
-                Gdx.app.debug(DEBUG, "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
+                if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, "[TargetsComponent] Unexpected: targetBreakable has no HealthComponent?!");
             }
         }
     }

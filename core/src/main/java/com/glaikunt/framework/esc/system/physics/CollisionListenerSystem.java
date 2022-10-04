@@ -15,6 +15,7 @@ import com.glaikunt.framework.application.Rectangle;
 import com.glaikunt.framework.esc.component.common.ContactComponent;
 import com.glaikunt.framework.esc.component.common.PositionComponent;
 import com.glaikunt.framework.esc.component.common.VelocityComponent;
+import com.glaikunt.framework.game.GameConstants;
 
 import static com.glaikunt.framework.game.GameConstants.DEBUG;
 
@@ -95,24 +96,22 @@ public class CollisionListenerSystem extends EntitySystem {
                         if (Math.abs(tmpVecContact.x) > Math.abs(tmpVecContact.y)) {
                             contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                             contact.getNormal().y = 0;
-                            Gdx.app.log(DEBUG, bodyA.getBodyType() + " x contact normal: " + contact.getNormal());
+                            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, bodyA.getBodyType() + " x contact normal: " + contact.getNormal());
                         } else {
                             contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
                             contact.getNormal().x = 0;
-                            Gdx.app.log(DEBUG, bodyA.getBodyType() + " y contact normal: " + contact.getNormal());
+                            if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, bodyA.getBodyType() + " y contact normal: " + contact.getNormal());
                         }
                     } else {
                         contact.getNormal().x = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.x));
                         contact.getNormal().y = GameUtils.clamp(-1, 1, MathUtils.floor(tmpVecContact.y));
-                        Gdx.app.log(DEBUG, bodyA.getBodyType() + " x & y contact normal: " + contact.getNormal());
+                        if (GameConstants.GDX_APP_DEBUG_LOGGING) Gdx.app.debug(DEBUG, bodyA.getBodyType() + " x & y contact normal: " + contact.getNormal());
                     }
                     contact.setInteraction(tmpContact);
 
                     bodyA.getBeforeContacts().add(contact);
                     bodyA.getContactsByBody().put(bodyB, contact);
                     bodyB.getContactsByBody().put(bodyA, contact);
-
-//                    Gdx.app.log("DEBUG", bodyA.getBodyType()+" putting ContactsByBody with "+bodyB.getBodyType()+" "+bodyB+" => "+contact);
                 }
 
                 if (bodyA.getContactsByBody().containsKey(bodyB) && !tmpBodyA.intersects(tmpBodyB)) {

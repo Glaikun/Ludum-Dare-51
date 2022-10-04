@@ -34,8 +34,6 @@ public class WarmthSystem extends EntitySystem {
             if (w.isNearHeatSource()) {
                 w.setWarmth(w.getWarmth() + (HEATSOURCE_UNITS_PER_SECOND * delta));
             }
-
-//            Gdx.app.log("DEBUG", "warmth: "+w);
         }
     }
 }

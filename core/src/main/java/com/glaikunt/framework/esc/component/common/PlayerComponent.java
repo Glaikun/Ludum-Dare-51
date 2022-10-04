@@ -49,4 +49,15 @@ public class PlayerComponent implements Component {
     public void setLevelComplete(boolean levelComplete) {
         this.levelComplete = levelComplete;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerComponent{" +
+                "health=" + health +
+                ", hit=" + hit +
+                ", dead=" + dead +
+                ", deathFrom=" + deathFrom +
+                ", levelComplete=" + levelComplete +
+                '}';
+    }
 }
