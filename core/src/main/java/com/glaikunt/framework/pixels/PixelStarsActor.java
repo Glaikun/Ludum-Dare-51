@@ -26,7 +26,7 @@ public class PixelStarsActor extends Actor {
     public PixelStarsActor(ApplicationResources applicationResources, Color colour) {
 
         this.pixel = new TextureRegion(applicationResources.getTexture(TextureCache.PIXEL));
-        int index = 1000;
+        int index = 100;
         this.xPos = new float[index];
         this.yPos = new float[index];
         this.xPosVol = new float[index];
