@@ -89,7 +89,4 @@ public class ApplicationResources {
         return getCacheRetriever().getSoundCache().getSoundCache(cache);
     }
 
-    public Model getModel(String cache) {
-        return getCacheRetriever().getModelCache().getModelCache(cache);
-    }
 }

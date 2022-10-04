@@ -19,7 +19,6 @@ public class CacheRetriever {
     private MusicCache musicCache;
     private TiledCache tiledCache;
     private FontCache fontCache;
-    private ModelCache modelCache;
 
     public CacheRetriever() {
 
@@ -29,7 +28,6 @@ public class CacheRetriever {
         this.musicCache = new MusicCache();
         this.tiledCache = new TiledCache();
         this.fontCache = new FontCache();
-        this.modelCache = new ModelCache();
     }
 
     public void loadCache() {
@@ -40,7 +38,6 @@ public class CacheRetriever {
         getMusicCache().loadCache(getAssetManager());
         getTiledCache().loadCache(getAssetManager());
         getFontCache().loadCache(getAssetManager());
-        getModelCache().loadCache(getAssetManager());
         loaded = true;
     }
 
@@ -50,8 +47,7 @@ public class CacheRetriever {
                 (getTiledCache().isLoaded(getAssetManager()) || getTiledCache().getTiledMap().isEmpty()) &&
                 (getSoundCache().isLoaded(getAssetManager()) || getSoundCache().getSounds().isEmpty()) &&
                 (getMusicCache().isLoaded(getAssetManager()) || getMusicCache().getMusic().isEmpty()) &&
-                (getFontCache().isLoaded(getAssetManager()) || getFontCache().getFonts().isEmpty()) &&
-                (getModelCache().isLoaded(getAssetManager()) || getModelCache().getModelMap().isEmpty());
+                (getFontCache().isLoaded(getAssetManager()) || getFontCache().getFonts().isEmpty());
     }
 
     public boolean update() {
@@ -107,10 +103,6 @@ public class CacheRetriever {
 
     public FontCache getFontCache() {
         return fontCache;
-    }
-
-    public ModelCache getModelCache() {
-        return modelCache;
     }
 
     public void dispose() {
