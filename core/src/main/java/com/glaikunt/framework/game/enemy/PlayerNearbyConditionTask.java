@@ -38,7 +38,7 @@ public class PlayerNearbyConditionTask extends AbstractLeafTask {
         if (tmpCircle.contains(playerBC.x, playerBC.y)) {
             tmpVector2b.sub(tmpVector2a);
             int x = Math.round(tmpVector2b.x);
-            int y = Math.round(tmpVector2b.y);
+//            int y = Math.round(tmpVector2b.y);
             if (x < 0) {
                 ic.setLeft(true);
                 ic.setRight(false);

@@ -47,11 +47,10 @@ public class GeneratePowerPixelActor extends Actor {
         targetXPos = (xPos+((range/2f)));
         targetYPos = (yPos+((range/2f)));
 
-        Random r = new Random();
         for (int i = 0; i < this.xPos.length; i++) {
 
-            float xRange = (float)r.nextDouble() * ((xPos+(range)) - xPos) + xPos;
-            float yRange = (float)r.nextDouble() * ((yPos+(range)) - yPos) + yPos;
+            float xRange = MathUtils.random() * ((xPos+(range)) - xPos) + xPos;
+            float yRange = MathUtils.random() * ((yPos+(range)) - yPos) + yPos;
 
             this.xPos[i] = xRange;
             this.yPos[i] = yRange;
@@ -64,7 +63,7 @@ public class GeneratePowerPixelActor extends Actor {
             Color c = colour[MathUtils.random(0, colour.length-1)];
             this.colour[i] = new Color(c);
 
-            angle[i] = r.nextInt(6) + 1;
+            angle[i] = MathUtils.random(0, 6);
         }
     }
 

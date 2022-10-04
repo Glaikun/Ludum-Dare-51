@@ -21,13 +21,16 @@ import java.util.List;
 
 public abstract class Screen implements com.badlogic.gdx.Screen {
 
-    private ApplicationResources applicationResources;
-    private Stage front, background, ux, immutableBackground;
+    private final ApplicationResources applicationResources;
+    private final Stage front;
+    private final Stage background;
+    private final Stage ux;
+    private final Stage immutableBackground;
 
 //    private final GLProfiler glProfiler;
 //    private final DebugLabels debugLabels;
 
-    private TickTimer logTimer = new TickTimer(3);
+    private final TickTimer logTimer = new TickTimer(3);
     private float accum = 0;
     private int lastCount = 0;
 

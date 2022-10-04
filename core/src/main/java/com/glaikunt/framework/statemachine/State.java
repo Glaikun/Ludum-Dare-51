@@ -9,9 +9,9 @@ public abstract class State {
 
     private final List<Transition> transitions = new ArrayList<>();
 
-    private Entity entity;
+    private final Entity entity;
 
-    public State(Entity entity) {
+    protected State(Entity entity) {
         this.entity = entity;
     }
 

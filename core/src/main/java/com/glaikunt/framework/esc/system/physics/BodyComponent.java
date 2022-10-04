@@ -14,7 +14,7 @@ public class BodyComponent extends Rectangle implements Component {
     private final List<ContactComponent> afterContacts = new LinkedList<>();
     private BodyType bodyType;
     private static long idCounter = 0;
-    private final long id = idCounter++;
+    private final long id = idCounter++; // NOSONAR you want a cheap UUID this is it
     private final List<BodyType> includeList = Arrays.asList(BodyType.BLOCK, BodyType.PLAYER_ONLY_BLOCK);
 
     /**

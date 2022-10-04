@@ -30,7 +30,6 @@ public class Path {
 		 * @param y The y coordinate of the new step
 		 */
 		public Step(final int x, final int y, final float cost) {
-			statsStepsCreated++;
 			this.x = x;
 			this.y = y;
 			this.cost = cost;
@@ -74,9 +73,7 @@ public class Path {
 		}
 
 	}
-	public static long statsCreated;
-	public static long statsStepsCreated;
-	
+
 	/** The list of steps building up this path */
 	private final ArrayList<Step> steps = new ArrayList<>();
 
@@ -84,7 +81,6 @@ public class Path {
 	 * Create an empty path
 	 */
 	public Path() {
-		statsCreated++;
 	}
 	
 	/**

@@ -54,8 +54,7 @@ public class ExplodePixelActor extends Actor {
             this.colour[i].r = c.r;
             this.colour[i].g = c.g;
 
-            Random r = new Random();
-            angle[i] = r.nextInt(6) + 1;
+            angle[i] = MathUtils.random(0,6);
         }
     }
 

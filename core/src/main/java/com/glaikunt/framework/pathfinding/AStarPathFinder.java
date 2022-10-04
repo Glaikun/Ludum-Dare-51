@@ -50,14 +50,8 @@ public class AStarPathFinder implements PathFinder {
 			
 			final float f = heuristic + cost;
 			final float of = o.heuristic + o.cost;
-			
-			if (f < of) {
-				return -1;
-			} else if (f > of) {
-				return 1;
-			} else {
-				return 0;
-			}
+
+			return Float.compare(f, of);
 		}
 		
 		/**

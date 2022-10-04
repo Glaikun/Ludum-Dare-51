@@ -47,11 +47,10 @@ public class OutwardPowerPixelActor extends Actor {
         this.colour = new Color[amount];
         this.range = range;
 
-        Random r = new Random();
         for (int i = 0; i < this.xPos.length; i++) {
 
-            this.targetXPos[i] = (float)r.nextDouble() * ((xPos+(range)) - xPos) + xPos;
-            this.targetYPos[i] = (float)r.nextDouble() * ((yPos+(range)) - yPos) + yPos;
+            this.targetXPos[i] = MathUtils.random() * ((xPos+(range)) - xPos) + xPos;
+            this.targetYPos[i] = MathUtils.random() * ((yPos+(range)) - yPos) + yPos;
 
             this.xPos[i] = (xPos+((range/2f)));
             this.yPos[i] = (yPos+((range/2f)));
@@ -64,7 +63,7 @@ public class OutwardPowerPixelActor extends Actor {
             Color c = colour[MathUtils.random(0, colour.length-1)];
             this.colour[i] = new Color(c);
 
-            angle[i] = r.nextInt(6) + 1;
+            angle[i] = MathUtils.random(0,6);
         }
     }
 

@@ -48,7 +48,7 @@ public class MoveToNearestHeatSourceActionTask extends AbstractLeafTask {
             tc.setTargetHeatSource(tmpVector2Target);
             tmpVector2b.set(tmpVector2Target).sub(tmpVector2a);
             int x = Math.round(tmpVector2b.x);
-            int y = Math.round(tmpVector2b.y);
+//            int y = Math.round(tmpVector2b.y);
             if (x < 0) {
                 ic.setLeft(true);
                 ic.setRight(false);
