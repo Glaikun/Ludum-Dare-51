@@ -7,18 +7,16 @@ import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
-import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.esc.component.text.DelayedTextComponent;
 
 public class DelayedTextSystem extends EntitySystem {
 
-    private ApplicationResources applicationResources;
-    private ImmutableArray<Entity> entities;
 
-    private ComponentMapper<DelayedTextComponent> tcm = ComponentMapper.getFor(DelayedTextComponent.class);
+    private final ImmutableArray<Entity> entities;
 
-    public DelayedTextSystem(ApplicationResources applicationResources, Engine engine) {
-        this.applicationResources = applicationResources;
+    private final ComponentMapper<DelayedTextComponent> tcm = ComponentMapper.getFor(DelayedTextComponent.class);
+
+    public DelayedTextSystem(Engine engine) {
         this.entities = engine.getEntitiesFor(Family.all(DelayedTextComponent.class).get());
     }
 

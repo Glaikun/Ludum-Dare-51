@@ -8,9 +8,6 @@ import static com.glaikunt.framework.esc.component.movement.AbstractPlayerInputC
 
 public class PlayerInputComponent extends AbstractPlayerInputComponent implements InputProcessor {
 
-    private static final boolean CHAOS_MONKEY = false;
-
-
     @Override
     public boolean keyDown(int i) {
         return false;
@@ -41,11 +38,11 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
     }
 
     public boolean isMovingLeft() {
-        return Gdx.input.isKeyPressed(moveLeftPrimaryKey) || Gdx.input.isKeyPressed(moveLeftSecondaryKey) || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return Gdx.input.isKeyPressed(moveLeftPrimaryKey) || Gdx.input.isKeyPressed(moveLeftSecondaryKey);
     }
 
     public boolean isMovingRight() {
-        return Gdx.input.isKeyPressed(moveRightPrimaryKey) || Gdx.input.isKeyPressed(moveRightSecondaryKey) || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return Gdx.input.isKeyPressed(moveRightPrimaryKey) || Gdx.input.isKeyPressed(moveRightSecondaryKey);
     }
 
     public boolean isMovingUp() {
@@ -58,7 +55,7 @@ public class PlayerInputComponent extends AbstractPlayerInputComponent implement
 
     @Override
     public boolean isJumping() {
-        return Gdx.input.isKeyPressed(jumpKeyPrimary) || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return Gdx.input.isKeyPressed(jumpKeyPrimary);
     }
 
     @Override

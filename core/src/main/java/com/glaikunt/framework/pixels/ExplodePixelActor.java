@@ -9,15 +9,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.cache.TextureCache;
 
-import java.util.Random;
-
 public class ExplodePixelActor extends Actor {
 
-    private TextureRegion pixel;
+    private final TextureRegion pixel;
 
-    private float[] xPos, yPos, xPosVol, yPosVol, angle, energy;
-    private float width, height;
-    private Color[] colour;
+    private final float[] xPos;
+    private final float[] yPos;
+    private final float[] xPosVol;
+    private final float[] yPosVol;
+    private final float[] angle;
+    private final float[] energy;
+    private final float width;
+    private final float height;
+    private final Color[] colour;
 
     public ExplodePixelActor(ApplicationResources applicationResources, float xPos, float yPos, Color[] colour, int amount) {
         this(applicationResources, xPos, yPos, 1, 1, colour, amount, .2f);

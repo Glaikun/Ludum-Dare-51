@@ -5,7 +5,8 @@ import com.badlogic.ashley.core.Component;
 public class PlayerComponent implements Component {
 
     private int health = 1;
-    private boolean hit, dead;
+    private boolean hit;
+    private boolean dead;
     private int deathFrom;
     private boolean levelComplete;
 

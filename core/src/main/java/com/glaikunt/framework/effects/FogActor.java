@@ -17,12 +17,10 @@ public class FogActor extends Actor {
     private float offsetY;
     protected final float targetWidth;
     protected final float targetHeight;
-    private float speed;
-    private final Color color;
+    private final float speed;
 
-    public FogActor(ApplicationResources applicationResources, float speed, Color color) {
+    public FogActor(ApplicationResources applicationResources, float speed) {
         this.background = new TextureRegion(applicationResources.getTexture(TextureCache.FOG));
-        this.color = color;
         this.offsetX = 0;
         this.offsetY = 0;
         this.targetWidth = background.getTexture().getWidth();
@@ -46,10 +44,9 @@ public class FogActor extends Actor {
         background.setV2(background.getV2()-amt/10f);
     }
 
+    @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(color);
         batch.draw(background, offsetX-(targetWidth/2), offsetY-(targetHeight/2), targetWidth, targetHeight);
-        batch.setColor(Color.WHITE);
     }
 
     @Override

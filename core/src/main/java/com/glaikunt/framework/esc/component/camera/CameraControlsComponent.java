@@ -12,7 +12,8 @@ public class CameraControlsComponent implements Component {
     private boolean enableMovement;
     private final List<OrthographicCamera> cameras = new LinkedList<>();
 
-    private float movementSpeed = 50, scrollSpeed = 1f;
+    private float movementSpeed = 50;
+    private float scrollSpeed = 1f;
 
     public boolean isEnableZoom() {
         return enableZoom;

@@ -5,7 +5,9 @@ import com.badlogic.ashley.core.Component;
 public class BloatingComponent implements Component {
 
     private boolean toggle;
-    private float bloating, maxBloating, speed = 1f;
+    private float bloating;
+    private float maxBloating;
+    private float speed = 1f;
 
     public boolean isToggle() {
         return toggle;

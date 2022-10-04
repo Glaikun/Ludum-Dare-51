@@ -20,7 +20,6 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
     private final VelocityComponent playerVel;
     private final PlayerComponent player;
     private final BodyComponent bc;
-    private final TargetsComponent tc;
     private final EnemyInputComponent ic;
     private final BodyComponent playerBC;
     private final Vector2 tmpVector2a = new Vector2();
@@ -34,7 +33,6 @@ public class AttackPlayerActionTask extends AbstractLeafTask {
         this.playerVel = eac.getPlayerEntity().getComponent(VelocityComponent.class);
         this.player = eac.getPlayerEntity().getComponent(PlayerComponent.class);
         this.playerBC = eac.getPlayerEntity().getComponent(BodyComponent.class);
-        this.tc = entity.getComponent(TargetsComponent.class);
         this.ic = entity.getComponent(EnemyInputComponent.class);
     }
 

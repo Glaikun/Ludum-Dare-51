@@ -20,7 +20,7 @@ public class HeatSourceActor extends CommonActor {
     private final BodyComponent body;
     private final AnimationComponent animation;
 
-    private TickTimer pixelsTimer = new TickTimer(1f);
+    private final TickTimer pixelsTimer = new TickTimer(1f);
 
     public HeatSourceActor(ApplicationResources applicationResources, Vector2 pos) {
         super(applicationResources);
@@ -53,7 +53,7 @@ public class HeatSourceActor extends CommonActor {
 //           float xPos, float yPos, float targetXPos, float targetYPos, float width, float height, Color color, int amount, float speed) {
             float x = MathUtils.random(getX()+5, getX() +(getWidth()));
             float y = MathUtils.random(getY()+5, getY() +(getHeight()/2));
-            getStage().addActor(new ExplodePixelActor(getApplicationResources(), x, y, 1, 1, new Color[]{FrameworkConstants.ORANAGE, FrameworkConstants.RED}, 15, 5));
+            getStage().addActor(new ExplodePixelActor(getApplicationResources(), x, y, 1, 1, new Color[]{FrameworkConstants.ORANGE, FrameworkConstants.RED}, 15, 5));
         }
     }
 

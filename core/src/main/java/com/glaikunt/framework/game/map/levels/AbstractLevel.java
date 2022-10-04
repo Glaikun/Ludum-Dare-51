@@ -23,7 +23,8 @@ public abstract class AbstractLevel extends CommonActor {
     private final Stage front;
 
     protected OrthogonalTiledMapRenderer renderer;
-    protected TiledMapTileLayer background, foreground;
+    protected TiledMapTileLayer background;
+    protected TiledMapTileLayer foreground;
 
     protected PlayerActor player;
     protected final Array<EnemyActor> enemies = new Array<>();
@@ -32,7 +33,7 @@ public abstract class AbstractLevel extends CommonActor {
 
     protected String level;
 
-    public AbstractLevel(ApplicationResources applicationResources, Stage front, String level) {
+    protected AbstractLevel(ApplicationResources applicationResources, Stage front, String level) {
         super(applicationResources);
         this.front = front;
         this.level = level;

@@ -16,13 +16,11 @@ public class EnemyInputSystem extends EntitySystem {
     private static final float JUMPING_ACCELERATION = 75;
     private final ImmutableArray<Entity> animationEntities;
 
-    private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
-    private final ComponentMapper<VelocityComponent> vc = ComponentMapper.getFor(VelocityComponent.class);
     private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
     private final ComponentMapper<EnemyInputComponent> eic = ComponentMapper.getFor(EnemyInputComponent.class);
     private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
-    private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
-    private ComponentMapper<SpeedComponent> sc = ComponentMapper.getFor(SpeedComponent.class);
+    private final ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
+    private final ComponentMapper<SpeedComponent> sc = ComponentMapper.getFor(SpeedComponent.class);
 
     //TODO Jumping State
 

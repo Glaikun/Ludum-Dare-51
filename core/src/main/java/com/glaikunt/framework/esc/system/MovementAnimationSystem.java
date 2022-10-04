@@ -12,9 +12,9 @@ public class MovementAnimationSystem extends EntitySystem {
 
     private ApplicationResources applicationResources;
 
-    private ImmutableArray<Entity> animationEntities;
+    private final ImmutableArray<Entity> animationEntities;
 
-    private ComponentMapper<MovementAnimationComponent> ac = ComponentMapper.getFor(MovementAnimationComponent.class);
+    private final ComponentMapper<MovementAnimationComponent> ac = ComponentMapper.getFor(MovementAnimationComponent.class);
 
     public MovementAnimationSystem(ApplicationResources applicationResources) {
         this.applicationResources = applicationResources;

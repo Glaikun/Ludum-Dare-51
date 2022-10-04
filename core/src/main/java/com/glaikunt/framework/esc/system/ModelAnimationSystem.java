@@ -10,9 +10,9 @@ import com.glaikunt.framework.esc.component.animation.ModelAnimationComponent;
 
 public class ModelAnimationSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> animationEntities;
+    private final ImmutableArray<Entity> animationEntities;
 
-    private ComponentMapper<ModelAnimationComponent> ac = ComponentMapper.getFor(ModelAnimationComponent.class);
+    private final ComponentMapper<ModelAnimationComponent> ac = ComponentMapper.getFor(ModelAnimationComponent.class);
 
     public ModelAnimationSystem(Engine engine) {
         animationEntities = engine.getEntitiesFor(Family.all(ModelAnimationComponent.class).get());

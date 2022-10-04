@@ -7,7 +7,9 @@ public class RotationComponent implements Component {
 
     private TickTimer rotationTimer;
     private boolean toggle;
-    private float baseRotation, rotation, rotationSpeed;
+    private float baseRotation;
+    private float rotation;
+    private float rotationSpeed;
 
     public void setRotationTimer(TickTimer rotationTimer) {
         this.rotationTimer = rotationTimer;

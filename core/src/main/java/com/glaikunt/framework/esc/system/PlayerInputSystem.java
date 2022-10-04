@@ -16,16 +16,13 @@ import com.glaikunt.framework.esc.component.movement.PlayerInputComponent;
 import com.glaikunt.framework.esc.system.physics.BodyComponent;
 
 public class PlayerInputSystem extends EntitySystem {
-        private static final float LATERAL_ACCELERATION = 50f;
+    private static final float LATERAL_ACCELERATION = 50f;
     private static final float JUMPING_ACCELERATION = 75;
     private final ImmutableArray<Entity> animationEntities;
-
-    private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
-    private final ComponentMapper<VelocityComponent> vc = ComponentMapper.getFor(VelocityComponent.class);
     private final ComponentMapper<AccelerationComponent> acm = ComponentMapper.getFor(AccelerationComponent.class);
     private final ComponentMapper<PlayerInputComponent> pic = ComponentMapper.getFor(PlayerInputComponent.class);
     private final ComponentMapper<BodyComponent> bcm = ComponentMapper.getFor(BodyComponent.class);
-    private ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
+    private final ComponentMapper<WarmthComponent> wcm = ComponentMapper.getFor(WarmthComponent.class);
 
     //TODO Jumping State
 
@@ -43,8 +40,6 @@ public class PlayerInputSystem extends EntitySystem {
         for (int i = 0; i < animationEntities.size(); ++i) {
 
             Entity entity = animationEntities.get(i);
-            AnimationComponent playerAnimation = ac.get(entity);
-            VelocityComponent vel = vc.get(entity);
             AccelerationComponent ac = acm.get(entity);
             AbstractPlayerInputComponent input = pic.get(entity);
             BodyComponent body = bcm.get(entity);

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Entity;
 
 public abstract class Transition {
 
-    private Entity entity;
+    private final Entity entity;
 
     public Transition(Entity entity) {
         this.entity = entity;

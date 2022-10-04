@@ -21,14 +21,13 @@ import java.util.List;
 public class CreditScreen extends Screen {
 
     private TickTimer textTimer;
-    private List<CreditTextActor> credits = new ArrayList<>();
-    private Entity endScreenEntity;
+    private final List<CreditTextActor> credits = new ArrayList<>();
     private BloatingComponent bloating;
     private Vector2 size;
     private Texture heart;
     private float alpha = 0;
 
-    private TickTimer endTimer = new TickTimer(12);
+    private final TickTimer endTimer = new TickTimer(12);
 
     public CreditScreen(ApplicationResources applicationResources) {
         super(applicationResources, Scaling.stretch, Scaling.stretch);
@@ -42,17 +41,17 @@ public class CreditScreen extends Screen {
             getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).play();
         }
         if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() < 1f) {
-            getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(1f);
+            getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(.25f);
         }
         if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() > 0f) {
             getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(0f);
         }
 
-        this.endScreenEntity = new Entity();
+        Entity endScreenEntity = new Entity();
         this.bloating = new BloatingComponent();
         this.bloating.setMaxBloating(5);
         this.bloating.setSpeed(10f);
-        this.endScreenEntity.add(bloating);
+        endScreenEntity.add(bloating);
         getApplicationResources().getEngine().addEntity(endScreenEntity);
         getApplicationResources().getEngine().addSystem(new BloatingSystem(getEngine()));
 
@@ -79,18 +78,6 @@ public class CreditScreen extends Screen {
         String message = "Thanks For Playing!  \n\n";
         getFront().addActor(new TopTextActor(getApplicationResources(), message));
 //        getApplicationResources().getAudioManager().loopGameOver();
-    }
-
-    @Override
-    public void hide() {
-        super.hide();
-
-//        getApplicationResources().getAudioManager().stopGameOver();
-    }
-
-    @Override
-    public void render(float delta) {
-        super.render(delta);
     }
 
     @Override

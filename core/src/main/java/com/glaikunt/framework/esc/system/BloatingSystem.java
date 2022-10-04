@@ -14,9 +14,9 @@ public class BloatingSystem extends EntitySystem {
 //        this.bloating.setMaxBloating(5);
 //        this.bloating.setSpeed(10f);
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<BloatingComponent> bcm = ComponentMapper.getFor(BloatingComponent.class);
+    private final ComponentMapper<BloatingComponent> bcm = ComponentMapper.getFor(BloatingComponent.class);
 
     public BloatingSystem(Engine engine) {
         entities = engine.getEntitiesFor(Family.all(BloatingComponent.class).get());

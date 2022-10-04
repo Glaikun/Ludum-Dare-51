@@ -13,12 +13,12 @@ public class CacheRetriever {
 
     private boolean loaded = false;
 
-    private AssetManager assetManager;
-    private TextureCache textureCache;
-    private SoundCache soundCache;
-    private MusicCache musicCache;
-    private TiledCache tiledCache;
-    private FontCache fontCache;
+    private final AssetManager assetManager;
+    private final TextureCache textureCache;
+    private final SoundCache soundCache;
+    private final MusicCache musicCache;
+    private final TiledCache tiledCache;
+    private final FontCache fontCache;
 
     public CacheRetriever() {
 

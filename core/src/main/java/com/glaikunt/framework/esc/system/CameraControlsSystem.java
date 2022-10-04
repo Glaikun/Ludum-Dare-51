@@ -14,9 +14,9 @@ import com.glaikunt.framework.application.GameUtils;
 
 public class CameraControlsSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<CameraControlsComponent> cccm = ComponentMapper.getFor(CameraControlsComponent.class);
+    private final ComponentMapper<CameraControlsComponent> cccm = ComponentMapper.getFor(CameraControlsComponent.class);
 
     public CameraControlsSystem(Engine engine) {
         entities = engine.getEntitiesFor(Family.all(CameraControlsComponent.class).get());

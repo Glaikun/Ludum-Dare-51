@@ -16,7 +16,6 @@ public class Display2D extends Display {
 
 	public static final float WORLD_WIDTH = 1280; //640 //1980 //320
 	public static final float WORLD_HEIGHT = 960; //480 //1080 //240
-	public static final String VERSION = "v0.1.0";
 
     private ApplicationResources applicationResources;
 

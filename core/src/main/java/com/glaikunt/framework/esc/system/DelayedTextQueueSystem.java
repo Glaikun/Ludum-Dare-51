@@ -15,10 +15,10 @@ import static com.badlogic.gdx.Input.Keys.ANY_KEY;
 
 public class DelayedTextQueueSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<TextQueueComponent> tqcm = ComponentMapper.getFor(TextQueueComponent.class);
-    private ComponentMapper<DelayedTextComponent> dtcm = ComponentMapper.getFor(DelayedTextComponent.class);
+    private final ComponentMapper<TextQueueComponent> tqcm = ComponentMapper.getFor(TextQueueComponent.class);
+    private final ComponentMapper<DelayedTextComponent> dtcm = ComponentMapper.getFor(DelayedTextComponent.class);
 
     public DelayedTextQueueSystem(Engine engine) {
         this.entities = engine.getEntitiesFor(Family.all(TextQueueComponent.class, DelayedTextComponent.class).get());

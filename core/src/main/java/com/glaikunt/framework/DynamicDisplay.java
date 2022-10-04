@@ -2,7 +2,6 @@ package com.glaikunt.framework;
 
 import com.badlogic.gdx.Gdx;
 import com.glaikunt.framework.application.ApplicationResources;
-import com.glaikunt.framework.application.TickTimer;
 import com.glaikunt.framework.splash.SplashScreen;
 
 import static com.badlogic.gdx.utils.Logger.DEBUG;

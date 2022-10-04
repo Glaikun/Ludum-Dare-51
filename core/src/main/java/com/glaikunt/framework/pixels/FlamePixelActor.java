@@ -11,11 +11,17 @@ import com.glaikunt.framework.cache.TextureCache;
 
 public class FlamePixelActor extends Actor {
 
-    private TextureRegion pixel;
+    private final TextureRegion pixel;
 
-    private float[] xPos, yPos, xPosVol, yPosVol, angle, energy;
-    private float width = 2, height = 2;
-    private Color[] colour;
+    private final float[] xPos;
+    private final float[] yPos;
+    private final float[] xPosVol;
+    private final float[] yPosVol;
+    private final float[] angle;
+    private final float[] energy;
+    private float width = 2;
+    private float height = 2;
+    private final Color[] colour;
 
     public FlamePixelActor(ApplicationResources applicationResources, float xPos, float yPos, float targetXPos, float targetYPos, float width, float height, Color color, int amount) {
         this(applicationResources, xPos, yPos, targetXPos, targetYPos, width, height, color, amount, .4f);

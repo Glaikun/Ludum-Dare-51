@@ -13,8 +13,8 @@ import com.glaikunt.framework.application.ApplicationResources;
 import static com.glaikunt.framework.cache.FontCache.BASIC_FONT;
 
 public class TopTextActor extends Actor {
-    private BitmapFont baseFont;
-    private GlyphLayout layout;
+    private final BitmapFont baseFont;
+    private final GlyphLayout layout;
     private Vector2 pos;
 
     public TopTextActor(ApplicationResources applicationResources, String txt) {

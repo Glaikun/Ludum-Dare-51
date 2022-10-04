@@ -15,16 +15,13 @@ import com.glaikunt.framework.game.GameConstants;
 
 public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
 
-    private static final int RADIUS = 32; // tile
     private static final float LATERAL_ACCELERATION = 150f;
 
     private final VelocityComponent playerVel;
     private final PlayerComponent player;
     private final BodyComponent bc;
-    private final TargetsComponent tc;
     private final EnemyInputComponent ic;
     private final BodyComponent playerBC;
-    private final Vector2 tmpVector2a = new Vector2();
     private final Vector2 tmpVector2b = new Vector2();
     private final Circle tmpCircle = new Circle();
 
@@ -35,7 +32,6 @@ public class AttackPlayerHoldingGroundActionTask extends AbstractLeafTask {
         this.playerVel = eac.getPlayerEntity().getComponent(VelocityComponent.class);
         this.player = eac.getPlayerEntity().getComponent(PlayerComponent.class);
         this.playerBC = eac.getPlayerEntity().getComponent(BodyComponent.class);
-        this.tc = entity.getComponent(TargetsComponent.class);
         this.ic = entity.getComponent(EnemyInputComponent.class);
     }
 

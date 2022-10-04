@@ -11,10 +11,8 @@ import java.util.Map;
 
 public class TiledCache implements Cache {
 
-    //   ################## EXAMPLE ##################
-    public static final String DEBUG_MAP = "maps/debug_map.tmx";
-    public static final String TRANSITION_DEBUG_MAP = "maps/debug_map_2.tmx";
-//   ################## EXAMPLE ##################
+//    public static final String DEBUG_MAP = "maps/debug_map.tmx";
+//    public static final String TRANSITION_DEBUG_MAP = "maps/debug_map_2.tmx";
 
     //   ################## LEVELS ##################
     public static final String LEVEL_1 = "maps/levels/level1.tmx";
@@ -38,11 +36,11 @@ public class TiledCache implements Cache {
         TmxMapLoader loader = new TmxMapLoader(new InternalFileHandleResolver());
         assetManager.setLoader(TiledMap.class, loader);
 
-        assetManager.load(DEBUG_MAP, TiledMap.class, params);
-        getTiledMap().put(DEBUG_MAP, null);
-
-        assetManager.load(TRANSITION_DEBUG_MAP, TiledMap.class, params);
-        getTiledMap().put(TRANSITION_DEBUG_MAP, null);
+//        assetManager.load(DEBUG_MAP, TiledMap.class, params);
+//        getTiledMap().put(DEBUG_MAP, null);
+//
+//        assetManager.load(TRANSITION_DEBUG_MAP, TiledMap.class, params);
+//        getTiledMap().put(TRANSITION_DEBUG_MAP, null);
 
         assetManager.load(LEVEL_1, TiledMap.class, params);
         getTiledMap().put(LEVEL_1, null);

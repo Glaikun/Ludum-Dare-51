@@ -6,9 +6,6 @@ public class AudioManager {
 
     private float volume = 1;
 
-    public AudioManager() {
-    }
-
     public void init(SoundCache soundCache) {
     }
 

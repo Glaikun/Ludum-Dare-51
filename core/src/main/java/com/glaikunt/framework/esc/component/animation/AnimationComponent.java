@@ -11,9 +11,11 @@ public class AnimationComponent implements Component {
     private IntMap<Animation<TextureRegion>> entries = new IntMap<>();
     private int currentAnimationId = 0;
     private TextureRegion currentFrame;
-    private float stateTime, framerate;
+    private float stateTime;
+    private float framerate;
     private boolean playing;
-    private boolean xFlip, yFlip;
+    private boolean xFlip;
+    private boolean yFlip;
 
     public AnimationComponent(AnimationComponent animationComponent) {
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AnimationsComponent implements Component {
 
-    private List<AnimationComponent> animations = new ArrayList<>();
+    private final List<AnimationComponent> animations = new ArrayList<>();
 
     public void add(AnimationComponent animation) {
         this.animations.add(animation);

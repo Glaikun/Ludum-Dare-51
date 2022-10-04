@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FontCache implements Cache {
-
-    //   ################## EXAMPLE ##################
     public static final String BASIC_FONT = "font/kenny_thick.fnt";
-    //   ################## EXAMPLE ##################
 
-    private Map<String, BitmapFont> fonts = new HashMap<>();
+    private final Map<String, BitmapFont> fonts = new HashMap<>();
     private boolean loaded = false;
 
     @Override

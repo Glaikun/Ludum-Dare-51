@@ -18,10 +18,10 @@ public class VelocityIterationsSystem extends EntitySystem {
 
     private static final float MAX_X_V = 20f;
     private static final float MAX_Y_V = 20f; // should be terminal velocity
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
-    private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
+    private final ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
 
     public VelocityIterationsSystem(Engine engine) {
         entities = engine.getEntitiesFor(

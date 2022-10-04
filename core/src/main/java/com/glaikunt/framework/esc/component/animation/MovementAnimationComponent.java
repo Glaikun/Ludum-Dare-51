@@ -6,8 +6,11 @@ import com.glaikunt.framework.application.TickTimer;
 public class MovementAnimationComponent implements Component {
 
     private TickTimer rotationTimer;
-    private boolean toggle, paused, pixelAnimation;
-    private float rotation, rotationSpeed;
+    private boolean toggle;
+    private boolean paused;
+    private boolean pixelAnimation;
+    private float rotation;
+    private float rotationSpeed;
 
     public void setRotationTimer(TickTimer rotationTimer) {
         this.rotationTimer = rotationTimer;

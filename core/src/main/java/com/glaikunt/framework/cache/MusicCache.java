@@ -11,7 +11,7 @@ public class MusicCache implements Cache {
    public static final String BLIZZARD_EXTERNAL = "sound/573290__kevp888__210523-1598-fr-blizzard.ogg";
    public static final String BLIZZARD_INTERNAL = "sound/173096__stormpetrel__whistling-antarctic-blizzard.ogg"; // real Antarctic SFX!
 
-    private Map<String, Music> sounds = new HashMap<>();
+    private final Map<String, Music> sounds = new HashMap<>();
     private boolean loaded = false;
 
     @Override

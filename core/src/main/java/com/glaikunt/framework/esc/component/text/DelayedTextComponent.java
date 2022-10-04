@@ -9,15 +9,19 @@ import com.glaikunt.framework.esc.component.common.PositionComponent;
 
 public class DelayedTextComponent implements TextComponent {
 
-    private String text, deltaText = "";
-    private TickTimer delay, disableTimer = new TickTimer(3f);
+    private String text;
+    private String deltaText = "";
+    private TickTimer delay;
+    private TickTimer disableTimer = new TickTimer(3f);
     private BitmapFont font;
     private GlyphLayout layout;
     private Color colour;
     private float targetWidth = 0;
     private int align = Align.left;
     private boolean wrap = false;
-    private boolean finished, visible, paused;
+    private boolean finished;
+    private boolean visible;
+    private boolean paused;
     private PositionComponent pos;
     private boolean shake;
     private PositionComponent shakePos = new PositionComponent(0, 0);

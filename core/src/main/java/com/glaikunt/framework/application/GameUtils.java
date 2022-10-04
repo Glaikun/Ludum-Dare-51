@@ -18,7 +18,7 @@ public final class GameUtils {
      * @param speed
      * @return
      */
-    static public Vector2 moveToTarget(Vector2 currentPos, Vector2 targetPos, float speed) {
+    public static Vector2 moveToTarget(Vector2 currentPos, Vector2 targetPos, float speed) {
         float startX = currentPos.x;
         float startY = currentPos.y;
 
@@ -41,7 +41,7 @@ public final class GameUtils {
      * @param speed
      * @return
      */
-    static public Vector2 curveToTarget(Vector2 startPos, Vector2 heightPos, Vector2 targetPos, float speed) {
+    public static Vector2 curveToTarget(Vector2 startPos, Vector2 heightPos, Vector2 targetPos, float speed) {
 
         vecCurv1.set(startPos.lerp(heightPos, speed));
         vecCurv2.set(heightPos.lerp(targetPos, speed));
@@ -55,7 +55,7 @@ public final class GameUtils {
      * @param value
      * @return
      */
-    static public float clamp(float min, float max, float value) {
+    public static float clamp(float min, float max, float value) {
 
         return Math.min(max, Math.max(value, min));
     }
@@ -68,7 +68,7 @@ public final class GameUtils {
      * @param max
      * @return
      */
-    static public float percentage(float currentVal, float size, float max) {
+    public static float percentage(float currentVal, float size, float max) {
 
         return GameUtils.clamp(0, size, (currentVal * size) / max);
     }

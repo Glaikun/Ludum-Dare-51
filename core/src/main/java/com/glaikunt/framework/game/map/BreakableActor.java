@@ -1,6 +1,5 @@
 package com.glaikunt.framework.game.map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -16,7 +15,6 @@ import com.glaikunt.framework.esc.system.physics.BodyType;
 public class BreakableActor extends CommonActor {
 
     private final BodyComponent body;
-    private final HealthComponent health;
     private final AnimationComponent animation;
 
     public BreakableActor(ApplicationResources applicationResources, Vector2 pos) {
@@ -30,7 +28,7 @@ public class BreakableActor extends CommonActor {
         this.body.setBodyType(BodyType.BREAKABLE);
         this.body.set(getX(), getY(), getWidth(), getHeight());
 
-        this.health = new HealthComponent(100f,100f);
+        HealthComponent health = new HealthComponent(100f, 100f);
 
         getEntity().add(animation);
         getEntity().add(body);

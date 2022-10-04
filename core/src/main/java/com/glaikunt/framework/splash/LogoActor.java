@@ -21,10 +21,10 @@ import java.util.List;
 
 public class LogoActor extends CommonActor {
 
-    private AnimationComponent logo;
-    private FadeComponent.Fade fade;
-    private TickTimer completeTimer = new TickTimer(2);
-    private TickTimer startTimer = new TickTimer(2);
+    private final AnimationComponent logo;
+    private final FadeComponent.Fade fade;
+    private final TickTimer completeTimer = new TickTimer(2);
+    private final TickTimer startTimer = new TickTimer(2);
 
     public LogoActor(ApplicationResources applicationResources) {
         super(applicationResources);

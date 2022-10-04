@@ -13,9 +13,11 @@ public class ModelAnimationComponent implements Component {
     private IntMap<Animation<ModelInstance>> entries = new IntMap<>();
     private int currentAnimationId = 0;
     private ModelInstance currentFrame;
-    private float stateTime, framerate;
+    private float stateTime;
+    private float framerate;
     private boolean playing;
-    private boolean xFlip, yFlip;
+    private boolean xFlip;
+    private boolean yFlip;
 
     public ModelAnimationComponent(ModelAnimationComponent animationComponent) {
 

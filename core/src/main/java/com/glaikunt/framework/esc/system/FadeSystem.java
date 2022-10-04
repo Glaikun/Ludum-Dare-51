@@ -14,9 +14,9 @@ public class FadeSystem extends EntitySystem {
 //        fade.setFade(0);
 //        fade.setMaxFade(1f);
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<FadeComponent> fcm = ComponentMapper.getFor(FadeComponent.class);
+    private final ComponentMapper<FadeComponent> fcm = ComponentMapper.getFor(FadeComponent.class);
 
     public FadeSystem(Engine engine) {
         entities = engine.getEntitiesFor(Family.all(FadeComponent.class).get());

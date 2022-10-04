@@ -11,7 +11,7 @@ import com.glaikunt.framework.cache.TextureCache;
 
 public class FadeActor extends CommonActor {
 
-    private Texture pixel;
+    private final Texture pixel;
     private float fade = 0;
 
     public FadeActor(ApplicationResources applicationResources) {

@@ -1,12 +1,8 @@
 package com.glaikunt.framework.esc.component.movement;
 
-import com.badlogic.gdx.math.MathUtils;
-
 import static com.glaikunt.framework.esc.component.movement.AbstractPlayerInputComponent.Animation.IDLE;
 
 public class EnemyInputComponent extends AbstractPlayerInputComponent {
-
-    private static final boolean CHAOS_MONKEY = false;
 
     private boolean sprinting = false;
     private boolean left = false;
@@ -43,11 +39,11 @@ public class EnemyInputComponent extends AbstractPlayerInputComponent {
     }
 
     public boolean isMovingLeft() {
-        return left || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return left;
     }
 
     public boolean isMovingRight() {
-        return right || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return right;
     }
 
     public boolean isMovingUp() {
@@ -58,9 +54,8 @@ public class EnemyInputComponent extends AbstractPlayerInputComponent {
         return down;
     }
 
-    @Override
     public boolean isJumping() {
-        return jump || (CHAOS_MONKEY && MathUtils.randomBoolean());
+        return jump;
     }
 
     public void setSprinting(boolean sprinting) {

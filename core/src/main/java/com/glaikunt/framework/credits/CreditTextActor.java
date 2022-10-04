@@ -14,12 +14,12 @@ import static com.glaikunt.framework.cache.FontCache.BASIC_FONT;
 
 public class CreditTextActor extends Actor {
 
-    private BitmapFont baseFont;
-    private GlyphLayout layout;
+    private final BitmapFont baseFont;
+    private final GlyphLayout layout;
     private float alpha = 0;
-    private Vector2 pos;
+    private final Vector2 pos;
     private boolean toggle;
-    private String txt;
+    private final String txt;
 
     public CreditTextActor(ApplicationResources applicationResources, String txt) {
 

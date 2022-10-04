@@ -19,7 +19,7 @@ public class VelocityDecaySystem extends EntitySystem {
     private static final float DECAY_RATE = 10f;
     private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
+    private final ComponentMapper<VelocityComponent> vcm = ComponentMapper.getFor(VelocityComponent.class);
 
 
     public VelocityDecaySystem(Engine engine) {
@@ -37,11 +37,7 @@ public class VelocityDecaySystem extends EntitySystem {
             Entity entity = entities.get(ei);
             VelocityComponent vel = vcm.get(entity);
 
-
             vel.scl(1f - (DECAY_RATE*delta) );
-//            accel.scl(1f - (100*DECAY_RATE*delta) );
-//            accel.x -= Math.abs(accel.x/2);// * delta;
-//            accel.y -= (accel.x/8) * delta;
         }
     }
 }

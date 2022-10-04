@@ -5,13 +5,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.glaikunt.framework.esc.system.physics.BodyType;
 
-import java.util.Objects;
-
 public class ContactComponent implements Component {
 
     private final Rectangle interaction = new Rectangle();
     private final Vector2 normal = new Vector2();
-    private Rectangle bodyA, bodyB;
+    private Rectangle bodyA;
+    private Rectangle bodyB;
     private BodyType bodyAType;
     private BodyType bodyBType;
 

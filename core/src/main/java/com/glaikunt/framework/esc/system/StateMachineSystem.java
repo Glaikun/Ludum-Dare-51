@@ -10,9 +10,9 @@ import com.glaikunt.framework.esc.component.statemachine.StateComponent;
 
 public class StateMachineSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<StateComponent> esc = ComponentMapper.getFor(StateComponent.class);
+    private final ComponentMapper<StateComponent> esc = ComponentMapper.getFor(StateComponent.class);
 
     public StateMachineSystem(Engine engine) {
         this.entities = engine.getEntitiesFor(Family.all(StateComponent.class).get());

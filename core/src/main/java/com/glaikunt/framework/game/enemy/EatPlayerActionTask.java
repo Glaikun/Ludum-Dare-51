@@ -6,13 +6,13 @@ import com.glaikunt.framework.esc.component.common.PlayerComponent;
 
 public class EatPlayerActionTask extends AbstractLeafTask {
 
-    private final PlayerComponent playerBC;
+//    private final PlayerComponent playerBC;
 
     protected EatPlayerActionTask(Entity entity, ApplicationResources applicationResources) {
         super(entity, applicationResources);
 
         EasyAccessComponent eac = entity.getComponent(EasyAccessComponent.class);
-        this.playerBC = eac.getPlayerEntity().getComponent(PlayerComponent.class);
+//        this.playerBC = eac.getPlayerEntity().getComponent(PlayerComponent.class);
     }
 
     //TODO some funny/silly effect

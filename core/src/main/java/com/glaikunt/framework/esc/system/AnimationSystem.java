@@ -11,11 +11,11 @@ import com.glaikunt.framework.esc.component.animation.AnimationsComponent;
 
 public class AnimationSystem extends EntitySystem {
 
-    private ImmutableArray<Entity> animationEntities;
-    private ImmutableArray<Entity> animationsEntities;
+    private final ImmutableArray<Entity> animationEntities;
+    private final ImmutableArray<Entity> animationsEntities;
 
-    private ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
-    private ComponentMapper<AnimationsComponent> asc = ComponentMapper.getFor(AnimationsComponent.class);
+    private final ComponentMapper<AnimationComponent> ac = ComponentMapper.getFor(AnimationComponent.class);
+    private final ComponentMapper<AnimationsComponent> asc = ComponentMapper.getFor(AnimationsComponent.class);
 
     public AnimationSystem(Engine engine) {
         animationEntities = engine.getEntitiesFor(Family.all(AnimationComponent.class).get());

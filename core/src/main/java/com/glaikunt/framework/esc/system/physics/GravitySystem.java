@@ -16,10 +16,10 @@ import com.glaikunt.framework.esc.component.common.GravityComponent;
  */
 public class GravitySystem extends EntitySystem {
 
-    private ImmutableArray<Entity> entities;
+    private final ImmutableArray<Entity> entities;
 
-    private ComponentMapper<GravityComponent> gcm = ComponentMapper.getFor(GravityComponent.class);
-    private ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
+    private final ComponentMapper<GravityComponent> gcm = ComponentMapper.getFor(GravityComponent.class);
+    private final ComponentMapper<AccelerationComponent> fcm = ComponentMapper.getFor(AccelerationComponent.class);
 
     public GravitySystem(Engine engine) {
         entities = engine.getEntitiesFor(

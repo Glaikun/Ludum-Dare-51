@@ -17,7 +17,7 @@ public class SoundCache implements Cache {
             "sound/85541__maj061785__banging-screen-door-2.ogg"
     }));
 
-    private Map<String, Sound> sounds = new HashMap<>();
+    private final Map<String, Sound> sounds = new HashMap<>();
     private boolean loaded = false;
 
     @Override

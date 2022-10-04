@@ -33,7 +33,6 @@ public class CollisionListenerSystem extends EntitySystem {
     private final Rectangle tmpBodyB = new Rectangle();
     private final Rectangle tmpContact = new Rectangle();
     private final Vector2 tmpVecA = new Vector2();
-    private final Vector2 tmpVecB = new Vector2();
     private final Vector2 tmpVecContact = new Vector2();
 
     public CollisionListenerSystem(Engine engine) {

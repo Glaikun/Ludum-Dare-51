@@ -26,7 +26,8 @@ import java.util.List;
 
 public class LevelController extends CommonActor {
 
-    private Stage front, background;
+    private final Stage front;
+    private final Stage background;
     private final List<AbstractLevel> levels = new ArrayList<>();
     private AbstractLevel currentLevel;
     private PlayerActor currentPlayer;
@@ -37,7 +38,8 @@ public class LevelController extends CommonActor {
 
     private final FadeComponent.Fade fade;
 
-    private boolean startLevelTransition, resetLevel;
+    private boolean startLevelTransition;
+    private boolean resetLevel;
     private final TickTimer resetLevelTimer = new TickTimer(2f);
 
     public LevelController(ApplicationResources applicationResources, Stage front, Stage background) {
@@ -57,8 +59,7 @@ public class LevelController extends CommonActor {
 //        this.levels.add(new DebugLevel(applicationResources, front));
 //        this.levels.add(new NextDebugLevel(applicationResources, front));
 
-        AbstractLevel abstractLevel = levels.get(0);
-        this.currentLevel = abstractLevel;
+        this.currentLevel = levels.get(0);
         this.currentLevel.init();
         this.currentPlayer = currentLevel.getPlayer();
         this.levels.remove(0);
@@ -77,8 +78,8 @@ public class LevelController extends CommonActor {
     private void createEffects(Stage front, Stage background) {
         background.addActor(new PixelStarsActor(getApplicationResources(), FrameworkConstants.WHITE));
         front.addActor(blizzard = new PixelBlizzardActor(getApplicationResources(), FrameworkConstants.WHITE));
-        front.addActor(fogActor = new FogActor(getApplicationResources(), 0.04f, Color.WHITE));
-        front.addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f, Color.WHITE));
+        front.addActor(fogActor = new FogActor(getApplicationResources(), 0.04f));
+        front.addActor(fogActor2 = new FogActor(getApplicationResources(), 0.011f));
     }
 
     @Override
@@ -170,8 +171,7 @@ public class LevelController extends CommonActor {
             getEngine().removeAllEntities();
             getEngine().addEntity(getEntity());
 
-            AbstractLevel abstractLevel = levels.get(0);
-            currentLevel = abstractLevel;
+            currentLevel = levels.get(0);
             currentLevel.init();
             currentPlayer = currentLevel.getPlayer();
             levels.remove(0);

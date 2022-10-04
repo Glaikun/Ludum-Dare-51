@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.btree.BehaviorTree;
-import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -28,8 +27,6 @@ import com.glaikunt.framework.esc.system.physics.BodyType;
 import com.glaikunt.framework.game.GameConstants;
 import com.glaikunt.framework.game.map.levels.AbstractLevel;
 
-import java.util.Map;
-
 public class EnemyActor extends CommonActor {
 
     private final AccelerationComponent acceleration;
@@ -42,9 +39,6 @@ public class EnemyActor extends CommonActor {
     private final SpeedComponent speed;
     private final EnemyInputComponent input;
     private final BodyComponent body;
-
-    private final Vector2 tmpVector2 = new Vector2();
-
     private final BehaviorTree<Entity> behaviorTree;
 
     public EnemyActor(ApplicationResources applicationResources, Vector2 pos, AbstractLevel abstractLevel) {
