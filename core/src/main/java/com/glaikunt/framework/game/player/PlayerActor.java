@@ -148,8 +148,8 @@ public class PlayerActor extends CommonActor {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setLooping(true);
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).play();
             }
-            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() < 1f) {
-                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.min(1f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()+(delta*AUDIO_RAMP)));
+            if (getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume() < .5f) {
+                getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).setVolume(Math.min(.5f, getApplicationResources().getMusic(MusicCache.BLIZZARD_INTERNAL).getVolume()+(delta*AUDIO_RAMP)));
             }
             if (getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume() > 0f) {
                 getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).setVolume(Math.max(0f, getApplicationResources().getMusic(MusicCache.BLIZZARD_EXTERNAL).getVolume()-(delta*AUDIO_RAMP)));
