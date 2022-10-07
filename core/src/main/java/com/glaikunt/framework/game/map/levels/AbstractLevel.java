@@ -2,21 +2,27 @@ package com.glaikunt.framework.game.map.levels;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.glaikunt.framework.application.ApplicationResources;
 import com.glaikunt.framework.application.CommonActor;
+import com.glaikunt.framework.esc.component.animation.AnimationComponent;
 import com.glaikunt.framework.game.enemy.EnemyActor;
 import com.glaikunt.framework.game.enemy.Stance;
 import com.glaikunt.framework.game.map.*;
 import com.glaikunt.framework.game.player.PlayerActor;
+
+import java.util.Iterator;
 
 public abstract class AbstractLevel extends CommonActor {
 
@@ -87,9 +93,16 @@ public abstract class AbstractLevel extends CommonActor {
     public void init() {
 
         TiledMap map = getApplicationResources().getTiledMap(level);
+        for (TiledMapTileSet tiledMapTiles : map.getTileSets()) {
+            for (TiledMapTile tiledMapTile : tiledMapTiles) {
+                AnimationComponent.fixBleeding(tiledMapTile.getTextureRegion());
+            }
+        }
+
         this.renderer = new OrthogonalTiledMapRenderer(map);
         this.background = (TiledMapTileLayer) map.getLayers().get("Background");
         this.foreground = (TiledMapTileLayer) map.getLayers().get("Foreground");
+
 
         createPlatforms(getApplicationResources(), getFront(), map);
 
