@@ -32,6 +32,7 @@ public class TiledCache implements Cache {
         TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
         params.textureMinFilter = Texture.TextureFilter.Linear;
         params.textureMagFilter = Texture.TextureFilter.Nearest;
+//        params.generateMipMaps = true;
 
         TmxMapLoader loader = new TmxMapLoader(new InternalFileHandleResolver());
         assetManager.setLoader(TiledMap.class, loader);
